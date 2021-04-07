@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BibliotecaSantiagoMaior">
         <activity android:name=".MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@style/Theme.BibliotecaSantiagoMaior.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
