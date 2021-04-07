@@ -8,7 +8,7 @@
 
 # Biblioteca da escola de SamTiago Maior
 
-## Desenho da interface FEITO! [X]
+## Desenho da interface. [X]
 
 ## Criação da Aplicação no AndroidStudio
 
