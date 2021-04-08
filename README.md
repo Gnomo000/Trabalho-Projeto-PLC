@@ -24,6 +24,7 @@
 ### Requisitos Avançados
 * Tema claro/Escuro
 * Esquema de Cores para os livros
+* Olho para ver a password
 
 ## Lista de Tarefas
 
