@@ -19,6 +19,7 @@
 * Lista de Requisições
 * Lista de Livros
 * Pagina unica do Livro
+* Tipos de Utilizadores: Utilizador e Administrador
 
 ### Requisitos Avançados
 * Tema claro/Escuro
