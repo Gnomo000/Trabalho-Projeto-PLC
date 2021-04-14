@@ -6,7 +6,7 @@
 
 ## Este projeto tem como objetivo a criação de uma aplicação movel para a biblioteca da escola da escola de Santiago Maior
 
-# Biblioteca da escola de Santiago Maior
+# Biblioteca Virtual
 
 ## Desenho da interface. [X]
 
