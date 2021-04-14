@@ -4,33 +4,30 @@
 * Diogo Vaz nº21132
 * Daniel Rodrigues nº21707
 
-## Este projeto tem como objetivo a criação de uma aplicação movel para a biblioteca da escola da escola de SamTiago Maior
+## Este projeto tem como objetivo a criação de uma aplicação movel para a biblioteca da escola da escola de Santiago Maior
 
-# Biblioteca da escola de SamTiago Maior
+# Biblioteca da escola de Santiago Maior
 
 ## Desenho da interface. [X]
 
 ## Criação da Aplicação no AndroidStudio
 
 ### Requisitos Minimos
-* Adicionar/Remover/Alterar um Livro
-* Adicionar/Remover/Alterar um Utilizador
-* Adicionar/Remover/Alterar uma Requisição
+* Criar um Utilizador
+* Adicionar/Cancelar uma Requisição
 * Lista de Requisições
 * Lista de Livros
 * Pagina unica do Livro
-* Tipos de Utilizadores: Utilizador e Administrador
 
 ### Requisitos Avançados
+* Editar Perfil
 * Tema claro/Escuro
 * Esquema de Cores para os livros
-* Olho para ver a password
 
 ## Lista de Tarefas
 
-* Adicionar/Remover/Alterar um Livro []
-* Adicionar/Remover/Alterar um Utilizador []
-* Adicionar/Remover/Alterar uma Requisição []
+* Adicionar um Utilizador []
+* Adicionar/Cancelar uma Requisição []
 * Lista de Requisições []
 * Lista de Livros []
 * Pagina unica do Livro []
