@@ -9,7 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BibliotecaSantiagoMaior.Default">
-        <activity android:name=".LoginActivity"
+        <activity android:name=".HomeActivity"
+            android:label="@string/app_home"></activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/app_register"
+            android:theme="@style/Theme.BibliotecaSantiagoMaior.Default">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".LoginActivity"
             android:label="@string/app_login"
             android:theme="@style/Theme.BibliotecaSantiagoMaior.Default">
             android:parentActivityName=".MainActivity">
@@ -22,6 +33,7 @@
             android:theme="@style/Theme.BibliotecaSantiagoMaior.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

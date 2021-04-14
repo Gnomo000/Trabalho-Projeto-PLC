@@ -48,12 +48,13 @@
         app:layout_constraintStart_toStartOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="150dp"
-        android:text="Registrar"
         android:backgroundTint="@android:color/white"
+        android:onClick="goToRegister"
+        android:text="Registrar"
         android:textColor="#49688E"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
