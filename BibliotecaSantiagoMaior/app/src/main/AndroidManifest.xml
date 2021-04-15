@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BibliotecaSantiagoMaior.Default">
         <activity android:name=".HomeActivity"
-            android:label="@string/app_home"></activity>
+            android:label="@string/app_home">
+        </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/app_register"

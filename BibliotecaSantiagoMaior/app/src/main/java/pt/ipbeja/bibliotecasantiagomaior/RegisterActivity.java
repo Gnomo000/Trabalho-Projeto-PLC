@@ -18,5 +18,6 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
         this.finish();
+        MainActivity.CloseMainActivity.finish();
     }
 }
