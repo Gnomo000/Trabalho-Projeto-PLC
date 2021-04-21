@@ -21,8 +21,15 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
-    public void buttonLogOut(MenuItem item) {
+    public void goOut(MenuItem item) {
         Intent intent = new Intent(this,MainActivity.class);
+        LoginActivity.loginDone = false;
+        startActivity(intent);
+        this.finish();
+    }
+
+    public void goToSettings(MenuItem item) {
+        Intent intent = new Intent(this,SettingsActivity.class);
         startActivity(intent);
     }
 }

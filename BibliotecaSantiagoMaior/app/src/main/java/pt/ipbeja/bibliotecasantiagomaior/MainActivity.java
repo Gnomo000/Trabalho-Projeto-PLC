@@ -15,7 +15,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // TODO invocar o método do SessionManager para validar se existe sessão
+        // se existir sessão saltam para a HomeActivity
+
         CloseMainActivity=this;
+        if (LoginActivity.loginDone == true) {
+            Intent intent = new Intent(this,HomeActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
     }
 
     public void goToLogin(View view) {

@@ -8,6 +8,8 @@ import android.view.View;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    public static boolean loginDone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,5 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
         this.finish();
         MainActivity.CloseMainActivity.finish();
+        loginDone = true;
     }
 }
