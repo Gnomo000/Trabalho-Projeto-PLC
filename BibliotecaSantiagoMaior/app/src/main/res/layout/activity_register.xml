@@ -20,12 +20,14 @@
 
     <EditText
         android:id="@+id/editTextTextNameRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Nome"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewNameRegister"
         app:layout_constraintTop_toBottomOf="@+id/textViewNameRegister" />
 
@@ -42,12 +44,14 @@
 
     <EditText
         android:id="@+id/editTextDateRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Data de nascimento "
         android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewDateRegister"
         app:layout_constraintTop_toBottomOf="@+id/textViewDateRegister" />
 
@@ -64,12 +68,14 @@
 
     <EditText
         android:id="@+id/editTextTextEmailRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewEmailRegister"
         app:layout_constraintTop_toBottomOf="@+id/textViewEmailRegister" />
 
@@ -86,12 +92,14 @@
 
     <EditText
         android:id="@+id/editTextPhoneRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Telemóvel"
         android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewPhoneRegister"
         app:layout_constraintTop_toBottomOf="@+id/textViewPhoneRegister" />
 
@@ -108,12 +116,14 @@
 
     <EditText
         android:id="@+id/editTextTextUsernameRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Nome de Utilzador"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewUsernameRegister"
         app:layout_constraintTop_toBottomOf="@+id/textViewUsernameRegister" />
 
@@ -130,12 +140,14 @@
 
     <EditText
         android:id="@+id/editTextTextPasswordRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Senha"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewPasswordRegister"
         app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRegister" />
 

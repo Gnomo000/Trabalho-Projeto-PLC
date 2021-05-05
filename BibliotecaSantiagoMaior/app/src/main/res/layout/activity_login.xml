@@ -20,15 +20,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:ems="16"
         android:hint="exemple@exemple.com"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewEmail"
         app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
 
@@ -45,9 +46,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewPasssWord"
         app:layout_constraintTop_toBottomOf="@+id/textViewPasssWord"
         app:passwordToggleEnabled="true"
@@ -55,7 +58,7 @@
 
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="16"
