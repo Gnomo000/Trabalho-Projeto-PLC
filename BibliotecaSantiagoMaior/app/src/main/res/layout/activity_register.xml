@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
         android:ems="10"
         android:hint="Nome"
         android:inputType="textPersonName"
@@ -48,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
         android:ems="10"
         android:hint="Data de nascimento "
         android:inputType="date"
@@ -72,6 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -96,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
         android:ems="10"
         android:hint="Telemóvel"
         android:inputType="phone"
@@ -120,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
         android:ems="10"
         android:hint="Nome de Utilzador"
         android:inputType="textPersonName"
@@ -138,30 +143,49 @@
         app:layout_constraintStart_toStartOf="@+id/editTextTextUsernameRegister"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextUsernameRegister" />
 
-    <EditText
-        android:id="@+id/editTextTextPasswordRegister"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
+        android:backgroundTint="#474747"
+        android:clipToPadding="false"
+        app:expandedHintEnabled="false"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRegister"
+        app:passwordToggleEnabled="true"
+        tools:ignore="MissingConstraints">
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#474747"
+            android:ems="10"
+            android:hint="Senha"
+            android:inputType="textPersonName"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textViewUsernameRegister"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUsernameRegister" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/registerbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#49688E"
         android:onClick="goToMainPage"
         android:text="Registrar"
-        android:textColor="@color/white"
+        android:textColor="#474747"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPasswordRegister" />
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

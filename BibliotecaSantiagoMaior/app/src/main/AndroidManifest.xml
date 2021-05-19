@@ -18,7 +18,9 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_home"></activity>
+            android:label="@string/app_home"
+            android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
+        </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/app_register"
@@ -31,7 +33,6 @@
             android:name=".LoginActivity"
             android:label="@string/app_login"
             android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
-            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

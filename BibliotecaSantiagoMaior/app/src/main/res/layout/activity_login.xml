@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context=".LoginActivity">
 
     <TextView
@@ -26,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
         android:ems="16"
         android:hint="exemple@exemple.com"
         android:inputType="textPersonName"
@@ -50,6 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#474747"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewPasssWord"
         app:layout_constraintTop_toBottomOf="@+id/textViewPasssWord"
@@ -60,11 +63,15 @@
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="16"
-            android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="@+id/textViewPasssWord"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPasssWord" />
+            android:background="#00FFFFFF"
+            android:backgroundTint="#474747"
+            android:ems="10"
+            android:hint="Nome de Utilzador"
+            android:inputType="textPersonName"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textViewUsernameRegister"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUsernameRegister" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -72,10 +79,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#49688E"
         android:onClick="goToMainPage"
         android:text="Entrar"
-        android:textColor="@color/white"
+        android:textColor="#474747"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />

@@ -1,54 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.BibliotecaSantiagoMaior.Light.Default" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#49688E</item>
-        <item name="colorPrimaryVariant">#49688E</item>
-        <item name="android:windowBackground">#FFFFFF</item>
-        <item name="android:navigationBarColor">#49688E</item>
-        <!-- Button Theme. -->
 
+    <style name="Theme.BibliotecaSantiagoMaior.Light.Default" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FFD046</item>
+        <item name="colorPrimaryVariant">#FFD046</item>
+        <item name="android:windowBackground">#769cd5</item>
+        <item name="android:navigationBarColor">#FFD046</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:textColor">#474747</item>
+
+        <!-- Button Theme. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
 
     <style name="Theme.BibliotecaSantiagoMaior.Light.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#49688E</item>
-        <item name="colorPrimaryVariant">#49688E</item>
-        <item name="android:windowBackground">#FFFFFF</item>
-        <item name="android:navigationBarColor">#49688E</item>
+        <item name="colorPrimary">#FFD046</item>
+        <item name="colorPrimaryVariant">#FFD046</item>
+        <item name="android:windowBackground">#769cd5</item>
+        <item name="android:navigationBarColor">#FFD046</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:textColor">#474747</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
 
-    <!-- Dark Mode. -->
-
-    <style name="Theme.BibliotecaSantiagoMaior.Dark.Default" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#49688E</item>
-        <item name="colorPrimaryVariant">#49688E</item>
-        <item name="android:windowBackground">#323232</item>
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:navigationBarColor">#49688E</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
-
-    <style name="Theme.BibliotecaSantiagoMaior.Dark.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#49688E</item>
-        <item name="colorPrimaryVariant">#49688E</item>
-        <item name="android:windowBackground">#323232</item>
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:navigationBarColor">#49688E</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
 </resources>

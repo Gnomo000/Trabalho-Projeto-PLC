@@ -28,16 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         String selectedTheme = this.sharedPref.getString(SETTINGS_THEME, THEME_LIGHT);
-        switch (selectedTheme){
-            case THEME_DARK:
-                setTheme(R.style.Theme_BibliotecaSantiagoMaior_Dark_Default);
-                Log.i("Teste","Escuro");
-                break;
-            case THEME_LIGHT:
-                setTheme(R.style.Theme_BibliotecaSantiagoMaior_Light_Default);
-                Log.i("Teste","Claro");
-                break;
-        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -55,34 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
         }
 
-
-
-        // IconSwitch  Checked Change Listener
-        iconSwitch.setCheckedChangeListener(new IconSwitch.CheckedChangeListener() {
-        @Override
-        public void onCheckChanged(IconSwitch.Checked current) {
-
-            SharedPreferences.Editor editor = sharedPref.edit();
-            //simple witch case
-            switch (current) {
-
-                case LEFT:
-                    //showing simple toast message to the user
-                    Toast.makeText(SettingsActivity.this, "Tema Claro", Toast.LENGTH_SHORT).show();
-                    editor.putString(SETTINGS_THEME, THEME_LIGHT);
-                    editor.apply();
-                    recreate();
-                    break;
-
-                case RIGHT:
-                    Toast.makeText(SettingsActivity.this, "Tema Escuro", Toast.LENGTH_SHORT).show();
-                    editor.putString(SETTINGS_THEME, THEME_DARK);
-                    editor.apply();
-                    recreate();
-                    break;
-            }
-        }
-        });
     }
 
     public void onClickAboutUs(View view) {
