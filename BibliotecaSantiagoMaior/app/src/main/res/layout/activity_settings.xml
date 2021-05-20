@@ -23,17 +23,16 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:text="Editar Conta ->"
-        android:textColor="#474747"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:background="@android:color/darker_gray"
+        android:background="#FFD046"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
@@ -85,10 +84,10 @@
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:background="@android:color/darker_gray"
+        android:background="#FFD046"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -110,7 +109,6 @@
         android:layout_marginTop="16dp"
         android:onClick="onClickAboutUs"
         android:text="Sobre Nós ->"
-        android:textColor="#474747"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 

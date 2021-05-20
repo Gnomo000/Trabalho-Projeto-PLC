@@ -20,14 +20,14 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextEmailLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#474747"
         android:ems="16"
-        android:hint="exemple@exemple.com"
+        android:hint="E-Mail"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewEmail"
@@ -37,53 +37,43 @@
         android:id="@+id/textViewPasssWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Palavra-chave:"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Senha"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailLogin" />
+
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/editTextPasswordRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:backgroundTint="#474747"
-        app:expandedHintEnabled="false"
-        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewPasssWord"
         app:layout_constraintTop_toBottomOf="@+id/textViewPasssWord"
-        app:passwordToggleEnabled="true"
-        tools:ignore="MissingConstraints">
+        app:passwordToggleEnabled="true">
 
-        <EditText
-            android:id="@+id/editTextTextPassword"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:backgroundTint="#474747"
-            android:ems="10"
-            android:hint="Nome de Utilzador"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textViewUsernameRegister"
-            app:layout_constraintTop_toBottomOf="@+id/textViewUsernameRegister" />
+            android:hint="Senha"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonLoginLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:onClick="goToMainPage"
         android:text="Entrar"
-        android:textColor="#474747"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintStart_toStartOf="@+id/textViewPasssWord"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
