@@ -50,7 +50,8 @@ public class SettingsActivity extends AppCompatActivity {
     public void onClickAboutUs(View view) {
         AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
         alertAboutUs.setTitle("Sobre Nós");
-        alertAboutUs.setMessage("ETC");
+        alertAboutUs.setMessage("Escola Básica de Santiago Maior é uma instituição publica que integra a rede de ensino nacional \r\n" +
+                "Catálogo Eletrónico é uma aplicação desenvolvida para facilitar a requizição de livros da nossa biblioteca");
         alertAboutUs.create().show();
     }
 }
