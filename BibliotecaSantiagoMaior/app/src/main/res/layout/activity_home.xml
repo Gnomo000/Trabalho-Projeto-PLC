@@ -12,9 +12,10 @@
         android:layout_height="91dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
+        android:src="@drawable/ic_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_icon" />
+        app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
     <TextView
         android:id="@+id/textView2"

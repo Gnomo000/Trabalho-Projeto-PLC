@@ -38,69 +38,14 @@
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Aparência"
-        android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.344"
-        tools:context=".SettingsActivity">
-
-        <!-- Icon Switch -->
-        <com.polyak.iconswitch.IconSwitch
-            android:id="@+id/iconSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="false"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            app:isw_active_tint_icon_left="#FFFFFF"
-            app:isw_active_tint_icon_right="#FFFFFF"
-            app:isw_background_color="#2196F3"
-            app:isw_default_selection="left"
-            app:isw_icon_left="@drawable/ic_sunny"
-            app:isw_icon_right="@drawable/ic_crescent_moon"
-            app:isw_icon_size="20dp"
-            app:isw_inactive_tint_icon_left="#FFEB3B"
-            app:isw_inactive_tint_icon_right="#100A0A"
-            app:isw_thumb_color_left="#FFC107"
-            app:isw_thumb_color_right="#0C0101" />
-
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:background="#FFD046"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Sobre"
         android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <Button
         android:id="@+id/buttonAboutUs"

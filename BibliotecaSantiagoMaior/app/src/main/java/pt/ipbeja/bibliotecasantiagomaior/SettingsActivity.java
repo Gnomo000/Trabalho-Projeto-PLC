@@ -14,37 +14,10 @@ import android.os.Bundle;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public static final String THEME_DARK = "dark";
-    public static final String THEME_LIGHT = "light";
-    public static final String SETTINGS_THEME = "theme";
-
-    private IconSwitch iconSwitch;
-
-    private SharedPreferences sharedPref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.sharedPref = SettingsActivity.this.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-        String selectedTheme = this.sharedPref.getString(SETTINGS_THEME, THEME_LIGHT);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        // initializing the IconSwitch object
-        iconSwitch = (IconSwitch) findViewById(R.id.iconSwitch);
-
-
-        switch (selectedTheme) {
-            case THEME_DARK:
-                iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
-                break;
-            case THEME_LIGHT:
-                iconSwitch.setChecked(IconSwitch.Checked.LEFT);
-                break;
-        }
-
     }
 
     public void onClickAboutUs(View view) {
