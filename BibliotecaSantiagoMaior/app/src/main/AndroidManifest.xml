@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_icon_trabalho_simples"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_icon_trabalho_simples"
         android:supportsRtl="true"
         android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
         <activity

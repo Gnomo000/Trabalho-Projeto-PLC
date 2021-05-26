@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = month + "/" + dayOfMonth + "/" + year;
+        String date = String.format("%02d",dayOfMonth) + "/" + String.format("%02d",month+1) + "/" + year;
         datetext.setText(date);
     }
 }
