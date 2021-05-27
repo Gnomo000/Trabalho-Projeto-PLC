@@ -3,196 +3,231 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:isScrollContainer="true">
 
-    <TextView
-        android:id="@+id/textViewNameRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="Nome Próprio:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextNameRegister"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#474747"
-        android:ems="10"
-        android:hint="Nome"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewNameRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNameRegister" />
-
-    <TextView
-        android:id="@+id/textViewDateRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Data de Nascimento"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextNameRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNameRegister" />
-
-    <EditText
-        android:id="@+id/editTextDateRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#474747"
-        android:ems="10"
-        android:hint="Data de nascimento "
-        android:inputType="date"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textViewDateRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDateRegister" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <TextView
-        android:id="@+id/textViewEmailRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="E-Mail"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextDateRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDateRegister" />
-
-    <EditText
-        android:id="@+id/editTextEmailRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#474747"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewEmailRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEmailRegister" />
-
-    <TextView
-        android:id="@+id/textViewPhoneRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Telemóvel"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextEmailRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister" />
-
-    <EditText
-        android:id="@+id/editTextPhoneRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#474747"
-        android:ems="10"
-        android:hint="Telemóvel"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewPhoneRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneRegister" />
-
-    <TextView
-        android:id="@+id/textViewUsernameRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Nome de Utilizador"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextPhoneRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhoneRegister" />
-
-    <EditText
-        android:id="@+id/editTextUsernameRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#474747"
-        android:ems="10"
-        android:hint="Nome de Utilzador"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewUsernameRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUsernameRegister" />
-
-    <TextView
-        android:id="@+id/textViewPasswordRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Senha"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextUsernameRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsernameRegister" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextPasswordRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRegister"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Senha"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buttonRegisterRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:onClick="goToMainPage"
-        android:text="Registrar"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister" />
+            <TextView
+                android:id="@+id/textViewNameRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Nome Próprio:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/buttonCalendar"
-        android:layout_width="43dp"
-        android:layout_height="38dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextDateRegister"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextDateRegister"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar"
-        tools:ignore="MissingConstraints" />
+            <EditText
+                android:id="@+id/editTextNameRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#474747"
+                android:ems="10"
+                android:hint="Nome"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewNameRegister"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNameRegister" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:onClick="deleteRoom"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonRegisterRegister"
-        app:layout_constraintStart_toEndOf="@+id/buttonRegisterRegister"
-        app:layout_constraintTop_toTopOf="@+id/buttonRegisterRegister" />
+            <TextView
+                android:id="@+id/textViewDateRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Data de Nascimento"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextNameRegister"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNameRegister" />
+
+            <EditText
+                android:id="@+id/editTextDateRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#474747"
+                android:ems="10"
+                android:hint="Data de nascimento "
+                android:inputType="date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewDateRegister"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDateRegister" />
+
+            <ImageButton
+                android:id="@+id/buttonCalendar"
+                android:layout_width="43dp"
+                android:layout_height="38dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextDateRegister"
+                app:layout_constraintEnd_toEndOf="@+id/editTextDateRegister"
+                app:layout_constraintTop_toTopOf="@+id/editTextDateRegister"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textViewEmailRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="E-Mail"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextDateRegister"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDateRegister" />
+
+            <EditText
+                android:id="@+id/editTextEmailRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#474747"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewEmailRegister"
+                app:layout_constraintTop_toBottomOf="@+id/textViewEmailRegister" />
+
+            <TextView
+                android:id="@+id/textViewPhoneRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Telemóvel"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextEmailRegister"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister" />
+
+            <EditText
+                android:id="@+id/editTextPhoneRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#474747"
+                android:ems="10"
+                android:hint="Telemóvel"
+                android:inputType="phone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewPhoneRegister"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPhoneRegister" />
+
+            <TextView
+                android:id="@+id/textViewUsernameRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Nome de Utilizador"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextPhoneRegister"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPhoneRegister" />
+
+            <EditText
+                android:id="@+id/editTextUsernameRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#474747"
+                android:ems="10"
+                android:hint="Nome de Utilzador"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewUsernameRegister"
+                app:layout_constraintTop_toBottomOf="@+id/textViewUsernameRegister" />
+
+            <TextView
+                android:id="@+id/textViewPasswordRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Senha"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextUsernameRegister"
+                app:layout_constraintTop_toBottomOf="@+id/editTextUsernameRegister" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextPasswordRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewPasswordRegister"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRegister"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Senha"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextPasswordRegisterConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/editTextPasswordRegister"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirmar Senha"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/buttonRegisterRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="goToMainPage"
+                android:text="Registrar"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextPasswordRegisterConfirm"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegisterConfirm" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:onClick="deleteRoom"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonRegisterRegister"
+                app:layout_constraintStart_toEndOf="@+id/buttonRegisterRegister"
+                app:layout_constraintTop_toTopOf="@+id/buttonRegisterRegister" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

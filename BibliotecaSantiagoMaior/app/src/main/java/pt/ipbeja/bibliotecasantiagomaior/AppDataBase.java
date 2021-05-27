@@ -20,12 +20,6 @@ public abstract class AppDataBase extends RoomDatabase {
                     AppDataBase.class,
                     "userDB")
                     .allowMainThreadQueries()
-                    .addCallback(new Callback() {
-                        @Override
-                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                            super.onCreate(db);
-                        }
-                    })
                     .build();
         }
         return INSTANCE;

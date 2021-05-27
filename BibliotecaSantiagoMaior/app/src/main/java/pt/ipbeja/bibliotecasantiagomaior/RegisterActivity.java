@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,13 +19,11 @@ import java.util.List;
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     public static boolean loginDone;
-    private TextView datetext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        datetext = findViewById(R.id.editTextDateRegister);
 
         findViewById(R.id.buttonCalendar).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,24 +60,47 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         EditText editTextPhone = findViewById(R.id.editTextPhoneRegister);
         EditText editTextUsername = findViewById(R.id.editTextUsernameRegister);
         TextInputLayout editTextPassword = findViewById(R.id.editTextPasswordRegister);
+        TextInputLayout editTextPasswordConfirm = findViewById(R.id.editTextPasswordRegisterConfirm);
 
-        do {
+
+        /*do {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
             alertAboutUs.setMessage("Dados não preenchidos");
             alertAboutUs.create().show();
-        }while (editTextName.getText() == null || editTextDate.getText() == null || editTextEmail.getText() == null || editTextPhone.getText() == null || editTextUsername.getText() == null || editTextPassword == null);
+        }while (editTextName.getText() == null || editTextDate.getTextSize() == 0 ||
+                editTextEmail.getTextSize() == 0 || editTextPhone.getTextSize() == 0 ||
+                editTextUsername.getTextSize() == 0 || editTextPassword.toString().length() == 0);*/
+
 
         if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
             alertAboutUs.setMessage("Email já existente");
             alertAboutUs.create().show();
-        }else if(AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()).equals("")){
-            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
-            alertAboutUs.setMessage("vazio");
-            alertAboutUs.create().show();
         }else {
-            User user = new User(0,editTextName.getText().toString(),editTextDate.toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUsername.getText().toString(),editTextPassword.toString());
-            AppDataBase.getInstance(this).getUserDao().add(user);
+            if(editTextName.getText().toString().isEmpty() || editTextEmail.getText().toString().isEmpty() || editTextDate.getText().toString().isEmpty()
+                    || editTextPhone.getText().toString().isEmpty() || editTextUsername.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty() || editTextPasswordConfirm.getEditText().getText().toString().isEmpty()){
+
+                AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+                alertAboutUs.setMessage("Dados não preenchidos");
+                alertAboutUs.create().show();
+
+            }else{
+                if (editTextPassword.getEditText().getText().toString() != editTextPasswordConfirm.getEditText().getText().toString()) {
+                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+                    alertAboutUs.setMessage("Senha não igual");
+                    alertAboutUs.create().show();
+                    Log.i("Sout",editTextPassword.getEditText().getText().toString());
+                    Log.i("Sout",editTextPasswordConfirm.getEditText().getText().toString());
+                }else{
+                    User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUsername.getText().toString(),editTextPassword.getEditText().getText().toString());
+                    AppDataBase.getInstance(this).getUserDao().add(user);
+                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+                    alertAboutUs.setMessage("OK");
+                    alertAboutUs.create().show();
+                }
+
+            }
+
         }
 
     }
@@ -86,7 +108,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = String.format("%02d",dayOfMonth) + "/" + String.format("%02d",month+1) + "/" + year;
-        datetext.setText(date);
+        EditText editTextDate = findViewById(R.id.editTextDateRegister);
+        System.out.println(date);
+        editTextDate.setText(date);
     }
 
     public void deleteRoom(View view) {
@@ -95,6 +119,5 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         for (int i = 0; i < user.size(); i++) {
             AppDataBase.getInstance(this).getUserDao().delete(user.get(i));
         }
-
     }
 }
