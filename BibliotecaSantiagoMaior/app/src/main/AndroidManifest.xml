@@ -11,6 +11,7 @@
         android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
         <activity
             android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -18,11 +19,13 @@
         </activity>
         <activity
             android:name=".HomeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_home"
             android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
         </activity>
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_register"
             android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
             <meta-data
@@ -31,6 +34,7 @@
         </activity>
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_login"
             android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.Default">
             <meta-data
@@ -39,6 +43,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.BibliotecaSantiagoMaior.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

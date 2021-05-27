@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Telemvel"
+        android:text="Telemóvel"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/editTextEmailRegister"
@@ -183,5 +183,16 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_my_calendar"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:onClick="deleteRoom"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRegisterRegister"
+        app:layout_constraintStart_toEndOf="@+id/buttonRegisterRegister"
+        app:layout_constraintTop_toTopOf="@+id/buttonRegisterRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

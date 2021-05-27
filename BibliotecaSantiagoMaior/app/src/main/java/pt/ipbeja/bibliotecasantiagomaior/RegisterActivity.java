@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -61,11 +62,21 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         EditText editTextUsername = findViewById(R.id.editTextUsernameRegister);
         TextInputLayout editTextPassword = findViewById(R.id.editTextPasswordRegister);
 
+        do {
+            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+            alertAboutUs.setMessage("Dados não preenchidos");
+            alertAboutUs.create().show();
+        }while (editTextName.getText() == null || editTextDate.getText() == null || editTextEmail.getText() == null || editTextPhone.getText() == null || editTextUsername.getText() == null || editTextPassword == null);
+
         if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
-            alertAboutUs.setTitle("Já Existe");
+            alertAboutUs.setMessage("Email já existente");
             alertAboutUs.create().show();
-        } else {
+        }else if(AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()).equals("")){
+            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+            alertAboutUs.setMessage("vazio");
+            alertAboutUs.create().show();
+        }else {
             User user = new User(0,editTextName.getText().toString(),editTextDate.toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUsername.getText().toString(),editTextPassword.toString());
             AppDataBase.getInstance(this).getUserDao().add(user);
         }
@@ -76,5 +87,14 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = String.format("%02d",dayOfMonth) + "/" + String.format("%02d",month+1) + "/" + year;
         datetext.setText(date);
+    }
+
+    public void deleteRoom(View view) {
+        List<User> user = AppDataBase.getInstance(this).getUserDao().getAll();
+
+        for (int i = 0; i < user.size(); i++) {
+            AppDataBase.getInstance(this).getUserDao().delete(user.get(i));
+        }
+
     }
 }
