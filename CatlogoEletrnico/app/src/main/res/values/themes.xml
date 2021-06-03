@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-
-    <style name="Theme.BibliotecaSantiagoMaior.Light.Default" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.CatálogoEletrónico.Light.Default" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FFD046</item>
         <item name="colorPrimaryVariant">#FFD046</item>
@@ -15,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.BibliotecaSantiagoMaior.Light.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.CatálogoEletrónico.Light.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FFD046</item>
         <item name="colorPrimaryVariant">#FFD046</item>
@@ -36,6 +35,4 @@
         <item name="android:textStyle">bold</item>
 
     </style>
-
-
 </resources>
