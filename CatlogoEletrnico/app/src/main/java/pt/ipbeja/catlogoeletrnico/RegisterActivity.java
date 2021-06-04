@@ -70,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
             }else{
                 if (editTextPassword.getEditText().getText().toString() == editTextPasswordConfirm.getEditText().getText().toString()) {
+                    //TODO: Erro ao tentar ver se as senhas estão iguais
                     User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString());
                     AppDataBase.getInstance(this).getUserDao().add(user);
                     AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
@@ -77,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                     alertAboutUs.create().show();
                 }else{
                     AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
-                    alertAboutUs.setMessage("Senha Não Igual");
+                    alertAboutUs.setMessage("!!!!"+editTextPassword.getEditText().getText().toString()+"!!!!"+editTextPasswordConfirm.getEditText().getText().toString()+"!!!!");
                     alertAboutUs.create().show();
                 }
 
