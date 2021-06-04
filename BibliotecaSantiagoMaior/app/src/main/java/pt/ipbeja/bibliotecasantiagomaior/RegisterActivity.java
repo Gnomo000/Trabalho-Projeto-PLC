@@ -89,8 +89,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                     AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
                     alertAboutUs.setMessage("Senha não igual");
                     alertAboutUs.create().show();
-                    Log.i("Sout",editTextPassword.getEditText().getText().toString());
-                    Log.i("Sout",editTextPasswordConfirm.getEditText().getText().toString());
                 }else{
                     User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUsername.getText().toString(),editTextPassword.getEditText().getText().toString());
                     AppDataBase.getInstance(this).getUserDao().add(user);
