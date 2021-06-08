@@ -35,10 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu">
+        app:headerLayout="@layout/nav_header">
+        <!--app:menu="@menu/drawer_menu"-->
         <!--TODO: Escolher qual dos tipos de menu escolher-->
-        <!--<androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -115,7 +115,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/buttonSettings"
                 app:layout_constraintStart_toStartOf="@+id/buttonSettings" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.navigation.NavigationView>
 
