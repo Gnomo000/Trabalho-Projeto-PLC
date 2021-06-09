@@ -10,11 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar">
         <activity
+            android:name=".HistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+        <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
-
         </activity>
         <activity
             android:name=".RegisterActivity"

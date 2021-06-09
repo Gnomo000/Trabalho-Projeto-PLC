@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,12 +21,12 @@
             android:background="#FFD046"
             android:hapticFeedbackEnabled="false"
             app:popupTheme="@style/Theme.AppCompat.Light"
-            app:titleTextColor="#424242"/>
+            app:titleTextColor="#424242" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
         </FrameLayout>
     </LinearLayout>
@@ -55,6 +56,7 @@
                 android:drawableLeft="@drawable/ic_history"
                 android:drawablePadding="20dp"
                 android:drawingCacheQuality="auto"
+                android:onClick="goToHistory"
                 android:paddingLeft="10dp"
                 android:text="Histórico"
                 android:textAlignment="textStart"

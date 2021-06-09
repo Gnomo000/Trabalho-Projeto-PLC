@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -35,5 +37,10 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void goToHistory(View view) {
+        Intent intent = new Intent(this,HistoryActivity.class);
+        startActivity(intent);
     }
 }
