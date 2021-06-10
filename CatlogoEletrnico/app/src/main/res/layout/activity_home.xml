@@ -74,6 +74,7 @@
                 android:drawableLeft="@drawable/ic_book"
                 android:drawablePadding="20dp"
                 android:drawingCacheQuality="auto"
+                android:onClick="goToBooks"
                 android:paddingLeft="10dp"
                 android:text="Livros"
                 android:textAlignment="textStart"
