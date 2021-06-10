@@ -44,8 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToBooks(View view) {
+    /*public void goToBooks(View view) {
         Intent intent = new Intent(this,BooksActivity.class);
         startActivity(intent);
-    }
+    }*/
 }
