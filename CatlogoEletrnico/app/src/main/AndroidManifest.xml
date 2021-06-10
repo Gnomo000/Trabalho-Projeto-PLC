@@ -9,14 +9,15 @@
         android:roundIcon="@drawable/ic_icon_trabalho_simples"
         android:supportsRtl="true"
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar">
-        <activity android:name=".BooksActivity"></activity>
+        <activity
+            android:name=".BooksActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
+        </activity>
         <activity
             android:name=".HistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".HomeActivity"
