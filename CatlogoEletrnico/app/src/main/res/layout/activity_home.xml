@@ -23,12 +23,12 @@
             app:popupTheme="@style/Theme.AppCompat.Light"
             app:titleTextColor="#424242" />
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -57,7 +57,7 @@
                 android:drawableLeft="@drawable/ic_home"
                 android:drawablePadding="20dp"
                 android:drawingCacheQuality="auto"
-                android:onClick="goToHistory"
+                android:onClick="goToHome"
                 android:paddingLeft="10dp"
                 android:text="Pagina Inicial"
                 android:textAlignment="textStart"

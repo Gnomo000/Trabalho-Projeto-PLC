@@ -6,7 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 public class BooksActivity extends AppCompatActivity {
@@ -41,5 +43,22 @@ public class BooksActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void goToHome(View view) {
+        Intent intent = new Intent(this,HomeActivity.class);
+        startActivity(intent);
+        HomeActivity.isActive = false;
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void goToHistory(View view) {
+        Intent intent = new Intent(this,HistoryActivity.class);
+        startActivity(intent);
+        HomeActivity.isActive = false;
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void goToBooks(View view) {
     }
 }

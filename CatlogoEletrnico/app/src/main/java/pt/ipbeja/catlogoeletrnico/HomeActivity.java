@@ -52,11 +52,16 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this,HistoryActivity.class);
         startActivity(intent);
         isActive = false;
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void goToBooks(View view) {
         Intent intent = new Intent(this,BooksActivity.class);
         startActivity(intent);
         isActive = false;
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void goToHome(View view) {
     }
 }
