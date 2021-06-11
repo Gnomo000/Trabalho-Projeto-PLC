@@ -7,15 +7,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {User.class}, version = 1)
-public abstract class AppDataBase extends RoomDatabase {
+public abstract class AppDataBaseUser extends RoomDatabase {
     public abstract UserDao getUserDao();
 
-    private static AppDataBase INSTANCE;
+    private static AppDataBaseUser INSTANCE;
 
-    public static AppDataBase getInstance(Context context){
+    public static AppDataBaseUser getInstance(Context context){
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDataBase.class,
+                    AppDataBaseUser.class,
                     "userDB")
                     .allowMainThreadQueries()
                     .build();

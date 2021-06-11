@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -57,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         TextInputLayout editTextPassword = findViewById(R.id.editTextRegisterPassword);
         TextInputLayout editTextPasswordConfirm = findViewById(R.id.editTextRegisterPasswordConfirm);
 
-        if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
+        if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
             alertAboutUs.setMessage("Email já existente");
             alertAboutUs.create().show();
@@ -73,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 if (editTextPassword.getEditText().getText().toString() == editTextPasswordConfirm.getEditText().getText().toString()) {
                     //TODO: Erro ao tentar ver se as senhas estão iguais
                     User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString());
-                    AppDataBase.getInstance(this).getUserDao().add(user);
+                    AppDataBaseUser.getInstance(this).getUserDao().add(user);
                     AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
                     alertAboutUs.setMessage("OK");
                     alertAboutUs.create().show();
@@ -89,10 +88,10 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     }
 
     public void deleteUser(View view) {
-        List<User> user = AppDataBase.getInstance(this).getUserDao().getAll();
+        List<User> user = AppDataBaseUser.getInstance(this).getUserDao().getAll();
 
         for (int i = 0; i < user.size(); i++) {
-            AppDataBase.getInstance(this).getUserDao().delete(user.get(i));
+            AppDataBaseUser.getInstance(this).getUserDao().delete(user.get(i));
         }
     }
 }

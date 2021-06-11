@@ -1,5 +1,7 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import android.net.Uri;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,8 +17,9 @@ public class Book {
     private String synopse;
     private String genders;
     private int quantity;
+    private String image;
 
-    public Book(long id, String title, String titleEn, String author, String edition, String publisher, String synopse, String genders, int quantity) {
+    public Book(long id, String title, String titleEn, String author, String edition, String publisher, String synopse, String genders, int quantity, String image) {
         this.id = id;
         this.title = title;
         this.titleEn = titleEn;
@@ -26,7 +29,7 @@ public class Book {
         this.synopse = synopse;
         this.genders = genders;
         this.quantity = quantity;
-
+        this.image = image;
     }
 
     public long getId() {
@@ -99,5 +102,13 @@ public class Book {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
