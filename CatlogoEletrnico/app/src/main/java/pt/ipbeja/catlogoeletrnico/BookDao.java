@@ -22,4 +22,7 @@ public interface BookDao {
     @Delete
     void delete(Book book);
 
+    @Query("SELECT * FROM Book WHERE id = :id")
+    Book getById(int id);
+
 }

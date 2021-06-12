@@ -31,7 +31,7 @@ public abstract class AppDataBaseBook extends RoomDatabase {
                                     "'José Gomes Ferreira'," +
                                     "'Maio de 2021'," +
                                     "'Oficina do Livro'," +
-                                    "'Os portugueses chegaram à América décadas antes de Colombo.'," +
+                                    "'Os portugueses chegaram à América décadas antes de Colombo, descobriram a Austrália, participaram nos planos da viagem de Fernão de Magalhães… e outros dados históricos comprovados que permanecem na sombra.'," +
                                     "'História de Portugal'," +
                                     "20," +
                                     "'https://img.wook.pt/images/factos-escondidos-da-historia-de-portugal-jose-gomes-ferreira/MXwyNDcxMDA5MnwyMDg2MzkzMXwxNjE4MjY4NDAwMDAwfHdlYnA=/502x')");

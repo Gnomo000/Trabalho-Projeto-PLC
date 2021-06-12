@@ -39,6 +39,12 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
         Book book = this.item.get(position);
         Glide.with(this.context).load(book.getImage()).into(holder.getImageView());
         holder.getTextView().setText(book.getTitle());
+        holder.getParentLayout().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BookDetailsActivity.startActivity(RecyclerViewAdapterBook.this.context, (int) book.getId());
+            }
+        });
     }
 
     @Override
@@ -59,7 +65,7 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
         }
 
         public View getParentLayout() {
-            return parentLayout;
+            return this.parentLayout;
         }
 
         public ImageView getImageView() {
