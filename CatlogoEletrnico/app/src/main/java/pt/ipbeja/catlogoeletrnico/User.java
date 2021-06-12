@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private int id;
     private String name;
     private String date;
     private String email;
@@ -15,7 +15,7 @@ public class User {
     private String password;
     private String image;
 
-    public User(long id, String name, String date, String email, String phone, String username, String password, String image) {
+    public User(int id, String name, String date, String email, String phone, String username, String password, String image) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -26,11 +26,11 @@ public class User {
         this.image = image;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -15,15 +15,17 @@
         android:src="@drawable/ic_account"/>
 
     <TextView
+        android:id="@+id/navName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:text="User Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18dp"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/navEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="example2gmail.com"
