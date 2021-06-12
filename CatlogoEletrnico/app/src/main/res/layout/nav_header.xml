@@ -18,6 +18,8 @@
         android:id="@+id/navName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:paddingTop="10dp"
         android:text="User Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -28,6 +30,8 @@
         android:id="@+id/navEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="example2gmail.com"
         android:textSize="18dp" />
 

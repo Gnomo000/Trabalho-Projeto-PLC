@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -38,12 +42,16 @@ public class HomeActivity extends AppCompatActivity {
             button.setBackgroundColor(0xFFFFFF);
         }
 
-        TextView textViewName = findViewById(R.id.navName);
-        TextView textViewEmail = findViewById(R.id.navEmail);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
 
-        /*TODO:TODO 1
-        User id = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
-        Log.i("POOP", MainActivity.emailGeral);*/
+
+        TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
+        TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
+
+        List<User> userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
+        textViewName.setText(userList.get(0).getUsername());
+        textViewEmail.setText(userList.get(0).getEmail());
 
     }
 

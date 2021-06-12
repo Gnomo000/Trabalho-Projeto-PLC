@@ -69,9 +69,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
             }else{
                 User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),null);
-                AppDataBaseUser.getInstance(this).getUserDao().add(user);
-                Intent intent = new Intent(this,HomeActivity.class);
+                Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
+                AppDataBaseUser.getInstance(this).getUserDao().add(user);
             }
         }
     }
