@@ -12,6 +12,14 @@
         android:roundIcon="@drawable/ic_icon_trabalho_simples"
         android:supportsRtl="true"
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar">
+        <activity android:name=".BookDetailsActivity"
+            android:label="Nome Livro"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BooksActivity" />
+        </activity>
         <activity
             android:name=".BooksActivity"
             android:label="Livros"
@@ -27,7 +35,7 @@
             android:name=".HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two"></activity>
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/app_register"
