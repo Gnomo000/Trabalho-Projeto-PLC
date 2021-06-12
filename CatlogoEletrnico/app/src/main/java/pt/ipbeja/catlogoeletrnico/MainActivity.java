@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goLogin(View view) {
+
+        EditText editTextEmail = findViewById(R.id.editTextLoginEmail);
+        TextInputLayout editTextPassword = findViewById(R.id.editTextPassLoginPass);
+
+        if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
+            if (editTextPassword == null) {
+                
+            }
+        }
+
         Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
     }

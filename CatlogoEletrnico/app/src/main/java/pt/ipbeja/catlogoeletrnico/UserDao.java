@@ -19,6 +19,9 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE email = :email")
     User getUserByEmail(String email);
 
+    @Query("SELECT * FROM User WHERE email = :email AND password = :password")
+    User getUserByPassword(String password);
+
     @Delete
     void delete(User user);
 

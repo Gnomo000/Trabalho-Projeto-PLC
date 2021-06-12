@@ -25,9 +25,16 @@ public abstract class AppDataBaseBook extends RoomDatabase {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
-                            db.execSQL("INSERT INTO Book (title,titleEn,author,edition,publisher,synopse,genders,quantity,image) " +
-                                    "VALUES ('Cão Como Nós','Dog Like Us','Manuel Alegre','18','Dom Quixote','É um épagneul-breton a personagem principal do novo livro de Manuel Alegre.'" +
-                                    ",'Literatura Romantica',20,'https://img.wook.pt/images/cao-como-nos-manuel-alegre/MXw3MTY3OXwxMDE3NDZ8MTM4MzUyMzIwMDAwMHx3ZWJw/502x')");
+                            db.execSQL("INSERT INTO Book (title,titleEn,author,edition,publisher,synopse,genders,quantity,image) VALUES" +
+                                    "('Factos Escondidos da História de Portugal'," +
+                                    "'Hidden Facts from the History of Portugal'," +
+                                    "'José Gomes Ferreira'," +
+                                    "'Maio de 2021'," +
+                                    "'Oficina do Livro'," +
+                                    "'Os portugueses chegaram à América décadas antes de Colombo.'," +
+                                    "'História de Portugal'," +
+                                    "20," +
+                                    "'https://img.wook.pt/images/factos-escondidos-da-historia-de-portugal-jose-gomes-ferreira/MXwyNDcxMDA5MnwyMDg2MzkzMXwxNjE4MjY4NDAwMDAwfHdlYnA=/502x')");
                             db.execSQL("INSERT INTO Book (title,titleEn,author,edition,publisher,synopse,genders,quantity,image) VALUES" +
                                     "('Harry Potter e a Pedra Filosofal'," +
                                     "'Harry Potter and the Philosophers Stone'," +
@@ -38,6 +45,16 @@ public abstract class AppDataBaseBook extends RoomDatabase {
                                     "'Juvenil'," +
                                     "40," +
                                     "'https://img.wook.pt/images/harry-potter-e-a-pedra-filosofal-j-k-rowling/MXwyNDA2Njc5OHwyMDEyNDQzMXwxNTkwNTM0MDAwMDAwfHdlYnA=/502x')");
+                            db.execSQL("INSERT INTO Book (title,titleEn,author,edition,publisher,synopse,genders,quantity,image) VALUES" +
+                                    "('Águas Passadas'," +
+                                    "'Past waters'," +
+                                    "'João Tordo'," +
+                                    "'Junho de 2021'," +
+                                    "'Companhia das Letras'," +
+                                    "'Durante treze dias de Janeiro de 2019, a chuva cai sem misericórdia sobre Lisboa.'," +
+                                    "'Policial e Thriller'," +
+                                    "37," +
+                                    "'https://img.wook.pt/images/aguas-passadas-joao-tordo/MXwyNDc4NTg5OXwyMDk2ODk4N3wxNjIxODEwODAwMDAwfHdlYnA=/502x')");
                         }
                     })
                     .build();

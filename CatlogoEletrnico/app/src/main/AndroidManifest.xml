@@ -14,6 +14,7 @@
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar">
         <activity
             android:name=".BooksActivity"
+            android:label="Livros"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
         </activity>

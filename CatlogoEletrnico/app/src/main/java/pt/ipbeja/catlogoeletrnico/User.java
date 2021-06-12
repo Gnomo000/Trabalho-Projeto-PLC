@@ -13,8 +13,9 @@ public class User {
     private String phone;
     private String username;
     private String password;
+    private String image;
 
-    public User(long id, String name, String date, String email, String phone, String username, String password) {
+    public User(long id, String name, String date, String email, String phone, String username, String password, String image) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -22,6 +23,7 @@ public class User {
         this.phone = phone;
         this.username = username;
         this.password = password;
+        this.image = image;
     }
 
     public long getId() {
@@ -78,5 +80,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

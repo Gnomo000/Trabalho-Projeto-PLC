@@ -179,36 +179,18 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editTextRegisterPasswordConfirm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
-                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="#FFD046">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Confirmar Senha"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
                 android:id="@+id/buttonRegister"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/radius"
                 android:onClick="createUser"
                 android:text="Registrar"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/editTextRegisterPasswordConfirm"
-                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPasswordConfirm"
-                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPasswordConfirm" />
+                app:layout_constraintEnd_toEndOf="@+id/editTextRegisterPassword"
+                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword" />
 
             <Button
                 android:id="@+id/button"

@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextLoginName"
+        android:id="@+id/editTextLoginEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -49,8 +49,8 @@
         android:text="Senha:"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextLoginName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLoginName" />
+        app:layout_constraintStart_toStartOf="@+id/editTextLoginEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLoginEmail" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextPassLoginPass"

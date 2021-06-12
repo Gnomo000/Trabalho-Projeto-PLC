@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -43,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = String.format("%02d",dayOfMonth) + "/" + String.format("%02d",month+1) + "/" + year;
         EditText editTextDate = findViewById(R.id.editTextRegisterDate);
-        System.out.println(date);
         editTextDate.setText(date);
     }
 
@@ -54,7 +54,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         EditText editTextPhone = findViewById(R.id.editTextRegisterPhone);
         EditText editTextUserName = findViewById(R.id.editTextRegisterUsername);
         TextInputLayout editTextPassword = findViewById(R.id.editTextRegisterPassword);
-        TextInputLayout editTextPasswordConfirm = findViewById(R.id.editTextRegisterPasswordConfirm);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
@@ -62,28 +61,18 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             alertAboutUs.create().show();
         }else {
             if(editTextName.getText().toString().isEmpty() || editTextEmail.getText().toString().isEmpty() || editTextDate.getText().toString().isEmpty()
-                    || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty() || editTextPasswordConfirm.getEditText().getText().toString().isEmpty()){
+                    || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty()){
 
                 AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
                 alertAboutUs.setMessage("Dados não preenchidos");
                 alertAboutUs.create().show();
 
             }else{
-                if (editTextPassword.getEditText().getText().toString() == editTextPasswordConfirm.getEditText().getText().toString()) {
-                    //TODO: Erro ao tentar ver se as senhas estão iguais
-                    User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString());
-                    AppDataBaseUser.getInstance(this).getUserDao().add(user);
-                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
-                    alertAboutUs.setMessage("OK");
-                    alertAboutUs.create().show();
-                }else{
-                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
-                    alertAboutUs.setMessage("!!!!"+editTextPassword.getEditText().getText().toString()+"!!!!"+editTextPasswordConfirm.getEditText().getText().toString()+"!!!!");
-                    alertAboutUs.create().show();
-                }
-
+                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),null);
+                AppDataBaseUser.getInstance(this).getUserDao().add(user);
+                Intent intent = new Intent(this,HomeActivity.class);
+                startActivity(intent);
             }
-
         }
     }
 
