@@ -1,5 +1,7 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import android.net.Uri;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -20,7 +22,10 @@ public interface UserDao {
     User getUserByEmail(String email);
 
     @Query("SELECT * FROM User WHERE email = :email AND password = :password")
-    User getUserByPasswordAndEmail(String password, String email);
+    User getUserByPasswordAndEmail(String email, String password);
+
+    /*@Query("SELECT name FROM User WHERE email = :email")
+    User getName(String email);*/
 
     @Delete
     void delete(User user);

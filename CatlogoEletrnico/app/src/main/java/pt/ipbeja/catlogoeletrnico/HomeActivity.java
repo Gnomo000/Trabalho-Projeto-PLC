@@ -7,11 +7,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -37,6 +37,14 @@ public class HomeActivity extends AppCompatActivity {
             button.setClickable(false);
             button.setBackgroundColor(0xFFFFFF);
         }
+
+        TextView textViewName = findViewById(R.id.navName);
+        TextView textViewEmail = findViewById(R.id.navEmail);
+
+        /*TODO:TODO 1
+        User id = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
+        Log.i("POOP", MainActivity.emailGeral);*/
+
     }
 
     @Override
