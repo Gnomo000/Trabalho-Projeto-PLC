@@ -33,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
         TextInputLayout editTextPassword = findViewById(R.id.editTextPassLoginPass);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
-            if (editTextPassword == null) {
-                
+            if (AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()) != null) {
+                Intent intent = new Intent(this,HomeActivity.class);
+                startActivity(intent);
             }
         }
-
-        Intent intent = new Intent(this,HomeActivity.class);
-        startActivity(intent);
     }
 }

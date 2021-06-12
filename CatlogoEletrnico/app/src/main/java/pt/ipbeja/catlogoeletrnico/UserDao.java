@@ -20,7 +20,7 @@ public interface UserDao {
     User getUserByEmail(String email);
 
     @Query("SELECT * FROM User WHERE email = :email AND password = :password")
-    User getUserByPassword(String password);
+    User getUserByPasswordAndEmail(String password, String email);
 
     @Delete
     void delete(User user);
