@@ -80,4 +80,9 @@ public class HomeActivity extends AppCompatActivity {
 
     public void goToHome(View view) {
     }
+
+    public void goToBook(View view) {
+        Intent intent = new Intent(this,BookDetailsActivity.class);
+        startActivity(intent);
+    }
 }

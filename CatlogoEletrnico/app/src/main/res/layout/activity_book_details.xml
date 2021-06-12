@@ -20,8 +20,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutBook"
-        android:layout_width="317dp"
-        android:layout_height="187dp"
+        android:layout_width="331dp"
+        android:layout_height="156dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="32dp"
@@ -65,8 +65,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutBookInfo"
-        android:layout_width="316dp"
-        android:layout_height="186dp"
+        android:layout_width="311dp"
+        android:layout_height="222dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/constraintlayout_corners"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayoutBook"
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="TextView"
+            android:text="Edição:"
             app:layout_constraintEnd_toEndOf="@+id/authorHardCoded"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/authorHardCoded"
@@ -110,17 +110,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
             android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/editionHardCoded"
             app:layout_constraintStart_toEndOf="@+id/editionHardCoded"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAuthor" />
+            app:layout_constraintTop_toTopOf="@+id/editionHardCoded" />
 
         <TextView
             android:id="@+id/publisherHardCoded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="TextView"
+            android:text="Editora:"
             app:layout_constraintStart_toStartOf="@+id/editionHardCoded"
             app:layout_constraintTop_toBottomOf="@+id/editionHardCoded" />
 
@@ -129,39 +129,156 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
             android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/publisherHardCoded"
             app:layout_constraintStart_toEndOf="@+id/publisherHardCoded"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEdition" />
+            app:layout_constraintTop_toTopOf="@+id/publisherHardCoded" />
 
         <TextView
             android:id="@+id/synopsetHardCoded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Sinopse:"
+            app:layout_constraintStart_toStartOf="@+id/publisherHardCoded"
+            app:layout_constraintTop_toBottomOf="@+id/publisherHardCoded" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:text="Sinopse"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/synopsetHardCoded">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewSynopse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="TextView"
             app:layout_constraintStart_toStartOf="@+id/publisherHardCoded"
             app:layout_constraintTop_toBottomOf="@+id/publisherHardCoded" />
 
         <TextView
-            android:id="@+id/textViewSynopse"
+            android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/synopsetHardCoded"
-            app:layout_constraintTop_toBottomOf="@+id/synopsetHardCoded" />
+            app:layout_constraintBottom_toTopOf="@+id/synopsetHardCoded"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView13"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="112dp"
+        android:layout_width="307dp"
+        android:layout_height="167dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/constraintlayout_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayoutBookInfo"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/constraintLayoutBookInfo"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutBookInfo">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutBookInfo"
+        app:layout_constraintVertical_bias="0.104">
 
+        <TextView
+            android:id="@+id/stateHardCoded"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Estado:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/stateHardCoded"
+            app:layout_constraintStart_toEndOf="@+id/stateHardCoded"
+            app:layout_constraintTop_toTopOf="@+id/stateHardCoded" />
+
+        <TextView
+            android:id="@+id/requestDateHardCoded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Data da requisição"
+            app:layout_constraintStart_toStartOf="@+id/stateHardCoded"
+            app:layout_constraintTop_toBottomOf="@+id/stateHardCoded" />
+
+        <TextView
+            android:id="@+id/textViewRequestDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/requestDateHardCoded"
+            app:layout_constraintStart_toEndOf="@+id/requestDateHardCoded"
+            app:layout_constraintTop_toTopOf="@+id/requestDateHardCoded" />
+
+        <TextView
+            android:id="@+id/deliveryDateHardCoded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Data de Entrega"
+            app:layout_constraintStart_toStartOf="@+id/requestDateHardCoded"
+            app:layout_constraintTop_toBottomOf="@+id/requestDateHardCoded" />
+
+        <TextView
+            android:id="@+id/textViewDeliveryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/deliveryDateHardCoded"
+            app:layout_constraintStart_toEndOf="@+id/deliveryDateHardCoded"
+            app:layout_constraintTop_toTopOf="@+id/deliveryDateHardCoded" />
+
+        <TextView
+            android:id="@+id/quantityHardCoded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Quantidade"
+            app:layout_constraintStart_toStartOf="@+id/deliveryDateHardCoded"
+            app:layout_constraintTop_toBottomOf="@+id/deliveryDateHardCoded" />
+
+        <TextView
+            android:id="@+id/textViewquantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/quantityHardCoded"
+            app:layout_constraintStart_toEndOf="@+id/quantityHardCoded"
+            app:layout_constraintTop_toTopOf="@+id/quantityHardCoded" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
