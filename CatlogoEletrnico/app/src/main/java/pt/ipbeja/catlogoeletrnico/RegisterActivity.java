@@ -3,6 +3,7 @@ package pt.ipbeja.catlogoeletrnico;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
+    public static Activity closeRegisterActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 showDatePickerDialog();
             }
         });
+        closeRegisterActivity = this;
     }
 
     private void showDatePickerDialog(){

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <Button
             android:id="@+id/requestButton"
             android:layout_width="0dp"
@@ -52,6 +53,10 @@
                     android:id="@+id/imageViewBook"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
                     tools:srcCompat="@tools:sample/avatars" />
             </androidx.cardview.widget.CardView>
 
@@ -74,6 +79,7 @@
                 android:id="@+id/bookTitleEn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:text="TextView"
@@ -88,9 +94,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutBookInfo"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/constraintlayout_corners"
+            app:layout_constraintBottom_toTopOf="@+id/requestButton"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayoutBook"
             app:layout_constraintStart_toStartOf="@+id/constraintLayoutBook"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayoutBook">
@@ -102,6 +110,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Autor:"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -110,8 +119,9 @@
                 android:id="@+id/textViewAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/authorHardCoded"
                 app:layout_constraintStart_toEndOf="@+id/authorHardCoded"
                 app:layout_constraintTop_toTopOf="@+id/authorHardCoded"
@@ -123,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Edição:"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/authorHardCoded"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -133,8 +144,9 @@
                 android:id="@+id/textViewEdition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editionHardCoded"
                 app:layout_constraintStart_toEndOf="@+id/editionHardCoded"
                 app:layout_constraintTop_toTopOf="@+id/editionHardCoded" />
@@ -145,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Editora:"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/editionHardCoded"
                 app:layout_constraintTop_toBottomOf="@+id/editionHardCoded" />
@@ -153,8 +166,9 @@
                 android:id="@+id/textViewPublisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/publisherHardCoded"
                 app:layout_constraintStart_toEndOf="@+id/publisherHardCoded"
                 app:layout_constraintTop_toTopOf="@+id/publisherHardCoded" />
@@ -163,11 +177,12 @@
                 android:id="@+id/synopsetHardCoded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="12dp"
                 android:text="Sinopse:"
+                android:textSize="16dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/publisherHardCoded"
-                app:layout_constraintTop_toBottomOf="@+id/publisherHardCoded" />
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -175,6 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Category:"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/publisherHardCoded"
                 app:layout_constraintTop_toBottomOf="@+id/publisherHardCoded" />
@@ -183,8 +199,9 @@
                 android:id="@+id/textViewCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/synopsetHardCoded"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toTopOf="@+id/textView13"
@@ -192,9 +209,9 @@
 
             <ScrollView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -212,7 +229,8 @@
                         android:id="@+id/textViewSynopse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="16dp" />
                 </LinearLayout>
             </ScrollView>
 
@@ -225,7 +243,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/constraintlayout_corners"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/requestButton"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayoutBookInfo"
             app:layout_constraintHorizontal_bias="0.0"

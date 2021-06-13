@@ -13,6 +13,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class BooksActivity extends AppCompatActivity {
 
@@ -44,6 +49,18 @@ public class BooksActivity extends AppCompatActivity {
         RecyclerViewAdapterBook adapter = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAll());
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
+
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+
+
+        TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
+        TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
+
+        List<User> userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
+        textViewName.setText(userList.get(0).getUsername());
+        textViewEmail.setText(userList.get(0).getEmail());
 
     }
 
