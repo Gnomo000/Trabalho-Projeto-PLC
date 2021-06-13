@@ -1,6 +1,10 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ActionBarContainer;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +42,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
 
+        ActionBar actionBar = getSupportActionBar();
+
         this.imageViewBook = findViewById(R.id.imageViewBook);
         this.textViewBook = findViewById(R.id.bookTitle);
         this.textViewBookEn = findViewById(R.id.bookTitleEn);
@@ -64,6 +70,8 @@ public class BookDetailsActivity extends AppCompatActivity {
             this.textViewBookPublisher.setText(this.book.getPublisher());
             this.textViewBookCategory.setText(this.book.getGenders());
             this.textViewBookSynopse.setText(this.book.getSynopse());
+            actionBar.setTitle(this.book.getTitle());
+
 
         }else {
             Log.e(TAG, "No position specified!");
