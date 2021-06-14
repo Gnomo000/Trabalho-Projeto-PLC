@@ -14,23 +14,19 @@
 
 ### Requisitos Minimos
 * Criar um Utilizador
-* Adicionar/Cancelar uma Requisição
+* Adicionar uma Requisição
 * Lista de Requisições
 * Lista de Livros
 * Pagina unica do Livro
 
 ### Requisitos Avançados
 * Editar Perfil
-* Tema claro/Escuro
 * Esquema de Cores para os livros
 
 ## Lista de Tarefas
 
 * Adicionar um Utilizador []
-* Adicionar/Cancelar uma Requisição []
+* Adicionar uma Requisição []
 * Lista de Requisições []
 * Lista de Livros []
 * Pagina unica do Livro []
-
-* Tema claro/Escuro []
-* Esquema de Cores para os livros []
