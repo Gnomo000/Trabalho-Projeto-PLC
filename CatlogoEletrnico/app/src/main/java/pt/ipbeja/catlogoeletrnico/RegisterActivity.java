@@ -72,7 +72,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 alertAboutUs.create().show();
 
             }else{
-                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),null);
+
+                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
+                        "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
                 AppDataBaseUser.getInstance(this).getUserDao().add(user);

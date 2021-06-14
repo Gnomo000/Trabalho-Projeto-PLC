@@ -9,10 +9,11 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/imageViewDr"
         android:layout_width="100dp"
         android:layout_height="120dp"
         android:paddingTop="20dp"
-        android:src="@drawable/ic_account"/>
+        android:src="@drawable/ic_account" />
 
     <TextView
         android:id="@+id/navName"

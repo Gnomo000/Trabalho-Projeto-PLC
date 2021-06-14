@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     public static boolean isActive = false;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +49,15 @@ public class HomeActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
 
-        TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
-        TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
+        TextView textViewName = headerView.findViewById(R.id.navName);
+        TextView textViewEmail = headerView.findViewById(R.id.navEmail);
+        ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        List<User> userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
-        textViewName.setText(userList.get(0).getUsername());
-        textViewEmail.setText(userList.get(0).getEmail());
+        User userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
+        textViewName.setText(userList.getUsername());
+        Glide.with(this).load(userList.getImage()).into(imageViewImage);
+        textViewEmail.setText(userList.getEmail());
+        //Glide.with(this).load(userList.getImage()).into(imageViewImage);
 
     }
 
