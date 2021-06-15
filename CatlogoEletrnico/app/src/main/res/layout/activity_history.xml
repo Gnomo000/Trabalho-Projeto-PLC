@@ -137,6 +137,7 @@
                 android:drawingCacheQuality="auto"
                 android:paddingLeft="10dp"
                 android:text="Definições"
+                android:onClick="goToSettings"
                 android:textAlignment="textStart"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/buttonBooks"

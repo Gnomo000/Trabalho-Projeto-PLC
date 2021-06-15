@@ -5,30 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
-
-public class HomeActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    public static boolean isActive = false;
-    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        isActive = true;
+        setContentView(R.layout.activity_settings);
+        HomeActivity.isActive = true;
 
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -39,25 +34,23 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(isActive = true){
-            Button button = findViewById(R.id.buttonMain);
+        if(HomeActivity.isActive = true){
+            Button button = findViewById(R.id.buttonSettings);
             button.setClickable(false);
             button.setBackgroundColor(0xFFFFFF);
         }
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
 
 
-        TextView textViewName = headerView.findViewById(R.id.navName);
-        TextView textViewEmail = headerView.findViewById(R.id.navEmail);
-        ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
+        TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
+        TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
 
         User userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
         textViewName.setText(userList.getUsername());
-        Glide.with(this).load(userList.getImage()).into(imageViewImage);
         textViewEmail.setText(userList.getEmail());
-        //Glide.with(this).load(userList.getImage()).into(imageViewImage);
 
     }
 
@@ -70,34 +63,27 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public void goToHome(View view) {
+        Intent intent = new Intent(this,HomeActivity.class);
+        startActivity(intent);
+        HomeActivity.isActive = false;
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
     public void goToHistory(View view) {
         Intent intent = new Intent(this,HistoryActivity.class);
         startActivity(intent);
-        isActive = false;
+        HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void goToBooks(View view) {
         Intent intent = new Intent(this,BooksActivity.class);
         startActivity(intent);
-        isActive = false;
+        HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    public void goToHome(View view) {
-        Intent intent = new Intent(this,BookDetailsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToBook(View view) {
-        Intent intent = new Intent(this,BookDetailsActivity.class);
-        startActivity(intent);
     }
 
     public void goToSettings(View view) {
-        Intent intent = new Intent(this,SettingsActivity.class);
-        startActivity(intent);
-        isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 }

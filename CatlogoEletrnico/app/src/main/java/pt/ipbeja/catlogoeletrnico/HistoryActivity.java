@@ -80,4 +80,11 @@ public class HistoryActivity extends AppCompatActivity {
         HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
     }
+
+    public void goToSettings(View view) {
+        Intent intent = new Intent(this,SettingsActivity.class);
+        startActivity(intent);
+        HomeActivity.isActive = false;
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
 }
