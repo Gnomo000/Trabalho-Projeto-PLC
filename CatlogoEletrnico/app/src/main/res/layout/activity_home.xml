@@ -101,24 +101,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/buttonHistory" />
 
             <Button
-                android:id="@+id/buttonSettings"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/radius"
-                android:drawableLeft="@drawable/ic_settings"
-                android:drawablePadding="20dp"
-                android:drawingCacheQuality="auto"
-                android:paddingLeft="10dp"
-                android:text="Definições"
-                android:onClick="goToSettings"
-                android:textAlignment="textStart"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/buttonBooks"
-                app:layout_constraintStart_toStartOf="@+id/buttonBooks"
-                app:layout_constraintTop_toBottomOf="@+id/buttonBooks" />
-
-            <Button
                 android:id="@+id/buttonLogOut"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -133,8 +115,8 @@
                 android:textAlignment="textStart"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/buttonSettings"
-                app:layout_constraintStart_toStartOf="@+id/buttonSettings" />
+                app:layout_constraintEnd_toEndOf="@+id/buttonBooks"
+                app:layout_constraintStart_toStartOf="@+id/buttonBooks" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

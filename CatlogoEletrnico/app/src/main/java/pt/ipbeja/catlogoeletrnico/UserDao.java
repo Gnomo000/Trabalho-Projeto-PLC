@@ -16,9 +16,6 @@ public interface UserDao {
     @Query("SELECT * FROM User")
     List<User> getAll();
 
-    @Update
-    void update(User user);
-
     @Insert
     void add(User user);
 
@@ -28,8 +25,9 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE email = :email AND password = :password")
     User getUserByPasswordAndEmail(String email, String password);
 
-    @Query("SELECT * FROM User WHERE email = :email")
-    User getName(String email);
+
+    @Query("UPDATE User SET name = :name, date = :date, phone = :phone, username = :username, password = :password ,image = :image ")
+    void updateUser(String name, String date,String phone, String username, String password, String image);
 
     @Delete
     void delete(User user);

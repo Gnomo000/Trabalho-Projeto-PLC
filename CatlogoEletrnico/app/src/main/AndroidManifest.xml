@@ -17,10 +17,6 @@
             android:label="Definições"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BooksActivity" />
-
         </activity>
         <activity
             android:name=".BookDetailsActivity"
@@ -35,15 +31,11 @@
             android:name=".BooksActivity"
             android:label="Livros"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
-
-        </activity>
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
             android:name=".HistoryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
-
-        </activity>
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -58,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         EditText editTextPhone = findViewById(R.id.editTextRegisterPhone);
         EditText editTextUserName = findViewById(R.id.editTextRegisterUsername);
         TextInputLayout editTextPassword = findViewById(R.id.editTextRegisterPassword);
+
+        editTextDate.setInputType(InputType.TYPE_DATETIME_VARIATION_NORMAL);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);

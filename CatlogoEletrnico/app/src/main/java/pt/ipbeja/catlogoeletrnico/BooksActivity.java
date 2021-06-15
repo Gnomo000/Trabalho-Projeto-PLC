@@ -58,7 +58,7 @@ public class BooksActivity extends AppCompatActivity {
         TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
         TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
 
-        User userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
+        User userList = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.emailGeral);
         textViewName.setText(userList.getUsername());
         textViewEmail.setText(userList.getEmail());
 

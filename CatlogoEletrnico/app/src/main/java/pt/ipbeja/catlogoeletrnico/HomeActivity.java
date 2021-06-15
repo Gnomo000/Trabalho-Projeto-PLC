@@ -23,7 +23,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     public static boolean isActive = false;
-    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +52,11 @@ public class HomeActivity extends AppCompatActivity {
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        User userList = AppDataBaseUser.getInstance(this).getUserDao().getName(MainActivity.emailGeral);
-        textViewName.setText(userList.getUsername());
-        Glide.with(this).load(userList.getImage()).into(imageViewImage);
-        textViewEmail.setText(userList.getEmail());
-        //Glide.with(this).load(userList.getImage()).into(imageViewImage);
+        User user = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.emailGeral);
+        Log.i("POOP",user.getUsername());
+        textViewName.setText(user.getUsername());
+        Glide.with(this).load(user.getImage()).into(imageViewImage);
+        textViewEmail.setText(user.getEmail());
 
     }
 
@@ -89,15 +88,5 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToBook(View view) {
-        Intent intent = new Intent(this,BookDetailsActivity.class);
-        startActivity(intent);
-    }
 
-    public void goToSettings(View view) {
-        Intent intent = new Intent(this,SettingsActivity.class);
-        startActivity(intent);
-        isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
 }
