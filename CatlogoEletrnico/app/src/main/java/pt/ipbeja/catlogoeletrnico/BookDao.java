@@ -25,4 +25,7 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE id = :id")
     Book getById(int id);
 
+    @Query("UPDATE Book SET quantity = 0 WHERE title = 'Harry Potter e a Pedra Filosofal'")
+    void update();
+
 }

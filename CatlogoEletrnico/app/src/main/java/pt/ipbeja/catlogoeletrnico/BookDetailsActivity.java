@@ -8,8 +8,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,8 +71,19 @@ public class BookDetailsActivity extends AppCompatActivity {
             this.textViewBookEdition.setText(this.book.getEdition());
             this.textViewBookPublisher.setText(this.book.getPublisher());
             this.textViewBookCategory.setText(this.book.getGenders());
-            this.textViewBookSynopse.setText(this.book.getSynopse());
+            this.textViewBookSynopse.setText(String.valueOf(this.book.getQuantity()));
             actionBar.setTitle(this.book.getTitle());
+
+            Button requestButton = findViewById(R.id.requestButton);
+
+            if (this.book.getQuantity() == 0) {
+                requestButton.setText("Esgotado");
+                requestButton.setTextColor(Color.parseColor("#FF9646"));
+                requestButton.setClickable(false);
+                requestButton.setBackgroundColor(0xFFFFFF);
+            }else{
+                requestButton.setText("Requisitar");
+            }
 
 
         }else {
