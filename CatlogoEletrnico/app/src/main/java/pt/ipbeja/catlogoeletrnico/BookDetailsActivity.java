@@ -109,15 +109,16 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         Book book = AppDataBaseBook.getInstance(this).getBookDao().getBookByTitle(this.book.getTitle());
 
-        AlertDialog.Builder areYouShure = new AlertDialog.Builder(this);
+        AlertDialog.Builder areYouShure = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         areYouShure.setTitle("Requisitar");
         areYouShure.setMessage("Quer requisitar: "+book.getTitle());
         areYouShure.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailsActivity.this,R.style.MyDialogTheme);
                 final View view = BookDetailsActivity.this.getLayoutInflater().inflate(R.layout.dialog, null);
                 builder.setView(view);
+                builder.setTitle("Quantidade");
                 final NumberPicker picker = (NumberPicker) view.findViewById(R.id.numberPicker1);
                 picker.setMaxValue(book.getQuantity());
                 picker.setMinValue(1);
