@@ -11,14 +11,16 @@ public class Request {
     private String title;
     private String requestDate;
     private String deliverDate;
+    private int quantity;
     private String status;
 
-    public Request(int id, String email, String title, String requestDate, String deliverDate, String status) {
+    public Request(int id, String email, String title, String requestDate, String deliverDate, int quantity, String status) {
         this.id = id;
         this.email = email;
         this.title = title;
         this.requestDate = requestDate;
         this.deliverDate = deliverDate;
+        this.quantity = quantity;
         this.status = status;
     }
 
@@ -62,6 +64,13 @@ public class Request {
         this.deliverDate = deliverDate;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String getStatus() {
         return status;

@@ -1,12 +1,15 @@
 package pt.ipbeja.catlogoeletrnico;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ActionBarContainer;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -102,22 +106,58 @@ public class BookDetailsActivity extends AppCompatActivity {
     }
 
     public void requestBook(View view) {
+
         Book book = AppDataBaseBook.getInstance(this).getBookDao().getBookByTitle(this.book.getTitle());
-        List<User> user = AppDataBaseUser.getInstance(this).getUserDao().getAll();
 
-        int day = LocalDate.now().getDayOfMonth();
-        int monthAfter = LocalDate.now().plusMonths(1).getMonthValue();
-        int month = LocalDate.now().getMonthValue();
-        int year = LocalDate.now().getYear();
+        AlertDialog.Builder areYouShure = new AlertDialog.Builder(this);
+        areYouShure.setTitle("Requisitar");
+        areYouShure.setMessage("Quer requisitar: "+book.getTitle());
+        areYouShure.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailsActivity.this);
+                final View view = BookDetailsActivity.this.getLayoutInflater().inflate(R.layout.dialog, null);
+                builder.setView(view);
+                final NumberPicker picker = (NumberPicker) view.findViewById(R.id.numberPicker1);
+                picker.setMaxValue(book.getQuantity());
+                picker.setMinValue(1);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int day = LocalDate.now().getDayOfMonth();
+                        int monthAfter = LocalDate.now().plusMonths(1).getMonthValue();
+                        int month = LocalDate.now().getMonthValue();
+                        int year = LocalDate.now().getYear();
+                        int getQuantity = picker.getValue();
 
-        String date = day+"/"+month+"/"+year;
-        String dateAfter = day+"/"+monthAfter+"/"+year;
+                        String date = day+"/"+month+"/"+year;
+                        String dateAfter = day+"/"+monthAfter+"/"+year;
 
-        Request request = new Request(0,user.get(0).getEmail(),book.getTitle(),date,dateAfter,"Por Levantar");
-        AppDataBaseRequest.getInstance(this).getRequestDao().add(request);
-        AppDataBaseBook.getInstance(this).getBookDao().update(book.getTitle());
+                        Request request = new Request(0,MainActivity.userList.getEmail(),book.getTitle(),date,dateAfter,getQuantity,"Por Levantar");
+                        AppDataBaseRequest.getInstance(BookDetailsActivity.this).getRequestDao().add(request);
+                        AppDataBaseBook.getInstance(BookDetailsActivity.this).getBookDao().update(getQuantity,book.getTitle());
 
-        recreate();
+                        BookDetailsActivity.this.recreate();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.create().hide();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+        areYouShure.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                areYouShure.create().hide();
+            }
+        });
+
+        areYouShure.create().show();
+
 
     }
 }

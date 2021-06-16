@@ -25,8 +25,8 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE id = :id")
     Book getById(int id);
 
-    @Query("UPDATE Book SET quantity = quantity - 1 WHERE title = :title")
-    void update(String title);
+    @Query("UPDATE Book SET quantity = quantity - :quantity WHERE title = :title")
+    void update(int quantity,String title);
 
 
 
