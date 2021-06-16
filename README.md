@@ -25,8 +25,8 @@
 
 ## Lista de Tarefas
 
-* Adicionar um Utilizador []
+* Adicionar um Utilizador [X]
 * Adicionar uma Requisição []
 * Lista de Requisições []
-* Lista de Livros []
-* Pagina unica do Livro []
+* Lista de Livros [X]
+* Pagina unica do Livro [X]
