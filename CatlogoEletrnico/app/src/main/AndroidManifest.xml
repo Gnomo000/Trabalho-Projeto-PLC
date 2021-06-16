@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_icon_trabalho_simples"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar">
+        android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".SettingsActivity"
             android:label="Definições"

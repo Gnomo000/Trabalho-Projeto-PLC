@@ -100,7 +100,4 @@ public class BooksActivity extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    public void apagar(View view) {
-        AppDataBaseBook.getInstance(this).getBookDao().update();
-    }
 }

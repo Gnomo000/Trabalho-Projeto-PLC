@@ -102,8 +102,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     }
 
     public void requestBook(View view) {
+        Book book = AppDataBaseBook.getInstance(this).getBookDao().getBookByTitle(this.book.getTitle());
         List<User> user = AppDataBaseUser.getInstance(this).getUserDao().getAll();
-        List<Book> book = AppDataBaseBook.getInstance(this).getBookDao().getAll();
 
         int day = LocalDate.now().getDayOfMonth();
         int monthAfter = LocalDate.now().plusMonths(1).getMonthValue();
@@ -113,13 +113,11 @@ public class BookDetailsActivity extends AppCompatActivity {
         String date = day+"/"+month+"/"+year;
         String dateAfter = day+"/"+monthAfter+"/"+year;
 
-        Log.i("POOP",dateAfter);
-
-        Request request = new Request(0,user.get(0).getEmail(),book.get(0).getTitle(),date,dateAfter,"Por Levantar");
+        Request request = new Request(0,user.get(0).getEmail(),book.getTitle(),date,dateAfter,"Por Levantar");
         AppDataBaseRequest.getInstance(this).getRequestDao().add(request);
+        AppDataBaseBook.getInstance(this).getBookDao().update(book.getTitle());
 
-        List<Request> request1 = AppDataBaseRequest.getInstance(this).getRequestDao().getAll();
-        Log.i("POOP", String.valueOf(request1.get(0)));
+        recreate();
 
     }
 }

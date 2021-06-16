@@ -17,7 +17,7 @@ public interface BookDao {
     void add(Book book);
 
     @Query("SELECT * FROM Book WHERE title = :title")
-    User getBookByTitle(String title);
+    Book getBookByTitle(String title);
 
     @Delete
     void delete(Book book);
@@ -25,7 +25,10 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE id = :id")
     Book getById(int id);
 
-    @Query("UPDATE Book SET quantity = 0 WHERE title = 'Harry Potter e a Pedra Filosofal'")
-    void update();
+    @Query("UPDATE Book SET quantity = quantity - 1 WHERE title = :title")
+    void update(String title);
+
+
+
 
 }

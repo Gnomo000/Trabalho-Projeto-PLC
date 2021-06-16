@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -81,21 +82,12 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 alertAboutUs.create().show();
 
             }else{
-                URLConnection connection = new URL(editTextImage.getText().toString()).openConnection();
-                String contentType = connection.getHeaderField("Content-Type");
-                boolean image = contentType.startsWith("image/");
-
-                if (image == false) {
-                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
-                    alertAboutUs.setMessage("Não é uma imagem");
-                    alertAboutUs.create().show();
-                }else {
-                    User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
-                            editTextImage.getText().toString());
-                    Intent intent = new Intent(this,MainActivity.class);
-                    startActivity(intent);
-                    AppDataBaseUser.getInstance(this).getUserDao().add(user);
-                }
+                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
+                        editTextImage.getText().toString());
+                Log.i("POOP",editTextImage.getText().toString());
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                AppDataBaseUser.getInstance(this).getUserDao().add(user);
             }
         }
     }

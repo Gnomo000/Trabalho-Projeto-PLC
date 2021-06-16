@@ -36,7 +36,7 @@
         android:background="@drawable/constraintlayout_box"
         android:ems="10"
         android:hint="E-Mail"
-        android:inputType="textPersonName|textEmailAddress"
+        android:inputType="textEmailAddress"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/textViewLoginName"
