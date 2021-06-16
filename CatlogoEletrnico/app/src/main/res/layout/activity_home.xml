@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".HomeActivity"
-    tools:openDrawer="start">
+    tools:context=".HomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +25,28 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewUsernameeee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="239dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewEmaillll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="235dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewUsernameeee" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

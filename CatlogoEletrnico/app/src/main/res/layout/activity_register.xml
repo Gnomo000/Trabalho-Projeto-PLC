@@ -188,14 +188,14 @@
                 android:id="@+id/buttonRegister"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/radius"
                 android:onClick="createUser"
                 android:text="Registrar"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/editTextRegisterPassword"
-                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
-                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword" />
+                app:layout_constraintEnd_toEndOf="@+id/editTextRegisterImage"
+                app:layout_constraintStart_toStartOf="@+id/editTextRegisterImage"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterImage" />
 
             <Button
                 android:id="@+id/button"
@@ -209,6 +209,30 @@
                 app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
                 app:layout_constraintStart_toStartOf="@+id/buttonRegister"
                 app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Imagem:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword" />
+
+            <EditText
+                android:id="@+id/editTextRegisterImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/constraintlayout_box"
+                android:ems="10"
+                android:hint="Imagem (URL)"
+                android:inputType="datetime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

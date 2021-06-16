@@ -8,17 +8,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    public static String emailGeral;
     public Activity closeMainActivity;
     public static boolean isLoginDone;
+
+    public static User userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             if (AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()) != null) {
-                emailGeral = editTextEmail.getText().toString();
+                userList = AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
                 Intent intent = new Intent(this,HomeActivity.class);
                 isLoginDone = true;
                 startActivity(intent);

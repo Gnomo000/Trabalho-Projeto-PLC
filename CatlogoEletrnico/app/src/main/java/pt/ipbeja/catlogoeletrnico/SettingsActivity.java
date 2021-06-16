@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.List;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -48,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
         TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
 
-        User userList = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.emailGeral);
+        User userList = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.userList.getEmail());
         textViewName.setText(userList.getUsername());
         textViewEmail.setText(userList.getEmail());
 

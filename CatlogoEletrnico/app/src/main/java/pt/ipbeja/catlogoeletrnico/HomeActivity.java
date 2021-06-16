@@ -52,11 +52,9 @@ public class HomeActivity extends AppCompatActivity {
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        User user = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.emailGeral);
-        Log.i("POOP",user.getUsername());
-        textViewName.setText(user.getUsername());
-        Glide.with(this).load(user.getImage()).into(imageViewImage);
-        textViewEmail.setText(user.getEmail());
+        textViewName.setText(MainActivity.userList.getUsername());
+        Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
+        textViewEmail.setText(MainActivity.userList.getEmail());
 
     }
 

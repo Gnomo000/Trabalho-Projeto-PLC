@@ -14,6 +14,10 @@ import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.List;
 
@@ -52,15 +56,16 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         editTextDate.setText(date);
     }
 
-    public void createUser(View view) {
+    public void createUser(View view) throws IOException {
         EditText editTextName = findViewById(R.id.editTextRegisterName);
         EditText editTextDate = findViewById(R.id.editTextRegisterDate);
         EditText editTextEmail = findViewById(R.id.editTextRegisterEmail);
         EditText editTextPhone = findViewById(R.id.editTextRegisterPhone);
         EditText editTextUserName = findViewById(R.id.editTextRegisterUsername);
         TextInputLayout editTextPassword = findViewById(R.id.editTextRegisterPassword);
+        EditText editTextImage = findViewById(R.id.editTextRegisterImage);
 
-        editTextDate.setInputType(InputType.TYPE_DATETIME_VARIATION_NORMAL);
+        editTextDate.setInputType(InputType.TYPE_CLASS_DATETIME);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
@@ -68,19 +73,29 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             alertAboutUs.create().show();
         }else {
             if(editTextName.getText().toString().isEmpty() || editTextEmail.getText().toString().isEmpty() || editTextDate.getText().toString().isEmpty()
-                    || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty()){
+                    || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty()
+                        || editTextImage.getText().toString().isEmpty()){
 
                 AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
                 alertAboutUs.setMessage("Dados não preenchidos");
                 alertAboutUs.create().show();
 
             }else{
+                URLConnection connection = new URL(editTextImage.getText().toString()).openConnection();
+                String contentType = connection.getHeaderField("Content-Type");
+                boolean image = contentType.startsWith("image/");
 
-                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
-                        "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                AppDataBaseUser.getInstance(this).getUserDao().add(user);
+                if (image == false) {
+                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+                    alertAboutUs.setMessage("Não é uma imagem");
+                    alertAboutUs.create().show();
+                }else {
+                    User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
+                            editTextImage.getText().toString());
+                    Intent intent = new Intent(this,MainActivity.class);
+                    startActivity(intent);
+                    AppDataBaseUser.getInstance(this).getUserDao().add(user);
+                }
             }
         }
     }

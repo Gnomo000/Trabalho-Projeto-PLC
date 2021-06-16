@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -55,12 +57,13 @@ public class BooksActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
 
-        TextView textViewName = (TextView) headerView.findViewById(R.id.navName);
-        TextView textViewEmail = (TextView) headerView.findViewById(R.id.navEmail);
+        TextView textViewName = headerView.findViewById(R.id.navName);
+        TextView textViewEmail = headerView.findViewById(R.id.navEmail);
+        ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        User userList = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.emailGeral);
-        textViewName.setText(userList.getUsername());
-        textViewEmail.setText(userList.getEmail());
+        textViewName.setText(MainActivity.userList.getUsername());
+        Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
+        textViewEmail.setText(MainActivity.userList.getEmail());
 
     }
 
