@@ -1,5 +1,6 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -45,14 +46,14 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
         holder.getTextView().setText(request.getTitle());
 
 
-        if (request.getStatus() == "Por Levantar") {
-            holder.getViewRectangle().getBackground().setColorFilter(Color.parseColor("#FF9646"), PorterDuff.Mode.SRC_ATOP);
-        }else if (request.getStatus() == "Por Entregar"){
+        if (request.getStatus().equals("Por Levantar")) {
+            holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));
+        }else if (request.getStatus().equals("Por Entregar")){
             holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
-        }else if (request.getStatus() == "Atrazado"){
-            holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7A00CC")));
-        }else if (request.getStatus() == "Entrague"){
+        }else if (request.getStatus().equals("Atrazado")){
             holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }else if (request.getStatus().equals("Entrague")){
+            holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
         }else {
             Log.i("POOP","|"+request.getStatus()+"|");
         }

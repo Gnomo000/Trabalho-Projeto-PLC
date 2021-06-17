@@ -124,12 +124,11 @@ public class BooksActivity extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    public void goToBooks(View view) {
-    }
 
-    public void goToSettings(View view) {
-        Intent intent = new Intent(this,SettingsActivity.class);
+    public void getOut(View view) {
+        Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
+        MainActivity.isLoginDone = false;
         HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
     }

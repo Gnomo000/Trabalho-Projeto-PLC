@@ -30,6 +30,8 @@ public class HistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EditText editTextSearchMyBook;
 
+    TextView textViewName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +65,16 @@ public class HistoryActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
 
-        TextView textViewName = headerView.findViewById(R.id.navName);
+        textViewName = headerView.findViewById(R.id.navName);
+
+        textViewName.setText("");
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
         textViewName.setText(MainActivity.userList.getUsername());
         Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
         textViewEmail.setText(MainActivity.userList.getEmail());
+
 
         editTextSearchMyBook = findViewById(R.id.editTextSearchMyBook);
 
@@ -114,8 +119,6 @@ public class HistoryActivity extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    public void goToHistory(View view) {
-    }
 
     public void goToBooks(View view) {
         Intent intent = new Intent(this,BooksActivity.class);
@@ -124,9 +127,11 @@ public class HistoryActivity extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    public void goToSettings(View view) {
-        Intent intent = new Intent(this,SettingsActivity.class);
+
+    public void goOut(View view) {
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
+        MainActivity.isLoginDone = false;
         HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
     }

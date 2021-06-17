@@ -22,11 +22,6 @@
                 android:value=".HistoryActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="Definições"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two"/>
-        <activity
             android:name=".BookDetailsActivity"
             android:label="Nome Livro"
             android:screenOrientation="portrait"
@@ -42,7 +37,7 @@
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
             android:name=".HistoryActivity"
-            android:label="Historico"
+            android:label="Histórico"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
