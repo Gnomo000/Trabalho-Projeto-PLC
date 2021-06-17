@@ -80,4 +80,7 @@
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">#FFD046</item>
     </style>
+
+
+
 </resources>

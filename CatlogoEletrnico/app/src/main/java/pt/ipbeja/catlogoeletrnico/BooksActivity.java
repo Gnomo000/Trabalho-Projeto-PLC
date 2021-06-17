@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +28,10 @@ import java.util.List;
 public class BooksActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
+    private RecyclerViewAdapterBook adapter;
+    private RecyclerView recyclerView;
+    private EditText editTextSearchBook;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +53,10 @@ public class BooksActivity extends AppCompatActivity {
             button.setBackgroundColor(0xFFFFFF);
         }
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        RecyclerViewAdapterBook adapter = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAll());
+        adapter = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAll());
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -65,7 +73,33 @@ public class BooksActivity extends AppCompatActivity {
         Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
         textViewEmail.setText(MainActivity.userList.getEmail());
 
+        editTextSearchBook = findViewById(R.id.editTextSearchBook);
+
+        editTextSearchBook.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                List<Book> book = AppDataBaseBook.getInstance(BooksActivity.this).getBookDao().getBookByTitleList(editTextSearchBook.getText().toString());
+                adapter = new RecyclerViewAdapterBook(BooksActivity.this,book);
+                recyclerView  = findViewById(R.id.recyclerView);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(BooksActivity.this,2);
+                recyclerView.setLayoutManager(gridLayoutManager);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -99,5 +133,4 @@ public class BooksActivity extends AppCompatActivity {
         HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
     }
-
 }

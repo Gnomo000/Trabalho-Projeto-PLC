@@ -18,4 +18,10 @@ public interface RequestDao {
     @Delete
     void delete(Request request);
 
+    @Query("SELECT * FROM Request WHERE id = :id")
+    Request getById(int id);
+
+    @Query("SELECT * FROM Request WHERE title LIKE '%' || :title || '%'")
+    List<Request> getRequestByTitle(String title);
+
 }

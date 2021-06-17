@@ -13,12 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".HistoryDetailsActivity"
+            android:label="Nome Livro"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HistoryActivity" />
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="Definições"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two">
-        </activity>
+            android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two"/>
         <activity
             android:name=".BookDetailsActivity"
             android:label="Nome Livro"
@@ -35,6 +42,7 @@
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
             android:name=".HistoryActivity"
+            android:label="Historico"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Default.Two" />
         <activity
