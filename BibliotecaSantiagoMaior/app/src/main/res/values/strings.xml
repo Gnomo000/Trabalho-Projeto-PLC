@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Catálogo Eletrónico</string>
-    <string name="app_login">Login</string>
-    <string name="app_register">Registrar</string>
-    <string name="app_home">Catálogo Eletrónico</string>
-    <string name="app_settings">Definições</string>
-    <string name="preference_file_key">settings</string>
-</resources>
