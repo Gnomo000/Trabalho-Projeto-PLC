@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         editTextDate.setInputType(InputType.TYPE_CLASS_DATETIME);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
-            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
             alertAboutUs.setMessage("Email já existente");
             alertAboutUs.create().show();
         }else {
@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                     || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty()
                         || editTextImage.getText().toString().isEmpty()){
 
-                AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this);
+                AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
                 alertAboutUs.setMessage("Dados não preenchidos");
                 alertAboutUs.create().show();
 

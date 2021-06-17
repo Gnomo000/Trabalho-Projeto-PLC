@@ -1,5 +1,6 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -54,7 +55,15 @@ public class MainActivity extends AppCompatActivity {
                 isLoginDone = true;
                 startActivity(intent);
                 finish();
+            }else {
+                AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
+                alertAboutUs.setMessage("Senha incorrecta");
+                alertAboutUs.create().show();
             }
+        }else {
+            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
+            alertAboutUs.setMessage("Email não existe");
+            alertAboutUs.create().show();
         }
     }
 }
