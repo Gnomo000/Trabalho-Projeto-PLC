@@ -184,6 +184,25 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextRegisterPasswordTwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#FFD046">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/constraintlayout_box"
+                    android:hint="Confirmar Senha"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/buttonRegister"
                 android:layout_width="0dp"
@@ -218,8 +237,8 @@
                 android:text="Imagem:"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
-                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword" />
+                app:layout_constraintStart_toStartOf="@+id/editTextRegisterPasswordTwo"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPasswordTwo" />
 
             <EditText
                 android:id="@+id/editTextRegisterImage"
