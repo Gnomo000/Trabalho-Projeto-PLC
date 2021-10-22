@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +32,7 @@ public class HistoryActivity extends AppCompatActivity {
     private EditText editTextSearchMyBook;
 
     TextView textViewName;
+    private User userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,10 @@ public class HistoryActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
+        userEmail = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        adapter = new RecyclerViewAdapterHistory(this, AppDataBaseRequest.getInstance(this).getRequestDao().getAll());
+        adapter = new RecyclerViewAdapterHistory(this, AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -71,9 +75,9 @@ public class HistoryActivity extends AppCompatActivity {
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(MainActivity.userList.getUsername());
-        Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
-        textViewEmail.setText(MainActivity.userList.getEmail());
+        textViewName.setText(MainActivity.loggedInUser.getUsername());
+        Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
+        textViewEmail.setText(MainActivity.loggedInUser.getEmail());
 
 
         editTextSearchMyBook = findViewById(R.id.editTextSearchMyBook);
@@ -91,12 +95,15 @@ public class HistoryActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                List<Request> request = AppDataBaseRequest.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(editTextSearchMyBook.getText().toString());
+
+                List<Request> request = AppDataBaseRequest.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString());
                 adapter = new RecyclerViewAdapterHistory(HistoryActivity.this,request);
                 recyclerView  = findViewById(R.id.recyclerView);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(HistoryActivity.this,2);
                 recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(adapter);
+
+
             }
         });
 
@@ -134,5 +141,24 @@ public class HistoryActivity extends AppCompatActivity {
         MainActivity.isLoginDone = false;
         HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        userEmail = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
+        this.adapter.update(AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
+
+        RecyclerView myBooks = findViewById(R.id.recyclerView);
+
+        LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+        if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+            isEmpty.setVisibility(View.VISIBLE);
+            myBooks.setVisibility(View.GONE);
+        }else {
+            isEmpty.setVisibility(View.GONE);
+            myBooks.setVisibility(View.VISIBLE);
+        }
     }
 }

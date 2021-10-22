@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,9 +67,9 @@ public class BooksActivity extends AppCompatActivity {
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(MainActivity.userList.getUsername());
-        Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
-        textViewEmail.setText(MainActivity.userList.getEmail());
+        textViewName.setText(MainActivity.loggedInUser.getUsername());
+        Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
+        textViewEmail.setText(MainActivity.loggedInUser.getEmail());
 
         editTextSearchBook = findViewById(R.id.editTextSearchBook);
 

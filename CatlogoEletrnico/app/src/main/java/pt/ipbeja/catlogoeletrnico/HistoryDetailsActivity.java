@@ -16,6 +16,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HistoryDetailsActivity extends AppCompatActivity {
 
     public static void startActivity(Context context, int id) {
@@ -41,7 +47,6 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     private TextView textViewDelivery;
     private TextView textViewQuantity;
     private View viewRect;
-    private TextView textViewUserName;
 
     private Request request;
     private Book book;
@@ -63,7 +68,6 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         this.textViewBookCategory = findViewById(R.id.textViewCategory);
         this.textViewBookSynopse = findViewById(R.id.textViewSynopse);
         this.textViewQuan = findViewById(R.id.textViewQuan);
-        this.textViewUserName = findViewById(R.id.textViewUserName);
 
         this.textViewStade = findViewById(R.id.textViewState);
         this.textViewRequest = findViewById(R.id.textViewRequestDate);
@@ -94,12 +98,12 @@ public class HistoryDetailsActivity extends AppCompatActivity {
             this.textViewQuan.setText(String.valueOf(this.book.getQuantity()));
             this.textViewBookSynopse.setText(this.book.getSynopse());
             actionBar.setTitle(this.book.getTitle());
-            this.textViewUserName.setText(user.getUsername());
 
             this.textViewStade.setText(this.request.getStatus());
             this.textViewRequest.setText(this.request.getRequestDate());
             this.textViewDelivery.setText(this.request.getDeliverDate());
             this.textViewQuantity.setText(String.valueOf(this.request.getQuantity()));
+
 
             if (request.getStatus().equals("Por Levantar")) {
                 this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));

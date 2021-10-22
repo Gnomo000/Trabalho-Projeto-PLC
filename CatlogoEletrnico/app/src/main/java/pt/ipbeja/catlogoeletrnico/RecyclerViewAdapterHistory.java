@@ -60,7 +60,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
         holder.getParentLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HistoryDetailsActivity.startActivity(RecyclerViewAdapterHistory.this.context, (int) request.getId());
+                HistoryDetailsActivity.startActivity(RecyclerViewAdapterHistory.this.context, request.getId());
             }
         });
     }
@@ -68,6 +68,11 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         return this.requests.size();
+    }
+
+    public void update(List<Request> newList) {
+        this.requests = newList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

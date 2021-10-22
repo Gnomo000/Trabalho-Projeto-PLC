@@ -9,14 +9,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -33,6 +43,32 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         isActive = true;
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        List<Request> request = AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail());
+
+        if (request.size() != 0) {
+
+            Date dateDeliver = null;
+            Date dateQ  = Calendar.getInstance().getTime();
+
+            for (int i = 0; i < request.size(); i++) {
+
+                try {
+                    dateDeliver = sdf.parse(request.get(0).getDeliverDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (dateQ.after(dateDeliver)) {
+                    AppDataBaseRequest.getInstance(this).getRequestDao().update("Atrazado",request.get(i).getId());
+                }else {
+                    AppDataBaseRequest.getInstance(this).getRequestDao().update("Por Levantar",request.get(i).getId());
+                }
+
+            }
+        }
+
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
 
@@ -48,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
             button.setBackgroundColor(0xFFFFFF);
         }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
 
         textViewName = headerView.findViewById(R.id.navName);
@@ -57,25 +93,54 @@ public class HomeActivity extends AppCompatActivity {
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(MainActivity.userList.getUsername());
-        Glide.with(this).load(MainActivity.userList.getImage()).into(imageViewImage);
-        textViewEmail.setText(MainActivity.userList.getEmail());
+        textViewName.setText(MainActivity.loggedInUser.getUsername());
+        Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
+        textViewEmail.setText(MainActivity.loggedInUser.getEmail());
 
 
         LinearLayoutManager layoutManagerMyBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManagerAllBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        RecyclerView myBooks = (RecyclerView) findViewById(R.id.recyclerViewMyBooks);
-        RecyclerView allBooks = (RecyclerView) findViewById(R.id.recyclerViewallBooks);
+        RecyclerView myBooks =  findViewById(R.id.recyclerViewMyBooks);
+        RecyclerView allBooks = findViewById(R.id.recyclerViewallBooks);
         myBooks.setLayoutManager(layoutManagerMyBooks);
         allBooks.setLayoutManager(layoutManagerAllBooks);
 
-        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBaseRequest.getInstance(this).getRequestDao().getAll());
+        LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+        if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+            isEmpty.setVisibility(View.VISIBLE);
+            myBooks.setVisibility(View.GONE);
+        }else {
+            isEmpty.setVisibility(View.GONE);
+            myBooks.setVisibility(View.VISIBLE);
+        }
+        
+
+        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
+        adapterAllBooks = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAllMoreZero());
+
+        allBooks.setAdapter(adapterAllBooks);
         myBooks.setAdapter(adapterMyBooks);
 
-        adapterAllBooks = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAll());
-        allBooks.setAdapter(adapterAllBooks);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.adapterAllBooks.update(AppDataBaseBook.getInstance(this).getBookDao().getAllMoreZero());
+        this.adapterMyBooks.update(AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
+
+        RecyclerView myBooks = findViewById(R.id.recyclerViewMyBooks);
+
+        LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+        if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+            isEmpty.setVisibility(View.VISIBLE);
+            myBooks.setVisibility(View.GONE);
+        }else {
+            isEmpty.setVisibility(View.GONE);
+            myBooks.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

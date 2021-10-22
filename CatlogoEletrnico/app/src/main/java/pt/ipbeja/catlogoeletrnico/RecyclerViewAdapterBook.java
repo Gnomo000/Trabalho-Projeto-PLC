@@ -1,6 +1,7 @@
 package pt.ipbeja.catlogoeletrnico;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,11 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public int getItemCount() {
         return this.item.size();
+    }
+
+    public void update(List<Book> newList) {
+        this.item = newList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

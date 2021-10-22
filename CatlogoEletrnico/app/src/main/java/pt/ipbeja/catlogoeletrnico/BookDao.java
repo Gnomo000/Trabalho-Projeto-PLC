@@ -13,6 +13,9 @@ public interface BookDao {
     @Query("SELECT * FROM Book")
     List<Book> getAll();
 
+    @Query("SELECT * FROM Book WHERE quantity > 0")
+    List<Book> getAllMoreZero();
+
     @Insert
     void add(Book book);
 

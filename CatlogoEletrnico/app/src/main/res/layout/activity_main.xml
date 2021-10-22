@@ -37,6 +37,7 @@
         android:ems="10"
         android:hint="E-Mail"
         android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/textViewLoginName"
@@ -97,7 +98,8 @@
             android:text="Registrar aqui"
             android:textColor="#FFD046"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
     <Button

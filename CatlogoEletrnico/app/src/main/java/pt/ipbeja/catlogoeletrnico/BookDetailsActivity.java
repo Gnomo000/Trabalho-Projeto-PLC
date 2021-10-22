@@ -3,11 +3,7 @@ package pt.ipbeja.catlogoeletrnico;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ActionBarContainer;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,10 +18,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
@@ -125,16 +121,17 @@ public class BookDetailsActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int day = LocalDate.now().getDayOfMonth();
-                        int monthAfter = LocalDate.now().plusMonths(1).getMonthValue();
-                        int month = LocalDate.now().getMonthValue();
-                        int year = LocalDate.now().getYear();
                         int getQuantity = picker.getValue();
 
-                        String date = day+"/"+month+"/"+year;
-                        String dateAfter = day+"/"+monthAfter+"/"+year;
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 
-                        Request request = new Request(0,MainActivity.userList.getEmail(),book.getTitle(),date,dateAfter,getQuantity,"Por Levantar");
+                        String dateNow = sdf.format(Calendar.getInstance().getTime());
+
+                        LocalDate localDate = LocalDate.now().plusMonths(1);
+                        String dateAfter = dtf.format(localDate);
+
+                        Request request = new Request(0,MainActivity.loggedInUser.getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
                         AppDataBaseRequest.getInstance(BookDetailsActivity.this).getRequestDao().add(request);
                         AppDataBaseBook.getInstance(BookDetailsActivity.this).getBookDao().update(getQuantity,book.getTitle());
 
