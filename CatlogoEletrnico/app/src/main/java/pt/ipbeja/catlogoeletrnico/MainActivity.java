@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -16,8 +17,11 @@ public class MainActivity extends AppCompatActivity {
 
     public Activity closeMainActivity;
     public static boolean isLoginDone;
-
     public static User loggedInUser;
+    public static SharedPreferences sharedpreferences;
+    public static SharedPreferences.Editor editor;
+    private EditText editTextEmail;
+    private TextInputLayout editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         closeMainActivity = this;
+
+
+        sharedpreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
+        String login = sharedpreferences.getString("LOGIN", null);
+        String pass = sharedpreferences.getString("PASS",null);
+
+        if (login != null && pass != null) {
+            loggedInUser = AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(login,pass);
+            Intent intent = new Intent(this,HomeActivity.class);
+            isLoginDone = true;
+            startActivity(intent);
+            finish();
+
+        }
+
     }
 
     public void goRegister(View view) {
@@ -39,26 +58,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void goLogin(View view) {
 
-        EditText editTextEmail = findViewById(R.id.editTextLoginEmail);
-        TextInputLayout editTextPassword = findViewById(R.id.editTextPassLoginPass);
+        editTextEmail = findViewById(R.id.editTextLoginEmail);
+        editTextPassword = findViewById(R.id.editTextPassLoginPass);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             if (AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()) != null) {
                 loggedInUser = AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
                 Intent intent = new Intent(this,HomeActivity.class);
                 isLoginDone = true;
+                editor = sharedpreferences.edit();
+                editor.putString("LOGIN", loggedInUser.getEmail());
+                editor.putString("PASS",loggedInUser.getPassword());
+                editor.apply();
                 startActivity(intent);
                 finish();
             }else {
-                /*AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-                alertAboutUs.setMessage("Senha incorrecta");
-                alertAboutUs.create().show();*/
                 Toast.makeText(getApplicationContext(), "Senha Incorrecta", Toast.LENGTH_SHORT).show();
             }
         }else {
-            /*AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-            alertAboutUs.setMessage("Email não existe");
-            alertAboutUs.create().show();*/
             Toast.makeText(getApplicationContext(), "Email não existe", Toast.LENGTH_SHORT).show();
         }
     }

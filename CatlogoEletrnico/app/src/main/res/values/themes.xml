@@ -1,7 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.CatálogoEletrónico.Light.Default" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
+    <style name="Theme.CatálogoEletrónico.Light.Drawer" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">#FFD046</item>
         <item name="colorPrimaryVariant">#FFD046</item>
         <item name="android:windowBackground">#769cd5</item>
@@ -16,40 +14,10 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow</item>
         <item name="toolbarStyle">@style/CustomToolBarStyle</item>
 
-
-        <!-- Button Theme. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
     </style>
 
-    <style name="CustomToolBarStyle" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="titleTextColor">#474747</item>
-    </style>
-
-
-    <style name="Theme.CatálogoEletrónico.Light.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#769cd5</item>
-        <item name="colorPrimaryVariant">#769cd5</item>
-        <item name="android:windowBackground">#769cd5</item>
-        <item name="android:navigationBarColor">#FFD046</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:textColor">#474747</item>
-
-        <item name="android:textColorHint">#FFD046</item>
-        <item name="colorControlNormal">#474747</item>
-        <item name="colorControlActivated">#FFD046</item>
-        <item name="android:editTextColor">#474747</item>
-        <item name="android:buttonStyle">@style/ButtonColor</item>
-
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
-
-    <style name="Theme.CatálogoEletrónico.Light.Default.Two" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <!-- Primary brand color. -->
+    <style name="Theme.CatálogoEletrónico.Light.NoDrawer" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">#FFD046</item>
         <item name="colorPrimaryVariant">#FFD046</item>
         <item name="android:windowBackground">#769cd5</item>
@@ -67,6 +35,24 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.CatálogoEletrónico.Light.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#769cd5</item>
+        <item name="colorPrimaryVariant">#769cd5</item>
+        <item name="android:windowBackground">#769cd5</item>
+        <item name="android:navigationBarColor">#FFD046</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:textColor">#474747</item>
+
+        <item name="android:textColorHint">#FFD046</item>
+        <item name="colorControlNormal">#474747</item>
+        <item name="colorControlActivated">#FFD046</item>
+        <item name="android:editTextColor">#474747</item>
+        <item name="android:buttonStyle">@style/ButtonColor</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    </style>
+
+
     <style name="ButtonColor" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="android:backgroundTint">#FFD046</item>
         <item name="android:textColor">#474747</item>
@@ -81,6 +67,8 @@
         <item name="android:background">#FFD046</item>
     </style>
 
-
+    <style name="CustomToolBarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">#474747</item>
+    </style>
 
 </resources>

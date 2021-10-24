@@ -1,5 +1,6 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
     private RecyclerViewAdapterHistory adapter;
@@ -38,25 +41,15 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        HomeActivity.isActive = true;
 
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-
         drawerLayout = findViewById(R.id.drawer_layout);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(HomeActivity.isActive = true){
-            Button button = findViewById(R.id.buttonHistory);
-            button.setClickable(false);
-            button.setBackgroundColor(0xFFFFFF);
-        }
-
         recyclerView = findViewById(R.id.recyclerView);
-
         userEmail = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
@@ -64,13 +57,12 @@ public class HistoryActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_history);
 
         textViewName = headerView.findViewById(R.id.navName);
-
         textViewName.setText("");
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
@@ -79,18 +71,14 @@ public class HistoryActivity extends AppCompatActivity {
         Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
         textViewEmail.setText(MainActivity.loggedInUser.getEmail());
 
-
         editTextSearchMyBook = findViewById(R.id.editTextSearchMyBook);
-
         editTextSearchMyBook.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -103,10 +91,8 @@ public class HistoryActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(adapter);
 
-
             }
         });
-
 
     }
 
@@ -119,40 +105,15 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-    public void goToHome(View view) {
-        Intent intent = new Intent(this,HomeActivity.class);
-        startActivity(intent);
-        HomeActivity.isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-
-    public void goToBooks(View view) {
-        Intent intent = new Intent(this,BooksActivity.class);
-        startActivity(intent);
-        HomeActivity.isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-
-    public void goOut(View view) {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-        MainActivity.isLoginDone = false;
-        HomeActivity.isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-
         userEmail = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
         this.adapter.update(AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
 
         RecyclerView myBooks = findViewById(R.id.recyclerView);
-
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+
         if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             myBooks.setVisibility(View.GONE);
@@ -160,5 +121,39 @@ public class HistoryActivity extends AppCompatActivity {
             isEmpty.setVisibility(View.GONE);
             myBooks.setVisibility(View.VISIBLE);
         }
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_history);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home: {
+                Intent intent = new Intent(this,HomeActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_books: {
+                Intent intent = new Intent(this,BooksActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_out: {
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                MainActivity.isLoginDone = false;
+                SharedPreferences.Editor editor = MainActivity.sharedpreferences.edit();
+                editor.remove("LOGIN");
+                editor.remove("PASS");
+                editor.apply();
+                HistoryActivity.this.finish();
+                break;
+            }
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }

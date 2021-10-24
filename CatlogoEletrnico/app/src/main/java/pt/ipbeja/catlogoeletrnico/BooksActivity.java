@@ -1,5 +1,6 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-public class BooksActivity extends AppCompatActivity {
+public class BooksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
     private RecyclerViewAdapterBook adapter;
@@ -34,34 +37,24 @@ public class BooksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books);
-        HomeActivity.isActive = true;
 
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-
         drawerLayout = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        if(HomeActivity.isActive = true){
-            Button button = findViewById(R.id.buttonBooks);
-            button.setClickable(false);
-            button.setBackgroundColor(0xFFFFFF);
-        }
-
         recyclerView = findViewById(R.id.recyclerView);
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         adapter = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAll());
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_books);
 
         TextView textViewName = headerView.findViewById(R.id.navName);
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
@@ -76,12 +69,10 @@ public class BooksActivity extends AppCompatActivity {
         editTextSearchBook.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -95,9 +86,7 @@ public class BooksActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -108,26 +97,41 @@ public class BooksActivity extends AppCompatActivity {
         }
     }
 
-    public void goToHome(View view) {
-        Intent intent = new Intent(this,HomeActivity.class);
-        startActivity(intent);
-        HomeActivity.isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_books);
     }
 
-    public void goToHistory(View view) {
-        Intent intent = new Intent(this,HistoryActivity.class);
-        startActivity(intent);
-        HomeActivity.isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home: {
+                Intent intent = new Intent(this,HomeActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_history: {
+                Intent intent = new Intent(this,HistoryActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_out: {
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                MainActivity.isLoginDone = false;
+                SharedPreferences.Editor editor = MainActivity.sharedpreferences.edit();
+                editor.remove("LOGIN");
+                editor.remove("PASS");
+                editor.apply();
+                BooksActivity.this.finish();
+                break;
+            }
+        }
 
-
-    public void getOut(View view) {
-        Intent intent = new Intent(this,HomeActivity.class);
-        startActivity(intent);
-        MainActivity.isLoginDone = false;
-        HomeActivity.isActive = false;
         drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }

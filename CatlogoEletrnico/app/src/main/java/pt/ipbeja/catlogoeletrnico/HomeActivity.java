@@ -1,5 +1,6 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,15 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -28,12 +33,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
     private RecyclerViewAdapterHistory adapterMyBooks;
     private RecyclerViewAdapterBook adapterAllBooks;
-    public static boolean isActive = false;
 
     TextView textViewName;
 
@@ -41,7 +45,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        isActive = true;
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -78,14 +81,12 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(isActive = true){
-            Button button = findViewById(R.id.buttonMain);
-            button.setClickable(false);
-            button.setBackgroundColor(0xFFFFFF);
-        }
-
         NavigationView navigationView =  findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
+
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
+
 
         textViewName = headerView.findViewById(R.id.navName);
 
@@ -141,6 +142,9 @@ public class HomeActivity extends AppCompatActivity {
             isEmpty.setVisibility(View.GONE);
             myBooks.setVisibility(View.VISIBLE);
         }
+
+        NavigationView navigationView =  findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_home);
     }
 
     @Override
@@ -152,26 +156,35 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void goToHistory(View view) {
-        Intent intent = new Intent(this,HistoryActivity.class);
-        startActivity(intent);
-        isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
 
-    public void goToBooks(View view) {
-        Intent intent = new Intent(this,BooksActivity.class);
-        startActivity(intent);
-        isActive = false;
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_history: {
+                Intent intent = new Intent(this,HistoryActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_books: {
+                Intent intent = new Intent(this,BooksActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_out: {
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                MainActivity.isLoginDone = false;
+                SharedPreferences.Editor editor = MainActivity.sharedpreferences.edit();
+                editor.remove("LOGIN");
+                editor.remove("PASS");
+                editor.apply();
+                HomeActivity.this.finish();
+                break;
+            }
+        }
 
-
-    public void getOut(View view) {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-        isActive = false;
-        MainActivity.isLoginDone = false;
         drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }
