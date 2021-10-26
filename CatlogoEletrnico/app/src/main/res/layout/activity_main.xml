@@ -36,6 +36,7 @@
         android:background="@drawable/constraintlayout_box"
         android:ems="10"
         android:hint="E-Mail"
+        android:autofillHints="emailAddress"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textSize="18sp"
@@ -70,6 +71,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/constraintlayout_box"
             android:hint="Senha"
+            android:autofillHints="password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -12,7 +12,7 @@ public interface RequestDao {
     @Query("SELECT * FROM Request")
     List<Request> getAll();
 
-    @Query("SELECT * FROM Request WHERE email = :email")
+    @Query("SELECT * FROM Request WHERE email = :email ORDER BY id DESC")
     List<Request> getRequestListByEmail(String email);
 
     @Insert
@@ -24,8 +24,8 @@ public interface RequestDao {
     @Query("SELECT * FROM Request WHERE id = :id")
     Request getById(int id);
 
-    @Query("SELECT * FROM Request WHERE title LIKE '%' || :title || '%' OR deliverDate = :deliverDate OR status LIKE '%' ||  :status || '%' OR requestDate = :requestDate")
-    List<Request> getRequestByTitle(String title,String deliverDate,String status,String requestDate);
+    @Query("SELECT * FROM Request WHERE email = :email AND title LIKE '%' || :title || '%' AND deliverDate LIKE '%' || :deliverDate || '%'  AND status LIKE '%' ||  :status || '%' AND requestDate LIKE '%' ||  :requestDate || '%'  ORDER BY id DESC")
+    List<Request> getRequestByTitle(String email,String title,String deliverDate,String status,String requestDate);
 
     @Query("UPDATE Request SET status = :status WHERE id = :id")
     void  update(String status,int id);

@@ -83,13 +83,24 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
 
             @Override
             public void afterTextChanged(Editable s) {
+                List<Request> request = AppDataBaseRequest.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(userEmail.getEmail(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString());
+                RecyclerView myBooks = findViewById(R.id.recyclerView);
+                LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-                List<Request> request = AppDataBaseRequest.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString());
-                adapter = new RecyclerViewAdapterHistory(HistoryActivity.this,request);
-                recyclerView  = findViewById(R.id.recyclerView);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(HistoryActivity.this,2);
-                recyclerView.setLayoutManager(gridLayoutManager);
-                recyclerView.setAdapter(adapter);
+                if (request.size() != 0) {
+                    adapter = new RecyclerViewAdapterHistory(HistoryActivity.this,request);
+                    recyclerView  = findViewById(R.id.recyclerView);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(HistoryActivity.this,2);
+                    recyclerView.setLayoutManager(gridLayoutManager);
+                    recyclerView.setAdapter(adapter);
+                    isEmpty.setVisibility(View.GONE);
+                    myBooks.setVisibility(View.VISIBLE);
+                }else {
+                    isEmpty.setVisibility(View.VISIBLE);
+                    myBooks.setVisibility(View.GONE);
+                }
+
+
 
             }
         });
@@ -116,10 +127,14 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
 
         if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
+            TextView textView = findViewById(R.id.emptyMessage);
+            textView.setText("Sem Livros Requisitados\nRequesite!");
             myBooks.setVisibility(View.GONE);
         }else {
             isEmpty.setVisibility(View.GONE);
             myBooks.setVisibility(View.VISIBLE);
+            TextView textView = findViewById(R.id.emptyMessage);
+            textView.setText("Livro não Encontrado");
         }
 
         NavigationView navigationView = findViewById(R.id.nav_view);

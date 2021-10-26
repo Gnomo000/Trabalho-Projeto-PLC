@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Activity closeMainActivity;
     public static boolean isLoginDone;
     public static User loggedInUser;
     public static SharedPreferences sharedpreferences;
@@ -30,11 +29,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        closeMainActivity = this;
-
 
         sharedpreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
         String login = sharedpreferences.getString("LOGIN", null);
@@ -48,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
             finish();
 
         }
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        
     }
 
     public void goRegister(View view) {
@@ -59,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public void goLogin(View view) {
 
         editTextEmail = findViewById(R.id.editTextLoginEmail);
+
         editTextPassword = findViewById(R.id.editTextPassLoginPass);
 
         if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {

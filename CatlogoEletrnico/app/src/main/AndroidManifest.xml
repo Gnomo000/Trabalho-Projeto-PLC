@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_icon_trabalho_simples"
+        android:icon="@mipmap/ic_launcher_background_blue_round"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_icon_trabalho_simples"
+        android:roundIcon="@mipmap/ic_launcher_background_blue_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar"
         android:usesCleartextTraffic="true">

@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Sem Livros Requisitados\nRequesite!"
+                    android:text="Livro não Encontrado"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -25,6 +26,8 @@ import java.util.List;
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     public static Activity closeRegisterActivity;
+    public static SharedPreferences sharedpreferences;
+    public static SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             }
         });
         closeRegisterActivity = this;
+        sharedpreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
+        String login = sharedpreferences.getString("LOGIN", null);
+        String pass = sharedpreferences.getString("PASS",null);
     }
 
     private void showDatePickerDialog(){
@@ -85,18 +91,16 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
                         editTextImage.getText().toString());
                 Log.i("POOP",editTextImage.getText().toString());
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(this,HomeActivity.class);
                 AppDataBaseUser.getInstance(this).getUserDao().add(user);
+                MainActivity.loggedInUser = AppDataBaseUser.getInstance(RegisterActivity.this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
+                editor = sharedpreferences.edit();
+                editor.putString("LOGIN", MainActivity.loggedInUser.getEmail());
+                editor.putString("PASS",MainActivity.loggedInUser.getPassword());
+                editor.apply();
+                MainActivity.isLoginDone = true;
+                startActivity(intent);
             }
-        }
-    }
-
-    public void deleteUser(View view) {
-        List<User> user = AppDataBaseUser.getInstance(this).getUserDao().getAll();
-
-        for (int i = 0; i < user.size(); i++) {
-            AppDataBaseUser.getInstance(this).getUserDao().delete(user.get(i));
         }
     }
 }

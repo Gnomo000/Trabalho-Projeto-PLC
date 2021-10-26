@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -78,11 +79,21 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void afterTextChanged(Editable s) {
                 List<Book> book = AppDataBaseBook.getInstance(BooksActivity.this).getBookDao().getBookByTitleList(editTextSearchBook.getText().toString());
-                adapter = new RecyclerViewAdapterBook(BooksActivity.this,book);
-                recyclerView  = findViewById(R.id.recyclerView);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(BooksActivity.this,2);
-                recyclerView.setLayoutManager(gridLayoutManager);
-                recyclerView.setAdapter(adapter);
+                RecyclerView myBooks = findViewById(R.id.recyclerView);
+                LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+                if (book.size() != 0) {
+                    adapter = new RecyclerViewAdapterBook(BooksActivity.this,book);
+                    recyclerView  = findViewById(R.id.recyclerView);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(BooksActivity.this,2);
+                    recyclerView.setLayoutManager(gridLayoutManager);
+                    recyclerView.setAdapter(adapter);
+
+                    isEmpty.setVisibility(View.GONE);
+                    myBooks.setVisibility(View.VISIBLE);
+                }else {
+                    isEmpty.setVisibility(View.VISIBLE);
+                    myBooks.setVisibility(View.GONE);
+                }
             }
         });
 
