@@ -11,17 +11,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
+import com.github.chrisbanes.photoview.PhotoView;
 
 public class HistoryDetailsActivity extends AppCompatActivity {
 
@@ -84,9 +78,9 @@ public class HistoryDetailsActivity extends AppCompatActivity {
                 finish();
                 return;
             }
-            this.request = AppDataBaseRequest.getInstance(this).getRequestDao().getById(id);
-            this.book = AppDataBaseBook.getInstance(this).getBookDao().getBookByTitle(this.request.getTitle());
-            this.user = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(this.request.getEmail());
+            this.request = AppDataBase.getInstance(this).getRequestDao().getById(id);
+            this.book = AppDataBase.getInstance(this).getBookDao().getBookByTitle(this.request.getTitle());
+            this.user = AppDataBase.getInstance(this).getUserDao().getUserByEmail(this.request.getEmail());
 
 
             Glide.with(this).load(this.book.getImage()).into(this.imageViewBook);
@@ -123,5 +117,15 @@ public class HistoryDetailsActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    public void zoomIn(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.photo_view);
+        Glide.with(this).load(this.book.getImage()).into(photoView);
+        mBuilder.setView(mView);
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
     }
 }

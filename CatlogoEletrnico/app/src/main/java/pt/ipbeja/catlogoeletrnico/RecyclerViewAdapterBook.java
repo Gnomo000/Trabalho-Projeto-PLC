@@ -38,6 +38,15 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = this.item.get(position);
+
+        if (book.getQuantity() == 0) {
+            holder.getNoStckView().setVisibility(View.VISIBLE);
+            holder.getNoStock().setVisibility(View.VISIBLE);
+        }else {
+            holder.getNoStckView().setVisibility(View.GONE);
+            holder.getNoStock().setVisibility(View.GONE);
+        }
+
         Glide.with(this.context).load(book.getImage()).into(holder.getImageView());
         holder.getTextView().setText(book.getTitle());
         holder.getParentLayout().setOnClickListener(new View.OnClickListener() {
@@ -62,12 +71,24 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
         private final View parentLayout;
         private final ImageView imageView;
         private final TextView textView;
+        private final TextView noStock;
+        private final View noStckView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.imageView = itemView.findViewById(R.id.imageViewSimple);
             this.textView = itemView.findViewById(R.id.textViewSimple);
             this.parentLayout = itemView.findViewById(R.id.parentLayout);
+            this.noStock = itemView.findViewById(R.id.noStockText);
+            this.noStckView = itemView.findViewById(R.id.myRectangleViewHs);
+        }
+
+        public TextView getNoStock() {
+            return noStock;
+        }
+
+        public View getNoStckView() {
+            return noStckView;
         }
 
         public View getParentLayout() {

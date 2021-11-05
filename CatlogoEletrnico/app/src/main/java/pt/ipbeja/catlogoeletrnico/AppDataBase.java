@@ -8,18 +8,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Book.class}, version = 404)
-public abstract class AppDataBaseBook extends RoomDatabase {
+@Database(entities = {Book.class,Request.class,User.class}, version = 1)
+public abstract class AppDataBase extends RoomDatabase {
 
     public abstract BookDao getBookDao();
+    public abstract RequestDao getRequestDao();
+    public abstract UserDao getUserDao();
 
-    private static AppDataBaseBook INSTANCE;
+    private static AppDataBase INSTANCE;
 
-    public static AppDataBaseBook getInstance(Context context){
+    public static AppDataBase getInstance(Context context){
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDataBaseBook.class,
-                    "bookDB")
+                    AppDataBase.class,
+                    "myDB")
                     .allowMainThreadQueries()
                     .addCallback(new Callback() {
                         @Override
@@ -108,6 +110,22 @@ public abstract class AppDataBaseBook extends RoomDatabase {
                                     "'Literatura Fantástica'," +
                                     "147," +
                                     "'https://img.wook.pt/images/o-principe-cruel-holly-black/MXwyMzg5NDg0MXwxOTkxNzg3M3wxNjIxMjA2MDAwMDAwfHdlYnA=/502x')");
+                            db.execSQL("INSERT INTO User (name,date,email,phone,username,password,image) VALUES (" +
+                                    "'Daniel Rodrigues'," +
+                                    "'06/07/2002'," +
+                                    "'21707@stu.ipbeja.pt'," +
+                                    "'927487980'," +
+                                    "'Gnomo'," +
+                                    "'pass'," +
+                                    "'https://s4.anilist.co/file/anilistcdn/user/avatar/large/b5271510-MiFJxt0NwyNc.png')");
+                            db.execSQL("INSERT INTO User (name,date,email,phone,username,password,image) VALUES (" +
+                                    "'Diogo Vaz'," +
+                                    "'19/03/2002'," +
+                                    "'21132@stu.ipbeja.pt'," +
+                                    "'960497033'," +
+                                    "'Vazinho'," +
+                                    "'1234'," +
+                                    "'https://s4.anilist.co/file/anilistcdn/character/large/b89361-x71P6YLrndd8.png')");
                         }
                     })
                     .fallbackToDestructiveMigration()

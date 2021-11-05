@@ -17,21 +17,57 @@
         app:cardBackgroundColor="#00FFFFFF"
         app:cardCornerRadius="12dp">
 
-        <ImageView
-            android:id="@+id/imageViewSimple"
-            android:layout_width="130dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:adjustViewBounds="true"
-            android:maxWidth="130dp"
-            android:maxHeight="200dp"
-            android:minWidth="130dp"
-            android:minHeight="200dp"
-            android:scaleType="fitXY"
-            tools:srcCompat="@tools:sample/avatars" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="200dp">
+
+            <ImageView
+                android:id="@+id/imageViewSimple"
+                android:layout_width="130dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="130dp"
+                android:maxHeight="200dp"
+                android:minWidth="130dp"
+                android:minHeight="200dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <View
+                android:id="@+id/myRectangleViewHs"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:background="@drawable/rectangle"
+                android:backgroundTint="#D31919"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewSimple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/noStockText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Esgotado"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewSimple"
+                app:layout_constraintEnd_toEndOf="@+id/myRectangleViewHs"
+                app:layout_constraintStart_toStartOf="@+id/myRectangleViewHs"
+                app:layout_constraintTop_toTopOf="@+id/myRectangleViewHs" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
     <TextView

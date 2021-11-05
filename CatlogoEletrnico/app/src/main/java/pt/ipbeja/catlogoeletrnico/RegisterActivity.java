@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
         editTextDate.setInputType(InputType.TYPE_CLASS_DATETIME);
 
-        if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
+        if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
             alertAboutUs.setMessage("Email já existente");
             alertAboutUs.create().show();
@@ -92,8 +92,8 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         editTextImage.getText().toString());
                 Log.i("POOP",editTextImage.getText().toString());
                 Intent intent = new Intent(this,HomeActivity.class);
-                AppDataBaseUser.getInstance(this).getUserDao().add(user);
-                MainActivity.loggedInUser = AppDataBaseUser.getInstance(RegisterActivity.this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
+                AppDataBase.getInstance(this).getUserDao().add(user);
+                MainActivity.loggedInUser = AppDataBase.getInstance(RegisterActivity.this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
                 editor = sharedpreferences.edit();
                 editor.putString("LOGIN", MainActivity.loggedInUser.getEmail());
                 editor.putString("PASS",MainActivity.loggedInUser.getPassword());

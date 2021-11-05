@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         String pass = sharedpreferences.getString("PASS",null);
 
         if (login != null && pass != null) {
-            loggedInUser = AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(login,pass);
+            loggedInUser = AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(login,pass);
             Intent intent = new Intent(this,HomeActivity.class);
             isLoginDone = true;
             startActivity(intent);
@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         editTextPassword = findViewById(R.id.editTextPassLoginPass);
 
-        if (AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
-            if (AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()) != null) {
-                loggedInUser = AppDataBaseUser.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
+        if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
+            if (AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()) != null) {
+                loggedInUser = AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
                 Intent intent = new Intent(this,HomeActivity.class);
                 isLoginDone = true;
                 editor = sharedpreferences.edit();

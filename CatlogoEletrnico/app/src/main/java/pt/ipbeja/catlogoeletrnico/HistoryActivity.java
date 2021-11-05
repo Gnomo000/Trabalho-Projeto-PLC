@@ -50,10 +50,10 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
         toggle.syncState();
 
         recyclerView = findViewById(R.id.recyclerView);
-        userEmail = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
+        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        adapter = new RecyclerViewAdapterHistory(this, AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
+        adapter = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -83,7 +83,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
 
             @Override
             public void afterTextChanged(Editable s) {
-                List<Request> request = AppDataBaseRequest.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(userEmail.getEmail(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString());
+                List<Request> request = AppDataBase.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(userEmail.getEmail(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString());
                 RecyclerView myBooks = findViewById(R.id.recyclerView);
                 LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
@@ -119,13 +119,13 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onStart() {
         super.onStart();
-        userEmail = AppDataBaseUser.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
-        this.adapter.update(AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
+        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
+        this.adapter.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
 
         RecyclerView myBooks = findViewById(R.id.recyclerView);
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-        if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             TextView textView = findViewById(R.id.emptyMessage);
             textView.setText("Sem Livros Requisitados\nRequesite!");

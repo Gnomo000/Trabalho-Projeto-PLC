@@ -17,6 +17,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -71,7 +72,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 finish();
                 return;
             }
-            this.book = AppDataBaseBook.getInstance(this).getBookDao().getById(id);
+            this.book = AppDataBase.getInstance(this).getBookDao().getById(id);
             Glide.with(this).load(this.book.getImage()).into(this.imageViewBook);
             this.textViewBook.setText(this.book.getTitle());
             this.textViewBookEn.setText(this.book.getTitleEn());
@@ -99,11 +100,12 @@ public class BookDetailsActivity extends AppCompatActivity {
             Log.e(TAG, "No position specified!");
             finish();
         }
+
     }
 
     public void requestBook(View view) {
 
-        Book book = AppDataBaseBook.getInstance(this).getBookDao().getBookByTitle(this.book.getTitle());
+        Book book = AppDataBase.getInstance(this).getBookDao().getBookByTitle(this.book.getTitle());
 
         AlertDialog.Builder areYouShure = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         areYouShure.setTitle("Requisitar");
@@ -132,8 +134,8 @@ public class BookDetailsActivity extends AppCompatActivity {
                         String dateAfter = dtf.format(localDate);
 
                         Request request = new Request(0,MainActivity.loggedInUser.getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
-                        AppDataBaseRequest.getInstance(BookDetailsActivity.this).getRequestDao().add(request);
-                        AppDataBaseBook.getInstance(BookDetailsActivity.this).getBookDao().update(getQuantity,book.getTitle());
+                        AppDataBase.getInstance(BookDetailsActivity.this).getRequestDao().add(request);
+                        AppDataBase.getInstance(BookDetailsActivity.this).getBookDao().update(getQuantity,book.getTitle());
 
                         BookDetailsActivity.this.recreate();
                     }
@@ -157,5 +159,17 @@ public class BookDetailsActivity extends AppCompatActivity {
         areYouShure.create().show();
 
 
+    }
+
+    public void zoomIn(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.photo_view);
+        //photoView.setImageURI(Uri.parse(BookDetailsActivity.this.book.getImage()));
+        //photoView.setImageResource(R.drawable.ic_launcher_background_blue_foreground);
+        Glide.with(this).load(this.book.getImage()).into(photoView);
+        mBuilder.setView(mView);
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
     }
 }

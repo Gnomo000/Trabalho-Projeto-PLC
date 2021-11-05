@@ -1,10 +1,8 @@
 package pt.ipbeja.catlogoeletrnico;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +39,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Request request = this.requests.get(position);
-        Book book = AppDataBaseBook.getInstance(this.context).getBookDao().getBookByTitle(request.getTitle());
+        Book book = AppDataBase.getInstance(this.context).getBookDao().getBookByTitle(request.getTitle());
         Glide.with(this.context).load(book.getImage()).into(holder.getImageView());
         holder.getTextView().setText(request.getTitle());
 

@@ -16,7 +16,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,7 +47,7 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
         recyclerView = findViewById(R.id.recyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        adapter = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAll());
+        adapter = new RecyclerViewAdapterBook(this, AppDataBase.getInstance(this).getBookDao().getAll());
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -78,7 +77,7 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
 
             @Override
             public void afterTextChanged(Editable s) {
-                List<Book> book = AppDataBaseBook.getInstance(BooksActivity.this).getBookDao().getBookByTitleList(editTextSearchBook.getText().toString());
+                List<Book> book = AppDataBase.getInstance(BooksActivity.this).getBookDao().getBookByTitleList(editTextSearchBook.getText().toString());
                 RecyclerView myBooks = findViewById(R.id.recyclerView);
                 LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
                 if (book.size() != 0) {

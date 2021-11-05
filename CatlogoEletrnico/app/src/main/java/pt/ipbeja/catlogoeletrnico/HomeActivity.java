@@ -11,18 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -48,7 +42,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        List<Request> request = AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail());
+        List<Request> request = AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail());
 
         if (request.size() != 0) {
 
@@ -64,9 +58,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 if (dateQ.after(dateDeliver)) {
-                    AppDataBaseRequest.getInstance(this).getRequestDao().update("Atrazado",request.get(i).getId());
+                    AppDataBase.getInstance(this).getRequestDao().update("Atrazado",request.get(i).getId());
                 }else {
-                    AppDataBaseRequest.getInstance(this).getRequestDao().update("Por Levantar",request.get(i).getId());
+                    AppDataBase.getInstance(this).getRequestDao().update("Por Levantar",request.get(i).getId());
                 }
 
             }
@@ -108,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         allBooks.setLayoutManager(layoutManagerAllBooks);
 
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-        if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             myBooks.setVisibility(View.GONE);
         }else {
@@ -117,8 +111,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         
 
-        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
-        adapterAllBooks = new RecyclerViewAdapterBook(this, AppDataBaseBook.getInstance(this).getBookDao().getAllMoreZero());
+        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
+        adapterAllBooks = new RecyclerViewAdapterBook(this, AppDataBase.getInstance(this).getBookDao().getAllMoreZero());
 
         allBooks.setAdapter(adapterAllBooks);
         myBooks.setAdapter(adapterMyBooks);
@@ -129,13 +123,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        this.adapterAllBooks.update(AppDataBaseBook.getInstance(this).getBookDao().getAllMoreZero());
-        this.adapterMyBooks.update(AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
+        this.adapterAllBooks.update(AppDataBase.getInstance(this).getBookDao().getAllMoreZero());
+        this.adapterMyBooks.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
 
         RecyclerView myBooks = findViewById(R.id.recyclerViewMyBooks);
 
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-        if (AppDataBaseRequest.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             myBooks.setVisibility(View.GONE);
         }else {
