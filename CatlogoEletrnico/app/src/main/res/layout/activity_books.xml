@@ -18,10 +18,12 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#FFD046"
+            android:layout_gravity="end"
+            android:background="@color/colorBlueDark"
+            android:gravity="end"
             android:hapticFeedbackEnabled="false"
             app:popupTheme="@style/Theme.AppCompat.Light"
-            app:titleTextColor="#424242" />
+            app:titleTextColor="@color/colorGray" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_container"
@@ -93,7 +95,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/colorGray"
+        app:itemIconTint="@color/colorGray">
 
     </com.google.android.material.navigation.NavigationView>
 
