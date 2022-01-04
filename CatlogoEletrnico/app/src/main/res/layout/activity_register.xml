@@ -181,7 +181,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textViewRegisterPassword"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRegisterPassword"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="#FFD046">
+                app:passwordToggleTint="@color/colorGray">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                 app:layout_constraintStart_toStartOf="@+id/editTextRegisterPassword"
                 app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="#FFD046">
+                app:passwordToggleTint="@color/colorGray">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
