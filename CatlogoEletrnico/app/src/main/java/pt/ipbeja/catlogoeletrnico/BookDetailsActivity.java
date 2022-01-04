@@ -88,7 +88,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
             if (this.book.getQuantity() == 0) {
                 requestButton.setText("Esgotado");
-                requestButton.setTextColor(getColor(R.color.colorBlueLight));
+                requestButton.setTextColor(Color.parseColor("#FF9646"));
                 requestButton.setClickable(false);
                 requestButton.setBackgroundColor(0xFFFFFF);
             }else{
