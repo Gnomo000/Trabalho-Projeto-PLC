@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBlueDark"
+    android:background="@color/barColor"
     android:gravity="bottom"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Light"
@@ -16,7 +16,7 @@
         android:layout_marginTop="8dp"
         android:paddingTop="20dp"
         app:civ_border_width="2dp"
-        app:civ_border_color="@color/colorGray"/>
+        app:civ_border_color="@color/textColor"/>
 
     <TextView
         android:id="@+id/navName"

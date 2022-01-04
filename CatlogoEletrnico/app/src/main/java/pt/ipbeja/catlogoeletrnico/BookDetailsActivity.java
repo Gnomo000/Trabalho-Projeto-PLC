@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -88,7 +87,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
             if (this.book.getQuantity() == 0) {
                 requestButton.setText("Esgotado");
-                requestButton.setTextColor(getColor(R.color.colorBlueLight));
+                requestButton.setTextColor(getColor(R.color.buttonColor));
                 requestButton.setClickable(false);
                 requestButton.setBackgroundColor(0xFFFFFF);
             }else{

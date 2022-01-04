@@ -18,11 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="end"
-            android:background="@color/colorBlueDark"
+            android:background="@color/barColor"
             android:gravity="end"
             android:hapticFeedbackEnabled="false"
             app:popupTheme="@style/Theme.AppCompat.Light"
-            app:titleTextColor="@color/colorGray" />
+            app:titleTextColor="@color/textColor" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_container"
@@ -112,8 +112,8 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
-        app:itemTextColor="@color/colorGray"
-        app:itemIconTint="@color/colorGray">
+        app:itemTextColor="@color/textColor"
+        app:itemIconTint="@color/textColor">
 
     </com.google.android.material.navigation.NavigationView>
 

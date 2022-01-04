@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="@+id/textViewLoginPass"
         app:layout_constraintTop_toBottomOf="@+id/textViewLoginPass"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorGray">
+        app:passwordToggleTint="@color/textColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:onClick="goRegister"
             android:text="Registrar aqui"
-            android:textColor="@color/colorBlueLight"
+            android:textColor="@color/buttonColor"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />

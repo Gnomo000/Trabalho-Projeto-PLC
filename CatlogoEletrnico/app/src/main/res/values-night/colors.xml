@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FF9646</color>
 
-    <color name="textColor">#9FADBD</color>
-    <color name="backgroundColor">#152232</color>
-    <color name="buttonColor">#960200</color>
-    <color name="barColor">#0B1622</color>
+    <color name="textColor">#425060</color>
+    <color name="backgroundColor">#cedbeb</color>
+    <color name="buttonColor">#ff6969</color>
+    <color name="barColor">#9fb4ce</color>
 </resources>

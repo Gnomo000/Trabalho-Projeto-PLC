@@ -3,6 +3,7 @@ package pt.ipbeja.catlogoeletrnico;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -32,7 +33,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private RecyclerViewAdapterHistory adapterMyBooks;
     private RecyclerViewAdapterBook adapterAllBooks;
-
+    public static boolean isDarkModeOn = false;
+    public static SharedPreferences sharedPreferences;
+    public static SharedPreferences.Editor editor;
     TextView textViewName;
 
     @Override
@@ -118,6 +121,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         myBooks.setAdapter(adapterMyBooks);
 
 
+        sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
+
+
+        // When user reopens the app
+        // after applying dark/light mode
+        if (isDarkModeOn) {
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+        }
+
     }
 
     @Override
@@ -173,6 +196,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 editor.remove("PASS");
                 editor.apply();
                 HomeActivity.this.finish();
+                break;
+            }
+            case R.id.nav_theme: {
+
+                if (HomeActivity.isDarkModeOn) {
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+                    editor.putBoolean("isDarkModeOn", false);
+                    editor.apply();
+
+                }
+                else {
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+
+                    editor.putBoolean("isDarkModeOn", true);
+                    editor.apply();
+
+
+                }
                 break;
             }
         }
