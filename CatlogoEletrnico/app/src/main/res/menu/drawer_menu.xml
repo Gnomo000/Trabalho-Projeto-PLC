@@ -17,7 +17,7 @@
             android:title="Livros" />
         <item
             android:id="@+id/nav_theme"
-            android:icon="@drawable/ic_logout"
+            android:icon="@drawable/ic_theme"
             android:title="Tema" />
         <item
             android:id="@+id/nav_out"
