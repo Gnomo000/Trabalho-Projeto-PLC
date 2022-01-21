@@ -3,6 +3,7 @@ package pt.ipbeja.catlogoeletrnico;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -152,6 +153,44 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_books: {
                 Intent intent = new Intent(this,BooksActivity.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.nav_theme: {
+
+                // When user taps the enable/disable
+                // dark mode button
+                if (HomeActivity.isDarkModeOn) {
+
+                    // if dark mode is on it
+                    // will turn it off
+                    AppCompatDelegate
+                            .setDefaultNightMode(
+                                    AppCompatDelegate
+                                            .MODE_NIGHT_NO);
+                    // it will set isDarkModeOn
+                    // boolean to false
+                    HomeActivity.editor.putBoolean("isDarkModeOn", false);
+                    HomeActivity.editor.apply();
+
+                    // change text of Button
+                }
+                else {
+
+                    // if dark mode is off
+                    // it will turn it on
+                    AppCompatDelegate
+                            .setDefaultNightMode(
+                                    AppCompatDelegate
+                                            .MODE_NIGHT_YES);
+
+                    // it will set isDarkModeOn
+                    // boolean to true
+                    HomeActivity.editor.putBoolean("isDarkModeOn", true);
+                    HomeActivity.editor.apply();
+
+                    // change text of Button
+
+                }
                 break;
             }
             case R.id.nav_out: {
