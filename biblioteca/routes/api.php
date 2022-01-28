@@ -18,9 +18,19 @@ use App\Http\Controllers\ApiController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Books
 Route::get('books', [ApiController::class, 'getAllBooks']);
 
+
+
+//Requests
 Route::get('requests/{email}', [ApiController::class, 'getRequestListByEmail']);
 Route::get('requests/{id}', [ApiController::class, 'getRequestById']);
 Route::post('requests', [ApiController::class, 'addRequest']);
-Route::get('requests/{id}', [ApiController::class, 'getRequestByTitle']);
+//Route::get('requests/{id}', [ApiController::class, 'getRequestByTitle']);
+Route::put('requests/{id}', [ApiController::class, 'updateRequest']);
+
+
+//Users
+Route::post('users', [ApiController::class, 'addUser']);
