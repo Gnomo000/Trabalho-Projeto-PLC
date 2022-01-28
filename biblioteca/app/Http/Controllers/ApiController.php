@@ -36,6 +36,7 @@ class ApiController extends Controller
             return response()->json(["message" => "Student not found"], 404);
           }
     }
+
     public function getUserByPasswordAndEmail($email,$password){
         if (User::where('email',$email)->where('password',$password)->exists()) {
             $userEmailAndPass = User::where('email',$email)->where('password',$password)->get()->toJson(JSON_PRETTY_PRINT);
@@ -111,4 +112,23 @@ class ApiController extends Controller
         }
     }
 
+
+//REQUISITION
+//REQUISITION
+//REQUISITION
+
+    public function getAllRequisitions(){
+        $requisitions = Requisition::get()->toJson(JSON_PRETTY_PRINT);
+        return response($requisitions, 200);
+    }
+
+    public function getRequisitionByEmail($email){
+        if (Requisition::where('email', $email)->exists()) {
+            $requisition = Requisition::where('email', $email)->get()->toJson(JSON_PRETTY_PRINT);
+            return response($requisition, 200);
+          } else {
+            return response()->json(["message" => "Student not found"], 404);
+          }
+    }
 }
+

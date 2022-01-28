@@ -33,3 +33,10 @@ Route::get('books/{title}', [ApiController::class, 'getBookByTitle']);
 Route::get('booksId/{id}', [ApiController::class, 'getBookById']);
 Route::put('books/{id}', [ApiController::class, 'updateBook']); //feito pelo raw
 Route::get('books/{column}/{string}', [ApiController::class, 'getBookByTitleList']);
+
+//REQUISITION
+//REQUISITION
+//REQUISITION
+
+Route::get('requisitions', [ApiController::class, 'getAllRequisitions']);
+Route::get('requisitions/{email}', [ApiController::class, 'getRequisitionByEmail']);
