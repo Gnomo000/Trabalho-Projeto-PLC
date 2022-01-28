@@ -130,5 +130,59 @@ class ApiController extends Controller
             return response()->json(["message" => "Student not found"], 404);
           }
     }
+
+    public function addRequisition(Request $request){
+        $requisitions = new Requisition;
+        $requisitions->email = $request->email;
+        $requisitions->title = $request->title;
+        $requisitions->requestDate = $request->requestDate;            
+        $requisitions->deliverDate = $request->deliverDate;
+        $requisitions->quantity = $request->quantity;
+        $requisitions->status = $request->status;
+        $requisitions->save();
+
+        return response()->json(["message" => "requests record created"], 201);
+
+    }
+    
+    public function getRequisitionById($id) {
+        if (Requisition::where('id', $id)->exists()) {
+            $id = Requisition::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+            return response($id, 200);
+        }else {
+            return response()->json([
+              "message" => "Book by id not found"
+            ], 404);
+        }
+    }
+
+    public function getRequisitionByTitle($column, $string){
+
+        if (Requisition::where($column, 'LIKE', '%' . $string . '%')->exists()) {
+            $requisitions = Requisition::where($column, 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($requisitions,200);
+        }else{
+            return response()->json([
+                "message" => "YESNTSS by word not found"
+            ],404);
+        }
+    }
+    
+    public function updateRequisition(Request $request, $id) {
+        if (Requisition::where('id', $id)->exists()) {
+            $requisitions = Requisition::find($id);
+            $requisitions->status = is_null($request->status) ? $requisitions->status : $request->status;
+            $requisitions->save();
+    
+            return response()->json([
+                "message" => "records updated successfully"
+            ], 200);
+            } else {
+            return response()->json([
+                "message" => "Book to update not found"
+            ], 404);
+            
+        }
+    }
 }
 

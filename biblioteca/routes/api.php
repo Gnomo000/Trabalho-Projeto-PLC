@@ -40,3 +40,7 @@ Route::get('books/{column}/{string}', [ApiController::class, 'getBookByTitleList
 
 Route::get('requisitions', [ApiController::class, 'getAllRequisitions']);
 Route::get('requisitions/{email}', [ApiController::class, 'getRequisitionByEmail']);
+Route::post('requisitions', [ApiController::class, 'addRequisition']);
+Route::get('requisitionsId/{id}', [ApiController::class, 'getRequisitionById']);
+Route::get('requisitions/{column}/{string}', [ApiController::class, 'getRequisitionByTitle']);
+Route::put('requisitions/{id}', [ApiController::class, 'updateRequisition']); //feito pelo raw
