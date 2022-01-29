@@ -132,7 +132,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                         LocalDate localDate = LocalDate.now().plusMonths(1);
                         String dateAfter = dtf.format(localDate);
 
-                        Request request = new Request(0,MainActivity.loggedInUser.getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
+                        Request request = new Request(0,SessionManager.getActiveSession(BookDetailsActivity.this).getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
                         AppDataBase.getInstance(BookDetailsActivity.this).getRequestDao().add(request);
                         AppDataBase.getInstance(BookDetailsActivity.this).getBookDao().update(getQuantity,book.getTitle());
 

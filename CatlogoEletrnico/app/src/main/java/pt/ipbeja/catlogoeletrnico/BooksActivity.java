@@ -61,9 +61,9 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(MainActivity.loggedInUser.getUsername());
-        Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
-        textViewEmail.setText(MainActivity.loggedInUser.getEmail());
+        textViewName.setText(SessionManager.getActiveSession(this).getUsername());
+        Glide.with(this).load(SessionManager.getActiveSession(this).getImage()).into(imageViewImage);
+        textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
 
         editTextSearchBook = findViewById(R.id.editTextSearchBook);
 
@@ -169,11 +169,7 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
             case R.id.nav_out: {
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
-                MainActivity.isLoginDone = false;
-                SharedPreferences.Editor editor = MainActivity.sharedpreferences.edit();
-                editor.remove("LOGIN");
-                editor.remove("PASS");
-                editor.apply();
+                SessionManager.clearSession(BooksActivity.this);
                 BooksActivity.this.finish();
                 break;
             }

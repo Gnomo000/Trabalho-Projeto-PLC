@@ -51,7 +51,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
         toggle.syncState();
 
         recyclerView = findViewById(R.id.recyclerView);
-        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
+        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(SessionManager.getActiveSession(this).getEmail());
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         adapter = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
@@ -68,9 +68,9 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(MainActivity.loggedInUser.getUsername());
-        Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
-        textViewEmail.setText(MainActivity.loggedInUser.getEmail());
+        textViewName.setText(SessionManager.getActiveSession(this).getUsername());
+        Glide.with(this).load(SessionManager.getActiveSession(this).getImage()).into(imageViewImage);
+        textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
 
         editTextSearchMyBook = findViewById(R.id.editTextSearchMyBook);
         editTextSearchMyBook.addTextChangedListener(new TextWatcher() {
@@ -120,13 +120,13 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onStart() {
         super.onStart();
-        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(MainActivity.loggedInUser.getEmail());
+        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(SessionManager.getActiveSession(this).getEmail());
         this.adapter.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
 
         RecyclerView myBooks = findViewById(R.id.recyclerView);
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             TextView textView = findViewById(R.id.emptyMessage);
             textView.setText("Sem Livros Requisitados\nRequesite!");
@@ -196,11 +196,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_out: {
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
-                MainActivity.isLoginDone = false;
-                SharedPreferences.Editor editor = MainActivity.sharedpreferences.edit();
-                editor.remove("LOGIN");
-                editor.remove("PASS");
-                editor.apply();
+                SessionManager.clearSession(HistoryActivity.this);
                 HistoryActivity.this.finish();
                 break;
             }

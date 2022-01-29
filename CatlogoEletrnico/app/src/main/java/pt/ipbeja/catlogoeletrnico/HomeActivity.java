@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        List<Request> request = AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail());
+        List<Request> request = AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail());
 
         if (request.size() != 0) {
 
@@ -91,9 +91,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(MainActivity.loggedInUser.getUsername());
-        Glide.with(this).load(MainActivity.loggedInUser.getImage()).into(imageViewImage);
-        textViewEmail.setText(MainActivity.loggedInUser.getEmail());
+        textViewName.setText(SessionManager.getActiveSession(this).getUsername());
+        Glide.with(this).load(SessionManager.getActiveSession(this).getImage()).into(imageViewImage);
+        textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
 
 
         LinearLayoutManager layoutManagerMyBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -105,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         allBooks.setLayoutManager(layoutManagerAllBooks);
 
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             myBooks.setVisibility(View.GONE);
         }else {
@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         
 
-        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
+        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()));
         adapterAllBooks = new RecyclerViewAdapterBook(this, AppDataBase.getInstance(this).getBookDao().getAllMoreZero());
 
         allBooks.setAdapter(adapterAllBooks);
@@ -147,12 +147,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         this.adapterAllBooks.update(AppDataBase.getInstance(this).getBookDao().getAllMoreZero());
-        this.adapterMyBooks.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()));
+        this.adapterMyBooks.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()));
 
         RecyclerView myBooks = findViewById(R.id.recyclerViewMyBooks);
 
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(MainActivity.loggedInUser.getEmail()).size() == 0){
+        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()).size() == 0){
             isEmpty.setVisibility(View.VISIBLE);
             myBooks.setVisibility(View.GONE);
         }else {
@@ -190,11 +190,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_out: {
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
-                MainActivity.isLoginDone = false;
-                SharedPreferences.Editor editor = MainActivity.sharedpreferences.edit();
-                editor.remove("LOGIN");
-                editor.remove("PASS");
-                editor.apply();
+                SessionManager.clearSession(HomeActivity.this);
                 HomeActivity.this.finish();
                 break;
             }

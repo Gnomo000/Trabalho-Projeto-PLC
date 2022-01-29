@@ -15,29 +15,16 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static boolean isLoginDone;
-    public static User loggedInUser;
-    public static SharedPreferences sharedpreferences;
-    public static SharedPreferences.Editor editor;
     private EditText editTextEmail;
     private TextInputLayout editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (isLoginDone == true) {
-            Intent intent = new Intent(this,HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
-        sharedpreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
-        String login = sharedpreferences.getString("LOGIN", null);
-        String pass = sharedpreferences.getString("PASS",null);
+        User user = SessionManager.getActiveSession(this);
 
-        if (login != null && pass != null) {
-            loggedInUser = AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(login,pass);
+        if (user != null) {
             Intent intent = new Intent(this,HomeActivity.class);
-            isLoginDone = true;
             startActivity(intent);
             finish();
 
@@ -56,18 +43,13 @@ public class MainActivity extends AppCompatActivity {
     public void goLogin(View view) {
 
         editTextEmail = findViewById(R.id.editTextLoginEmail);
-
         editTextPassword = findViewById(R.id.editTextPassLoginPass);
 
         if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
             if (AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()) != null) {
-                loggedInUser = AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
+                User user = AppDataBase.getInstance(this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
                 Intent intent = new Intent(this,HomeActivity.class);
-                isLoginDone = true;
-                editor = sharedpreferences.edit();
-                editor.putString("LOGIN", loggedInUser.getEmail());
-                editor.putString("PASS",loggedInUser.getPassword());
-                editor.apply();
+                SessionManager.saveSession(MainActivity.this,user);
                 startActivity(intent);
                 finish();
             }else {

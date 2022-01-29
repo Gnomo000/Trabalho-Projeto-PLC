@@ -26,8 +26,6 @@ import java.util.List;
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     public static Activity closeRegisterActivity;
-    public static SharedPreferences sharedpreferences;
-    public static SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +38,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             }
         });
         closeRegisterActivity = this;
-        sharedpreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
-        String login = sharedpreferences.getString("LOGIN", null);
-        String pass = sharedpreferences.getString("PASS",null);
     }
 
     private void showDatePickerDialog(){
@@ -88,17 +83,10 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 alertAboutUs.create().show();
 
             }else{
-                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),
-                        editTextImage.getText().toString());
-                Log.i("POOP",editTextImage.getText().toString());
+                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(), editTextImage.getText().toString());
                 Intent intent = new Intent(this,HomeActivity.class);
                 AppDataBase.getInstance(this).getUserDao().add(user);
-                MainActivity.loggedInUser = AppDataBase.getInstance(RegisterActivity.this).getUserDao().getUserByPasswordAndEmail(editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString());
-                editor = sharedpreferences.edit();
-                editor.putString("LOGIN", MainActivity.loggedInUser.getEmail());
-                editor.putString("PASS",MainActivity.loggedInUser.getPassword());
-                editor.apply();
-                MainActivity.isLoginDone = true;
+                SessionManager.saveSession(RegisterActivity.this,user);
                 startActivity(intent);
             }
         }
