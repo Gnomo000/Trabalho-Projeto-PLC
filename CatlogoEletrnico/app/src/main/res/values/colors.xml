@@ -11,6 +11,6 @@
 
     <color name="textColor">#9FADBD</color>
     <color name="backgroundColor">#152232</color>
-    <color name="buttonColor">#960200</color>
+    <color name="buttonColor">#9FADBD</color>
     <color name="barColor">#0B1622</color>
 </resources>
