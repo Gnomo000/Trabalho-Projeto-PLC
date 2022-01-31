@@ -220,6 +220,12 @@ class ApiController extends Controller
         }else{
             return response()->json([],404);
         }
+        
+    }
+
+    public function getBookByTitleListEmpty() {
+        $books = Book::get()->toJson(JSON_PRETTY_PRINT);
+        return response($books, 200);
     }
 
 //REQUISITION

@@ -190,7 +190,16 @@ public class BiblioRepository {
         call.enqueue(new Callback<List<Book>>() {
             @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                mutableLiveData.postValue(response.body());
+                if (response.isSuccessful()) {
+                    List<Book> requests = response.body();
+                    if (response.body() != null && requests.size() > 0) {
+                        mutableLiveData.postValue(response.body());
+                    }else {
+                        mutableLiveData.postValue(null);
+                    }
+                }else {
+                    mutableLiveData.postValue(null);
+                }
             }
 
             @Override
@@ -304,6 +313,8 @@ public class BiblioRepository {
                     }else {
                         userMutableLiveData.postValue(null);
                     }
+                }else {
+                    userMutableLiveData.postValue(null);
                 }
             }
 

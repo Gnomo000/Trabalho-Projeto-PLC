@@ -37,8 +37,8 @@ public interface BiblioService {
     @GET("books/")
     Call<List<Book>> getAllBooks();
 
-    @GET("booksType/{string}")
-    Call<List<Book>> getBookByTitleList(@Path("string") String string);
+    @GET("bookstype/{string}")
+    Call<List<Book>> getBookByTitleList(@Path("string") String string); //get book by string
 
     @GET("booksId/{id}")
     Call<List<Book>> getBookById(@Path("id") int id);
@@ -47,7 +47,7 @@ public interface BiblioService {
     Call<List<Book>> getBookByTitle(@Path("title") String title);
 
     @GET("requisitions/{email}/{string}")
-    Call<List<Request>> getRequestByTitle(@Path("email") String email,@Path("string") String string);
+    Call<List<Request>> getRequestByTitle(@Path("email") String email,@Path("string") String string); //get history by string
 
     @GET("requisitionsId/{id}")
     Call<List<Request>> getRequestById(@Path("id") int id);

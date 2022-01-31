@@ -35,6 +35,7 @@ Route::get('booksId/{id}', [ApiController::class, 'getBookById']);
 
 Route::put('books/{id}', [ApiController::class, 'updateBook']);
 Route::get('bookstype/{string}', [ApiController::class, 'getBookByTitleList']);
+Route::get('bookstype/', [ApiController::class, 'getBookByTitleListEmpty']);
 Route::put('booksQuantity/{title}/{quantity}', [ApiController::class, 'updateBookQuantity']);
 
 //REQUISITION
