@@ -3,6 +3,7 @@ package pt.ipbeja.catlogoeletrnico;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.List;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
@@ -33,6 +35,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_ITEMID = "ITEMID";
     private static final String TAG = "BookDetailsActivity";
+    private BiblioRepository biblioRepository;
 
     private ImageView imageViewBook;
     private TextView textViewBook;
@@ -44,12 +47,14 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView textViewBookSynopse;
     private TextView textViewQuan;
 
-    private Book book;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
+
+        this.biblioRepository = new BiblioRepository(this);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -65,35 +70,40 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            int id = bundle.getInt(KEY_ITEMID, -1);
+            id = bundle.getInt(KEY_ITEMID, -1);
             if (id == -1) {
                 Log.e(TAG, "Invalid position found!");
                 finish();
                 return;
             }
-            this.book = AppDataBase.getInstance(this).getBookDao().getById(id);
-            Glide.with(this).load(this.book.getImage()).into(this.imageViewBook);
-            this.textViewBook.setText(this.book.getTitle());
-            this.textViewBookEn.setText(this.book.getTitleEn());
-            this.textViewBookAuthor.setText(this.book.getAuthor());
-            this.textViewBookEdition.setText(this.book.getEdition());
-            this.textViewBookPublisher.setText(this.book.getPublisher());
-            this.textViewBookCategory.setText(this.book.getGenders());
-            this.textViewQuan.setText(String.valueOf(this.book.getQuantity()));
-            this.textViewBookSynopse.setText(this.book.getSynopse());
-            actionBar.setTitle(this.book.getTitle());
 
-            Button requestButton = findViewById(R.id.requestButton);
+            biblioRepository.getBookById(id).observe(this, new Observer<List<Book>>() {
+                @Override
+                public void onChanged(List<Book> books) {
 
-            if (this.book.getQuantity() == 0) {
-                requestButton.setText("Esgotado");
-                requestButton.setTextColor(getColor(R.color.buttonColor));
-                requestButton.setClickable(false);
-                requestButton.setBackgroundColor(0xFFFFFF);
-            }else{
-                requestButton.setText("Requisitar");
-            }
+                    Glide.with(BookDetailsActivity.this).load(books.get(0).getImage()).into(BookDetailsActivity.this.imageViewBook);
+                    BookDetailsActivity.this.textViewBook.setText(books.get(0).getTitle());
+                    BookDetailsActivity.this.textViewBookEn.setText(books.get(0).getTitleEn());
+                    BookDetailsActivity.this.textViewBookAuthor.setText(books.get(0).getAuthor());
+                    BookDetailsActivity.this.textViewBookEdition.setText(books.get(0).getEdition());
+                    BookDetailsActivity.this.textViewBookPublisher.setText(books.get(0).getPublisher());
+                    BookDetailsActivity.this.textViewBookCategory.setText(books.get(0).getGenders());
+                    BookDetailsActivity.this.textViewQuan.setText(String.valueOf(books.get(0).getQuantity()));
+                    BookDetailsActivity.this.textViewBookSynopse.setText(books.get(0).getSynopse());
+                    actionBar.setTitle(books.get(0).getTitle());
 
+                    Button requestButton = findViewById(R.id.requestButton);
+
+                    if (books.get(0).getQuantity() == 0) {
+                        requestButton.setText("Esgotado");
+                        requestButton.setTextColor(getColor(R.color.buttonColor));
+                        requestButton.setClickable(false);
+                        requestButton.setBackgroundColor(0xFFFFFF);
+                    }else{
+                        requestButton.setText("Requisitar");
+                    }
+                }
+            });
 
         }else {
             Log.e(TAG, "No position specified!");
@@ -104,58 +114,61 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     public void requestBook(View view) {
 
-        Book book = AppDataBase.getInstance(this).getBookDao().getBookByTitle(this.book.getTitle());
-
-        AlertDialog.Builder areYouShure = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-        areYouShure.setTitle("Requisitar");
-        areYouShure.setMessage("Quer requisitar: "+book.getTitle());
-        areYouShure.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+        biblioRepository.getBookById(id).observe(this, new Observer<List<Book>>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailsActivity.this,R.style.MyDialogTheme);
-                final View view = BookDetailsActivity.this.getLayoutInflater().inflate(R.layout.dialog, null);
-                builder.setView(view);
-                builder.setTitle("Quantidade");
-                final NumberPicker picker = (NumberPicker) view.findViewById(R.id.numberPicker1);
-                picker.setMaxValue(book.getQuantity());
-                picker.setMinValue(1);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onChanged(List<Book> books) {
+                biblioRepository.getBookByTitle(books.get(0).getTitle()).observe(BookDetailsActivity.this, new Observer<Book>() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int getQuantity = picker.getValue();
+                    public void onChanged(Book book) {
+                        AlertDialog.Builder areYouShure = new AlertDialog.Builder(BookDetailsActivity.this,R.style.MyDialogTheme);
+                        areYouShure.setTitle("Requisitar");
+                        areYouShure.setMessage("Quer requisitar: "+book.getTitle());
+                        areYouShure.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailsActivity.this,R.style.MyDialogTheme);
+                                final View view = BookDetailsActivity.this.getLayoutInflater().inflate(R.layout.dialog, null);
+                                builder.setView(view);
+                                builder.setTitle("Quantidade");
+                                final NumberPicker picker = (NumberPicker) view.findViewById(R.id.numberPicker1);
+                                picker.setMaxValue(book.getQuantity());
+                                picker.setMinValue(1);
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        int getQuantity = picker.getValue();
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+                                        String dateNow = sdf.format(Calendar.getInstance().getTime());
+                                        LocalDate localDate = LocalDate.now().plusMonths(1);
+                                        String dateAfter = dtf.format(localDate);
+                                        Request request = new Request(0,SessionManager.getActiveSession(BookDetailsActivity.this).getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
+                                        biblioRepository.addRequest(request);
+                                        biblioRepository.updateBookQuantity(book.getTitle(),getQuantity);
+                                        BookDetailsActivity.this.recreate();
+                                    }
+                                });
+                                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        builder.create().hide();
+                                    }
+                                });
+                                builder.create().show();
+                            }
+                        });
+                        areYouShure.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                areYouShure.create().hide();
+                            }
+                        });
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-
-                        String dateNow = sdf.format(Calendar.getInstance().getTime());
-
-                        LocalDate localDate = LocalDate.now().plusMonths(1);
-                        String dateAfter = dtf.format(localDate);
-
-                        Request request = new Request(0,SessionManager.getActiveSession(BookDetailsActivity.this).getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
-                        AppDataBase.getInstance(BookDetailsActivity.this).getRequestDao().add(request);
-                        AppDataBase.getInstance(BookDetailsActivity.this).getBookDao().update(getQuantity,book.getTitle());
-
-                        BookDetailsActivity.this.recreate();
+                        areYouShure.create().show();
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        builder.create().hide();
-                    }
-                });
-                builder.create().show();
             }
         });
-        areYouShure.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                areYouShure.create().hide();
-            }
-        });
-
-        areYouShure.create().show();
 
 
     }
@@ -164,11 +177,14 @@ public class BookDetailsActivity extends AppCompatActivity {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
         PhotoView photoView = mView.findViewById(R.id.photo_view);
-        //photoView.setImageURI(Uri.parse(BookDetailsActivity.this.book.getImage()));
-        //photoView.setImageResource(R.drawable.ic_launcher_background_blue_foreground);
-        Glide.with(this).load(this.book.getImage()).into(photoView);
-        mBuilder.setView(mView);
-        AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
+        biblioRepository.getBookById(id).observe(this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                Glide.with(BookDetailsActivity.this).load(books.get(0).getImage()).into(photoView);
+                mBuilder.setView(mView);
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
+        });
     }
 }

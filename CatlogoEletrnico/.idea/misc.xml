@@ -29,6 +29,7 @@
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/drawable/layout_corner.xml" value="0.22870370370370371" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/drawable/radius.xml" value="0.257" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/drawable/rectangle.xml" value="0.23378378378378378" />
+        <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/activity_base.xml" value="0.14460562103354488" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/activity_book_details.xml" value="0.2" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/activity_books.xml" value="0.21981981981981982" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/activity_history.xml" value="0.2" />
@@ -42,6 +43,8 @@
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/dialog.xml" value="0.21981981981981982" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/dialog_custom_layout.xml" value="0.21981981981981982" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/history_simple_layout.xml" value="0.5545454545454546" />
+        <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/home_fragment.xml" value="0.20521590423257802" />
+        <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/login_fragment.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/nav_header.xml" value="0.19293478260869565" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/layout/zoom_image.xml" value="0.21981981981981982" />
         <entry key="..\:/Users/danix/Documents/GitHub/Trabalho-Projeto-PLC/CatlogoEletrnico/app/src/main/res/menu/drawer_menu.xml" value="0.21981981981981982" />

@@ -1,5 +1,6 @@
 package pt.ipbeja.catlogoeletrnico;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,11 +25,14 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
     private List<Request> requests;
     private Context context;
     private LayoutInflater layoutInflater;
+    private BiblioRepository biblioRepository;
+    //private Book bookFinal;
 
     public RecyclerViewAdapterHistory(Context context, List<Request> requests) {
         this.context = context;
         this.requests = requests;
         this.layoutInflater = LayoutInflater.from(context);
+        this.biblioRepository = new BiblioRepository(context);
     }
 
     @NonNull
@@ -39,8 +45,38 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Request request = this.requests.get(position);
-        Book book = AppDataBase.getInstance(this.context).getBookDao().getBookByTitle(request.getTitle());
-        Glide.with(this.context).load(book.getImage()).into(holder.getImageView());
+
+        //bookFinal = new Book(0,null,null,null,null,null,null,null,0,null);
+
+        biblioRepository.getBookByTitle(request.getTitle()).observe((LifecycleOwner) this.context, new Observer<Book>() {
+            @Override
+            public void onChanged(Book book) {
+                Glide.with(RecyclerViewAdapterHistory.this.context).load(book.getImage()).into(holder.getImageView());
+                holder.getTextView().setText(request.getTitle());
+
+
+                if (request.getStatus().equals("Por Levantar")) {
+                    holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));
+                }else if (request.getStatus().equals("Por Entregar")){
+                    holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                }else if (request.getStatus().equals("Atrazado")){
+                    holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                }else if (request.getStatus().equals("Entrague")){
+                    holder.getViewRectangle().setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
+                }else {
+                    Log.i("POOP","|"+request.getStatus()+"|");
+                }
+                holder.getParentLayout().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HistoryDetailsActivity.startActivity(RecyclerViewAdapterHistory.this.context, request.getId());
+                    }
+                });
+            }
+        });
+
+        //bookFinal = AppDataBase.getInstance(this.context).getBookDao().getBookByTitle(request.getTitle());
+        /*Glide.with(this.context).load(bookFinal.getImage()).into(holder.getImageView());
         holder.getTextView().setText(request.getTitle());
 
 
@@ -60,7 +96,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
             public void onClick(View v) {
                 HistoryDetailsActivity.startActivity(RecyclerViewAdapterHistory.this.context, request.getId());
             }
-        });
+        });*/
     }
 
     @Override

@@ -12,14 +12,23 @@ public class SessionManager {
     private static final String KEY_USERNAME= "USERNAME";
     private static final String KEY_PASSWORD = "PASSWORD";
     private static final String KEY_IMAGE = "IMAGE";
+    private static final String KEY_DARKTHEME = "isDarkModeOn";
 
     private static SharedPreferences sharedpreferences;
+    private static SharedPreferences sharedpreferencesTheme;
 
     private static SharedPreferences getInstance(Context context) {
         if (sharedpreferences == null) {
             sharedpreferences = context.getApplicationContext().getSharedPreferences("Preferences", 0);
         }
         return sharedpreferences;
+    }
+
+    private static SharedPreferences getInstanceTheme(Context context) {
+        if (sharedpreferencesTheme == null) {
+            sharedpreferencesTheme = context.getApplicationContext().getSharedPreferences("Theme", 0);
+        }
+        return sharedpreferencesTheme;
     }
 
     public static User getActiveSession(Context context) {
@@ -36,6 +45,13 @@ public class SessionManager {
         return null;
     }
 
+    public static boolean getTheme(Context context) {
+        if (getInstanceTheme(context).contains(KEY_DARKTHEME)) {
+            return getInstanceTheme(context).getBoolean(KEY_DARKTHEME, true);
+        }
+        return false;
+    }
+
     public static void saveSession(Context context, User user) {
         getInstance(context).edit().putInt(KEY_ID, user.getId()).apply();
         getInstance(context).edit().putString(KEY_NAME, user.getName()).apply();
@@ -47,18 +63,15 @@ public class SessionManager {
         getInstance(context).edit().putString(KEY_IMAGE, user.getImage()).apply();
     }
 
-    public static void saveSessionStrings(Context context, int id, String name, String date, String email, String phone, String username,String password, String image) {
-        getInstance(context).edit().putInt(KEY_ID, id).apply();
-        getInstance(context).edit().putString(KEY_NAME, name).apply();
-        getInstance(context).edit().putString(KEY_DATE, date).apply();
-        getInstance(context).edit().putString(KEY_EMAIL, email).apply();
-        getInstance(context).edit().putString(KEY_PHONE, phone).apply();
-        getInstance(context).edit().putString(KEY_USERNAME, username).apply();
-        getInstance(context).edit().putString(KEY_PASSWORD, password).apply();
-        getInstance(context).edit().putString(KEY_IMAGE, image).apply();
+    public static void saveTheme(Context context, boolean b) {
+        getInstanceTheme(context).edit().putBoolean(KEY_DARKTHEME, b).apply();
     }
 
     public static void clearSession(Context context) {
         getInstance(context).edit().clear().apply();
+    }
+
+    public static void clearTheme(Context context) {
+        getInstanceTheme(context).edit().clear().apply();
     }
 }

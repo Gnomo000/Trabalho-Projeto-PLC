@@ -39,6 +39,8 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = this.item.get(position);
 
+
+
         if (book.getQuantity() == 0) {
             holder.getNoStckView().setVisibility(View.VISIBLE);
             holder.getNoStock().setVisibility(View.VISIBLE);

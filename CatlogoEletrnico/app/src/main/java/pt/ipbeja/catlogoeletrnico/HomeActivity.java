@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,47 +34,49 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private RecyclerViewAdapterHistory adapterMyBooks;
     private RecyclerViewAdapterBook adapterAllBooks;
-    public static boolean isDarkModeOn = false;
-    public static SharedPreferences sharedPreferences;
-    public static SharedPreferences.Editor editor;
+    private boolean isDarkModeOn;
     TextView textViewName;
+    private BiblioRepository biblioRepository;
+    private RecyclerView myBooks;
+    private RecyclerView allBooks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        this.biblioRepository = new BiblioRepository(this);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        List<Request> request = AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail());
+        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                if (requests.size() != 0) {
+                    Date dateDeliver = null;
+                    Date dateQ  = Calendar.getInstance().getTime();
 
-        if (request.size() != 0) {
+                    for (int i = 0; i < requests.size(); i++) {
+                        try {
+                            dateDeliver = sdf.parse(requests.get(i).getDeliverDate());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
-            Date dateDeliver = null;
-            Date dateQ  = Calendar.getInstance().getTime();
-
-            for (int i = 0; i < request.size(); i++) {
-
-                try {
-                    dateDeliver = sdf.parse(request.get(0).getDeliverDate());
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                        if (dateQ.after(dateDeliver)) {
+                            biblioRepository.updateRequestStatus(requests.get(i).getId(),"Atrazado");
+                        }else {
+                            biblioRepository.updateRequestStatus(requests.get(i).getId(),"Por Levantar");
+                        }
+                    }
                 }
-
-                if (dateQ.after(dateDeliver)) {
-                    AppDataBase.getInstance(this).getRequestDao().update("Atrazado",request.get(i).getId());
-                }else {
-                    AppDataBase.getInstance(this).getRequestDao().update("Por Levantar",request.get(i).getId());
-                }
-
             }
-        }
+        });
+
 
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -84,9 +87,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
 
-
         textViewName = headerView.findViewById(R.id.navName);
-
         textViewName.setText("");
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
@@ -95,50 +96,52 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(this).load(SessionManager.getActiveSession(this).getImage()).into(imageViewImage);
         textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
 
-
         LinearLayoutManager layoutManagerMyBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManagerAllBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        RecyclerView myBooks =  findViewById(R.id.recyclerViewMyBooks);
-        RecyclerView allBooks = findViewById(R.id.recyclerViewallBooks);
+        myBooks =  findViewById(R.id.recyclerViewMyBooks);
+        allBooks = findViewById(R.id.recyclerViewallBooks);
         myBooks.setLayoutManager(layoutManagerMyBooks);
         allBooks.setLayoutManager(layoutManagerAllBooks);
 
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()).size() == 0){
-            isEmpty.setVisibility(View.VISIBLE);
-            myBooks.setVisibility(View.GONE);
-        }else {
-            isEmpty.setVisibility(View.GONE);
-            myBooks.setVisibility(View.VISIBLE);
-        }
-        
 
-        adapterMyBooks = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()));
-        adapterAllBooks = new RecyclerViewAdapterBook(this, AppDataBase.getInstance(this).getBookDao().getAllMoreZero());
+        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                if (requests.size() == 0) {
+                    isEmpty.setVisibility(View.VISIBLE);
+                    myBooks.setVisibility(View.GONE);
+                }else {
+                    isEmpty.setVisibility(View.GONE);
+                    myBooks.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
-        allBooks.setAdapter(adapterAllBooks);
-        myBooks.setAdapter(adapterMyBooks);
+        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                adapterMyBooks = new RecyclerViewAdapterHistory(HomeActivity.this,requests);
+                myBooks.setAdapter(adapterMyBooks);
+            }
+        });
 
+        biblioRepository.getAllBooksMoreZero().observe(HomeActivity.this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                adapterAllBooks = new RecyclerViewAdapterBook(HomeActivity.this,books);
+                allBooks.setAdapter(adapterAllBooks);
+            }
+        });
 
-        sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
+        isDarkModeOn = SessionManager.getTheme(this);
 
-
-        // When user reopens the app
-        // after applying dark/light mode
         if (isDarkModeOn) {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_YES);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         else {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_NO);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
     }
@@ -146,19 +149,38 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        this.adapterAllBooks.update(AppDataBase.getInstance(this).getBookDao().getAllMoreZero());
-        this.adapterMyBooks.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()));
+
+        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                adapterMyBooks.update(requests);
+                myBooks.setAdapter(adapterMyBooks);
+            }
+        });
+
+        biblioRepository.getAllBooksMoreZero().observe(HomeActivity.this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                adapterAllBooks.update(books);
+                allBooks.setAdapter(adapterAllBooks);
+            }
+        });
 
         RecyclerView myBooks = findViewById(R.id.recyclerViewMyBooks);
-
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()).size() == 0){
-            isEmpty.setVisibility(View.VISIBLE);
-            myBooks.setVisibility(View.GONE);
-        }else {
-            isEmpty.setVisibility(View.GONE);
-            myBooks.setVisibility(View.VISIBLE);
-        }
+
+        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                if (requests.size() == 0) {
+                    isEmpty.setVisibility(View.VISIBLE);
+                    myBooks.setVisibility(View.GONE);
+                }else {
+                    isEmpty.setVisibility(View.GONE);
+                    myBooks.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_home);
@@ -188,7 +210,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_out: {
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 SessionManager.clearSession(HomeActivity.this);
                 HomeActivity.this.finish();
@@ -196,23 +218,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_theme: {
 
-                if (HomeActivity.isDarkModeOn) {
-
+                if (isDarkModeOn) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-                    editor.putBoolean("isDarkModeOn", false);
-                    editor.apply();
-
+                    SessionManager.saveTheme(HomeActivity.this,false);
                 }
                 else {
-
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-
-                    editor.putBoolean("isDarkModeOn", true);
-                    editor.apply();
-
-
+                    SessionManager.saveTheme(HomeActivity.this,true);
                 }
                 break;
             }

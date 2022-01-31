@@ -26,6 +26,10 @@ public class User {
         this.image = image;
     }
 
+    public static User createUser(String name, String date, String email, String phone, String username, String password, String image) {
+        return new User(0,name,date,email,phone,username,password,image);
+    }
+
     public int getId() {
         return id;
     }

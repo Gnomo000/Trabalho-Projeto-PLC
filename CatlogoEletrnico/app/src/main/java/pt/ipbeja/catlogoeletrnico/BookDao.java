@@ -35,5 +35,4 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE title LIKE '%' || :search || '%' OR titleEn LIKE '%' || :search || '%' OR author LIKE '%' || :search || '%'" +
             " OR publisher LIKE '%' || :search || '%' OR genders LIKE '%' || :search || '%'")
     List<Book> getBookByTitleList(String search);
-
 }

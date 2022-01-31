@@ -7,17 +7,16 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -34,9 +34,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
     private RecyclerViewAdapterHistory adapter;
     private RecyclerView recyclerView;
     private EditText editTextSearchMyBook;
-
-    TextView textViewName;
-    private User userEmail;
+    private BiblioRepository biblioRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +49,25 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
         toggle.syncState();
 
         recyclerView = findViewById(R.id.recyclerView);
-        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(SessionManager.getActiveSession(this).getEmail());
-
+        this.biblioRepository = new BiblioRepository(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        adapter = new RecyclerViewAdapterHistory(this, AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
+
+        biblioRepository.getRequestListByEmail(this,SessionManager.getActiveSession(this).getEmail()).observe(this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                adapter = new RecyclerViewAdapterHistory(HistoryActivity.this,requests);
+                recyclerView.setLayoutManager(gridLayoutManager);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_history);
 
-        textViewName = headerView.findViewById(R.id.navName);
-        textViewName.setText("");
+        TextView textViewName = headerView.findViewById(R.id.navName);
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
@@ -77,32 +80,33 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                List<Request> request = AppDataBase.getInstance(HistoryActivity.this).getRequestDao().getRequestByTitle(userEmail.getEmail(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString(),editTextSearchMyBook.getText().toString());
+
                 RecyclerView myBooks = findViewById(R.id.recyclerView);
                 LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-                if (request.size() != 0) {
-                    adapter = new RecyclerViewAdapterHistory(HistoryActivity.this,request);
-                    recyclerView  = findViewById(R.id.recyclerView);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(HistoryActivity.this,2);
-                    recyclerView.setLayoutManager(gridLayoutManager);
-                    recyclerView.setAdapter(adapter);
-                    isEmpty.setVisibility(View.GONE);
-                    myBooks.setVisibility(View.VISIBLE);
-                }else {
-                    isEmpty.setVisibility(View.VISIBLE);
-                    myBooks.setVisibility(View.GONE);
-                }
+                biblioRepository.getRequestByTitle(SessionManager.getActiveSession(HistoryActivity.this).getEmail(),editTextSearchMyBook.getText().toString()).observe(HistoryActivity.this, new Observer<List<Request>>() {
+                    @Override
+                    public void onChanged(List<Request> requests) {
+                        if (requests.size() != 0) {
+                            adapter = new RecyclerViewAdapterHistory(HistoryActivity.this,requests);
+                            recyclerView  = findViewById(R.id.recyclerView);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(HistoryActivity.this,2);
+                            recyclerView.setLayoutManager(gridLayoutManager);
+                            recyclerView.setAdapter(adapter);
 
-
-
+                            isEmpty.setVisibility(View.GONE);
+                            myBooks.setVisibility(View.VISIBLE);
+                        }else {
+                            isEmpty.setVisibility(View.VISIBLE);
+                            myBooks.setVisibility(View.GONE);
+                        }
+                    }
+                });
             }
         });
 
@@ -120,23 +124,28 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onStart() {
         super.onStart();
-        userEmail = AppDataBase.getInstance(this).getUserDao().getUserByEmail(SessionManager.getActiveSession(this).getEmail());
-        this.adapter.update(AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(userEmail.getEmail()));
 
         RecyclerView myBooks = findViewById(R.id.recyclerView);
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-        if (AppDataBase.getInstance(this).getRequestDao().getRequestListByEmail(SessionManager.getActiveSession(this).getEmail()).size() == 0){
-            isEmpty.setVisibility(View.VISIBLE);
-            TextView textView = findViewById(R.id.emptyMessage);
-            textView.setText("Sem Livros Requisitados\nRequesite!");
-            myBooks.setVisibility(View.GONE);
-        }else {
-            isEmpty.setVisibility(View.GONE);
-            myBooks.setVisibility(View.VISIBLE);
-            TextView textView = findViewById(R.id.emptyMessage);
-            textView.setText("Livro não Encontrado");
-        }
+        biblioRepository.getRequestListByEmail(this,SessionManager.getActiveSession(this).getEmail()).observe(this, new Observer<List<Request>>() {
+            @Override
+            public void onChanged(List<Request> requests) {
+                if (requests.size() == 0){
+                    isEmpty.setVisibility(View.VISIBLE);
+                    TextView textView = findViewById(R.id.emptyMessage);
+                    textView.setText("Sem Livros Requisitados\nRequesite!");
+                    myBooks.setVisibility(View.GONE);
+                }else {
+                    isEmpty.setVisibility(View.GONE);
+                    myBooks.setVisibility(View.VISIBLE);
+                    TextView textView = findViewById(R.id.emptyMessage);
+                    textView.setText("Livro não Encontrado");
+                }
+                HistoryActivity.this.adapter.update(requests);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_history);
@@ -157,44 +166,20 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             }
             case R.id.nav_theme: {
 
-                // When user taps the enable/disable
-                // dark mode button
-                if (HomeActivity.isDarkModeOn) {
+                boolean isDarkModeOn = SessionManager.getTheme(HistoryActivity.this);
 
-                    // if dark mode is on it
-                    // will turn it off
-                    AppCompatDelegate
-                            .setDefaultNightMode(
-                                    AppCompatDelegate
-                                            .MODE_NIGHT_NO);
-                    // it will set isDarkModeOn
-                    // boolean to false
-                    HomeActivity.editor.putBoolean("isDarkModeOn", false);
-                    HomeActivity.editor.apply();
-
-                    // change text of Button
+                if (isDarkModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    SessionManager.saveTheme(HistoryActivity.this,false);
                 }
                 else {
-
-                    // if dark mode is off
-                    // it will turn it on
-                    AppCompatDelegate
-                            .setDefaultNightMode(
-                                    AppCompatDelegate
-                                            .MODE_NIGHT_YES);
-
-                    // it will set isDarkModeOn
-                    // boolean to true
-                    HomeActivity.editor.putBoolean("isDarkModeOn", true);
-                    HomeActivity.editor.apply();
-
-                    // change text of Button
-
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    SessionManager.saveTheme(HistoryActivity.this,true);
                 }
                 break;
             }
             case R.id.nav_out: {
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 SessionManager.clearSession(HistoryActivity.this);
                 HistoryActivity.this.finish();

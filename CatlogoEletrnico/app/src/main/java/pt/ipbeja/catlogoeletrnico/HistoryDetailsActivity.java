@@ -3,6 +3,7 @@ package pt.ipbeja.catlogoeletrnico;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_ITEMID = "ITEMID";
     private static final String TAG = "HistoryDetailsActivity";
+    private BiblioRepository biblioRepository;
 
     private ImageView imageViewBook;
     private TextView textViewBook;
@@ -45,7 +47,6 @@ public class HistoryDetailsActivity extends AppCompatActivity {
 
     private Request request;
     private Book book;
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_details);
 
         ActionBar actionBar = getSupportActionBar();
+        this.biblioRepository = new BiblioRepository(this);
 
         this.imageViewBook = findViewById(R.id.imageViewBook);
         this.textViewBook = findViewById(R.id.bookTitle);
@@ -78,39 +80,48 @@ public class HistoryDetailsActivity extends AppCompatActivity {
                 finish();
                 return;
             }
-            this.request = AppDataBase.getInstance(this).getRequestDao().getById(id);
-            this.book = AppDataBase.getInstance(this).getBookDao().getBookByTitle(this.request.getTitle());
-            this.user = AppDataBase.getInstance(this).getUserDao().getUserByEmail(this.request.getEmail());
+
+            biblioRepository.getRequestById(id).observe(this, new Observer<Request>() {
+                @Override
+                public void onChanged(Request request) {
+                    HistoryDetailsActivity.this.textViewStade.setText(request.getStatus());
+                    HistoryDetailsActivity.this.textViewRequest.setText(request.getRequestDate());
+                    HistoryDetailsActivity.this.textViewDelivery.setText(request.getDeliverDate());
+                    HistoryDetailsActivity.this.textViewQuantity.setText(String.valueOf(request.getQuantity()));
+
+                    if (request.getStatus().equals("Por Levantar")) {
+                        HistoryDetailsActivity.this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));
+                    }else if (request.getStatus().equals("Por Entregar")){
+                        HistoryDetailsActivity.this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                    }else if (request.getStatus().equals("Atrazado")){
+                        HistoryDetailsActivity.this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    }else if (request.getStatus().equals("Entrague")){
+                        HistoryDetailsActivity.this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
+                    }else {
+                        Log.i("POOP","|"+request.getStatus()+"|");
+                    }
+
+                    biblioRepository.getBookByTitle(request.getTitle()).observe(HistoryDetailsActivity.this, new Observer<Book>() {
+                        @Override
+                        public void onChanged(Book book) {
+
+                            Glide.with(HistoryDetailsActivity.this).load(book.getImage()).into(HistoryDetailsActivity.this.imageViewBook);
+                            HistoryDetailsActivity.this.textViewBook.setText(book.getTitle());
+                            HistoryDetailsActivity.this.textViewBookEn.setText(book.getTitleEn());
+                            HistoryDetailsActivity.this.textViewBookAuthor.setText(book.getAuthor());
+                            HistoryDetailsActivity.this.textViewBookEdition.setText(book.getEdition());
+                            HistoryDetailsActivity.this.textViewBookPublisher.setText(book.getPublisher());
+                            HistoryDetailsActivity.this.textViewBookCategory.setText(book.getGenders());
+                            HistoryDetailsActivity.this.textViewQuan.setText(String.valueOf(book.getQuantity()));
+                            HistoryDetailsActivity.this.textViewBookSynopse.setText(book.getSynopse());
+                            actionBar.setTitle(book.getTitle());
+                        }
+                    });
+
+                }
+            });
 
 
-            Glide.with(this).load(this.book.getImage()).into(this.imageViewBook);
-            this.textViewBook.setText(this.book.getTitle());
-            this.textViewBookEn.setText(this.book.getTitleEn());
-            this.textViewBookAuthor.setText(this.book.getAuthor());
-            this.textViewBookEdition.setText(this.book.getEdition());
-            this.textViewBookPublisher.setText(this.book.getPublisher());
-            this.textViewBookCategory.setText(this.book.getGenders());
-            this.textViewQuan.setText(String.valueOf(this.book.getQuantity()));
-            this.textViewBookSynopse.setText(this.book.getSynopse());
-            actionBar.setTitle(this.book.getTitle());
-
-            this.textViewStade.setText(this.request.getStatus());
-            this.textViewRequest.setText(this.request.getRequestDate());
-            this.textViewDelivery.setText(this.request.getDeliverDate());
-            this.textViewQuantity.setText(String.valueOf(this.request.getQuantity()));
-
-
-            if (request.getStatus().equals("Por Levantar")) {
-                this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));
-            }else if (request.getStatus().equals("Por Entregar")){
-                this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
-            }else if (request.getStatus().equals("Atrazado")){
-                this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-            }else if (request.getStatus().equals("Entrague")){
-                this.viewRect.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
-            }else {
-                Log.i("POOP","|"+request.getStatus()+"|");
-            }
 
         }else {
             Log.e(TAG, "No position specified!");

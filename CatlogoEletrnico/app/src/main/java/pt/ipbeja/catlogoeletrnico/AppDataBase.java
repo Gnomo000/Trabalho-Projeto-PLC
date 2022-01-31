@@ -23,7 +23,7 @@ public abstract class AppDataBase extends RoomDatabase {
                     AppDataBase.class,
                     "myDB")
                     .allowMainThreadQueries()
-                    .addCallback(new Callback() {
+                    /*.addCallback(new Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
@@ -110,8 +110,8 @@ public abstract class AppDataBase extends RoomDatabase {
                                     "'Literatura Fantástica'," +
                                     "147," +
                                     "'https://img.wook.pt/images/o-principe-cruel-holly-black/MXwyMzg5NDg0MXwxOTkxNzg3M3wxNjIxMjA2MDAwMDAwfHdlYnA=/502x')");
-                            db.execSQL("INSERT INTO User (name,date,email,phone,username,password,image) VALUES (" +
-                                    "'Daniel Rodrigues'," +
+                            db.execSQL("INSERT INTO User (name,date,email,phone,username,password,image) VALUES " +
+                                    "('Daniel Rodrigues'," +
                                     "'06/07/2002'," +
                                     "'21707@stu.ipbeja.pt'," +
                                     "'927487980'," +
@@ -127,7 +127,7 @@ public abstract class AppDataBase extends RoomDatabase {
                                     "'1234'," +
                                     "'https://s4.anilist.co/file/anilistcdn/character/large/b89361-x71P6YLrndd8.png')");
                         }
-                    })
+                    })*/
                     .fallbackToDestructiveMigration()
                     .build();
         }

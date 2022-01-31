@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,6 +33,7 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
     private RecyclerViewAdapterBook adapter;
     private RecyclerView recyclerView;
     private EditText editTextSearchBook;
+    private BiblioRepository biblioRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +43,25 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+
+
         recyclerView = findViewById(R.id.recyclerView);
+        this.biblioRepository = new BiblioRepository(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        adapter = new RecyclerViewAdapterBook(this, AppDataBase.getInstance(this).getBookDao().getAll());
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
+
+        biblioRepository.getAllBooks().observe(BooksActivity.this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                adapter = new RecyclerViewAdapterBook(BooksActivity.this,books);
+                recyclerView.setLayoutManager(gridLayoutManager);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
@@ -66,34 +77,38 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
 
         editTextSearchBook = findViewById(R.id.editTextSearchBook);
-
         editTextSearchBook.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                List<Book> book = AppDataBase.getInstance(BooksActivity.this).getBookDao().getBookByTitleList(editTextSearchBook.getText().toString());
+
                 RecyclerView myBooks = findViewById(R.id.recyclerView);
                 LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
-                if (book.size() != 0) {
-                    adapter = new RecyclerViewAdapterBook(BooksActivity.this,book);
-                    recyclerView  = findViewById(R.id.recyclerView);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(BooksActivity.this,2);
-                    recyclerView.setLayoutManager(gridLayoutManager);
-                    recyclerView.setAdapter(adapter);
 
-                    isEmpty.setVisibility(View.GONE);
-                    myBooks.setVisibility(View.VISIBLE);
-                }else {
-                    isEmpty.setVisibility(View.VISIBLE);
-                    myBooks.setVisibility(View.GONE);
-                }
+                biblioRepository.getBookByTitleList(editTextSearchBook.getText().toString()).observe(BooksActivity.this, new Observer<List<Book>>() {
+                    @Override
+                    public void onChanged(List<Book> books) {
+
+                        if (books.size() != 0) {
+                            adapter = new RecyclerViewAdapterBook(BooksActivity.this,books);
+                            recyclerView  = findViewById(R.id.recyclerView);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(BooksActivity.this,2);
+                            recyclerView.setLayoutManager(gridLayoutManager);
+                            recyclerView.setAdapter(adapter);
+
+                            isEmpty.setVisibility(View.GONE);
+                            myBooks.setVisibility(View.VISIBLE);
+                        }else {
+                            isEmpty.setVisibility(View.VISIBLE);
+                            myBooks.setVisibility(View.GONE);
+                        }
+                    }
+                });
             }
         });
 
@@ -130,44 +145,20 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
             }
             case R.id.nav_theme: {
 
-                // When user taps the enable/disable
-                // dark mode button
-                if (HomeActivity.isDarkModeOn) {
+                boolean isDarkModeOn = SessionManager.getTheme(BooksActivity.this);
 
-                    // if dark mode is on it
-                    // will turn it off
-                    AppCompatDelegate
-                            .setDefaultNightMode(
-                                    AppCompatDelegate
-                                            .MODE_NIGHT_NO);
-                    // it will set isDarkModeOn
-                    // boolean to false
-                    HomeActivity.editor.putBoolean("isDarkModeOn", false);
-                    HomeActivity.editor.apply();
-
-                    // change text of Button
+                if (isDarkModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    SessionManager.saveTheme(BooksActivity.this,false);
                 }
                 else {
-
-                    // if dark mode is off
-                    // it will turn it on
-                    AppCompatDelegate
-                            .setDefaultNightMode(
-                                    AppCompatDelegate
-                                            .MODE_NIGHT_YES);
-
-                    // it will set isDarkModeOn
-                    // boolean to true
-                    HomeActivity.editor.putBoolean("isDarkModeOn", true);
-                    HomeActivity.editor.apply();
-
-                    // change text of Button
-
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    SessionManager.saveTheme(BooksActivity.this,true);
                 }
                 break;
             }
             case R.id.nav_out: {
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 SessionManager.clearSession(BooksActivity.this);
                 BooksActivity.this.finish();

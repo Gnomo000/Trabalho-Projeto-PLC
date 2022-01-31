@@ -2,6 +2,7 @@ package pt.ipbeja.catlogoeletrnico;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -26,11 +27,21 @@ import java.util.List;
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     public static Activity closeRegisterActivity;
+    private BiblioRepository biblioRepository;
+    private EditText editTextName;
+    private EditText editTextDate;
+    private EditText editTextEmail;
+    private EditText editTextPhone;
+    private EditText editTextUserName;
+    private TextInputLayout editTextPassword;
+    private EditText editTextImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        this.biblioRepository = new BiblioRepository(this);
         findViewById(R.id.buttonCalendar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,37 +69,46 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         editTextDate.setText(date);
     }
 
-    public void createUser(View view) throws IOException {
-        EditText editTextName = findViewById(R.id.editTextRegisterName);
-        EditText editTextDate = findViewById(R.id.editTextRegisterDate);
-        EditText editTextEmail = findViewById(R.id.editTextRegisterEmail);
-        EditText editTextPhone = findViewById(R.id.editTextRegisterPhone);
-        EditText editTextUserName = findViewById(R.id.editTextRegisterUsername);
-        TextInputLayout editTextPassword = findViewById(R.id.editTextRegisterPassword);
-        EditText editTextImage = findViewById(R.id.editTextRegisterImage);
-
+    public void createUser(View view) {
+        editTextName = findViewById(R.id.editTextRegisterName);
+        editTextDate = findViewById(R.id.editTextRegisterDate);
+        editTextEmail = findViewById(R.id.editTextRegisterEmail);
+        editTextPhone = findViewById(R.id.editTextRegisterPhone);
+        editTextUserName = findViewById(R.id.editTextRegisterUsername);
+        editTextPassword = findViewById(R.id.editTextRegisterPassword);
+        editTextImage = findViewById(R.id.editTextRegisterImage);
         editTextDate.setInputType(InputType.TYPE_CLASS_DATETIME);
 
-        if (AppDataBase.getInstance(this).getUserDao().getUserByEmail(editTextEmail.getText().toString()) != null) {
-            AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-            alertAboutUs.setMessage("Email já existente");
-            alertAboutUs.create().show();
-        }else {
-            if(editTextName.getText().toString().isEmpty() || editTextEmail.getText().toString().isEmpty() || editTextDate.getText().toString().isEmpty()
-                    || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty()
-                        || editTextImage.getText().toString().isEmpty()){
+        biblioRepository.getUserByEmail(RegisterActivity.this,editTextEmail.getText().toString()).observe(RegisterActivity.this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(RegisterActivity.this,R.style.MyDialogTheme);
+                    alertAboutUs.setMessage("Email já existente");
+                    alertAboutUs.create().show();
+                }else {
+                    if (editTextName.getText().toString().isEmpty() || editTextEmail.getText().toString().isEmpty() || editTextDate.getText().toString().isEmpty()
+                            || editTextPhone.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty() || editTextPassword.getEditText().getText().toString().isEmpty()
+                            || editTextImage.getText().toString().isEmpty()) {
 
-                AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-                alertAboutUs.setMessage("Dados não preenchidos");
-                alertAboutUs.create().show();
-
-            }else{
-                User user = new User(0,editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(), editTextImage.getText().toString());
-                Intent intent = new Intent(this,HomeActivity.class);
-                AppDataBase.getInstance(this).getUserDao().add(user);
-                SessionManager.saveSession(RegisterActivity.this,user);
-                startActivity(intent);
+                        AlertDialog.Builder alertAboutUs = new AlertDialog.Builder(RegisterActivity.this,R.style.MyDialogTheme);
+                        alertAboutUs.setMessage("Dados não preenchidos");
+                        alertAboutUs.create().show();
+                    }else {
+                        User newUser = User.createUser(editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),editTextImage.getText().toString());
+                        biblioRepository.createUser(newUser);
+                        biblioRepository.getUserByEmail(RegisterActivity.this,newUser.getEmail()).observe(RegisterActivity.this, new Observer<User>() {
+                            @Override
+                            public void onChanged(User user) {
+                                Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
+                                SessionManager.saveSession(RegisterActivity.this,user);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }
             }
-        }
+        });
+
     }
 }

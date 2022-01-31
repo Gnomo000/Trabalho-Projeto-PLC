@@ -24,10 +24,11 @@ public interface RequestDao {
     @Query("SELECT * FROM Request WHERE id = :id")
     Request getById(int id);
 
-    @Query("SELECT * FROM Request WHERE email = :email AND title LIKE '%' || :title || '%' OR deliverDate LIKE '%' || :deliverDate || '%'  OR status LIKE '%' ||  :status || '%' OR requestDate LIKE '%' ||  :requestDate || '%'  ORDER BY id DESC")
-    List<Request> getRequestByTitle(String email,String title,String deliverDate,String status,String requestDate);
+    @Query("SELECT * FROM Request WHERE email = :email AND title LIKE '%' || :title || '%' OR status LIKE '%' ||  :status || '%'  ORDER BY id DESC")
+    List<Request> getRequestByTitle(String email,String title,String status);
 
     @Query("UPDATE Request SET status = :status WHERE id = :id")
     void  update(String status,int id);
+
 
 }
