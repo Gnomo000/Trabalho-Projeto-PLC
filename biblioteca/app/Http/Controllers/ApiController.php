@@ -233,6 +233,7 @@ class ApiController extends Controller
 //REQUISITION
 
     public function addRequisition(Request $request){
+
         $requisitions = new Requisition;
         $requisitions->email = $request->email;
         $requisitions->title = $request->title;
@@ -250,7 +251,6 @@ class ApiController extends Controller
         $requisitions = Requisition::get()->toJson(JSON_PRETTY_PRINT);
         return response($requisitions, 200);
     }
-
 
 
     public function getRequisitionByEmail($email){
@@ -327,4 +327,4 @@ class ApiController extends Controller
             
         }
     }
-}      
+}

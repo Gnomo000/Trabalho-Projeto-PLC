@@ -22,30 +22,26 @@ Route::post('users', [ApiController::class, 'addUser']);
 Route::get('users/', [ApiController::class, 'getAllUsers']);
 Route::get('users/{email}', [ApiController::class, 'getUserByEmail']);
 Route::get('users/{email}/{password}', [ApiController::class, 'getUserByPasswordAndEmail']);
-Route::put('users/{id}', [ApiController::class, 'updateUser']); //feito pelo raw
+Route::put('users/{id}', [ApiController::class, 'updateUser']);
 Route::delete('users/{id}', [ApiController::class, 'deleteUser']);
 
 //BOOK
-//BOOK
-//BOOK
-
 Route::post('books', [ApiController::class, 'addBook']);
 Route::delete('books/{id}', [ApiController::class, 'deleteBook']);
 Route::get('books', [ApiController::class, 'getAllBooks']);
 Route::get('books/quantity', [ApiController::class, 'getAllMoreZero']);
 Route::get('books/{title}', [ApiController::class, 'getBookByTitle']);
 Route::get('booksId/{id}', [ApiController::class, 'getBookById']);
-Route::put('books/{id}', [ApiController::class, 'updateBook']); //feito pelo raw
-Route::get('booksType/{string}', [ApiController::class, 'getBookByTitleList']);
+
+Route::put('books/{id}', [ApiController::class, 'updateBook']);
+Route::get('bookstype/{string}', [ApiController::class, 'getBookByTitleList']);
 Route::put('booksQuantity/{title}/{quantity}', [ApiController::class, 'updateBookQuantity']);
 
 //REQUISITION
-//REQUISITION
-//REQUISITION
-
 Route::post('requisitions', [ApiController::class, 'addRequisition']);
 Route::get('requisitions', [ApiController::class, 'getAllRequisitions']);
 Route::get('requisitions/{email}', [ApiController::class, 'getRequisitionByEmail']);
 Route::get('requisitionsId/{id}', [ApiController::class, 'getRequisitionById']);
 Route::get('requisitions/{email}/{string}', [ApiController::class, 'getRequisitionByTitle']);
 Route::put('requisitions/{id}/{status}', [ApiController::class, 'updateRequisition']);
+
