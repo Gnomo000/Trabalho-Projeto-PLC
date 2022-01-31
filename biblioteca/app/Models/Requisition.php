@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Requisition extends Model
 {
     use HasFactory;
-    protected $requesitions = 'requisitions';
+    protected $requisitions = 'requisitions';
     protected $fillable = ['email','title','requestDate','diliverDate','quantity','status'];
 
 

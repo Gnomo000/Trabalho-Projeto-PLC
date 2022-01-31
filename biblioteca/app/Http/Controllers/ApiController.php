@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Appuser;
 use App\Models\Book;
 use App\Models\Requisition;
 
 class ApiController extends Controller
 {
     public function addUser(Request $request){
-        $users = new User;
+        $users = new Appuser;
         $users->name = $request->name;
         $users->date = $request->date;
         $users->email = $request->email;            
@@ -24,8 +24,8 @@ class ApiController extends Controller
     }
 
     public function updateUser(Request $request, $id) {
-        if (User::where('id', $id)->exists()) {
-            $users = User::find($id);
+        if (Appuser::where('id', $id)->exists()) {
+            $users = Appuser::find($id);
             $users->name = is_null($request->name) ? $users->name : $request->name;
             $users->date = is_null($request->date) ? $users->date : $request->date;
             $users->email = is_null($request->email) ? $users->email : $request->email;
@@ -36,7 +36,7 @@ class ApiController extends Controller
             $users->save();
     
             return response()->json([
-                "message" => "User atualizado"
+                "message" => "Appuser atualizado"
             ], 200);
             } else {
             return response()->json([
@@ -47,28 +47,28 @@ class ApiController extends Controller
     }
 
     public function deleteUser ($id) {
-        if(User::where('id', $id)->exists()) {
-          $users = User::find($id);
+        if(Appuser::where('id', $id)->exists()) {
+          $users = Appuser::find($id);
           $users->delete();
   
           return response()->json([
-            "message" => "User eliminado"
+            "message" => "Appuser eliminado"
           ], 202);
         } else {
           return response()->json([
-            "message" => "User nao encontrado para eliminar"
+            "message" => "Appuser nao encontrado para eliminar"
           ], 404);
         }
     }
 
     public function getAllUsers(){
-        $usersAll = User::get()->toJson(JSON_PRETTY_PRINT);
+        $usersAll = Appuser::get()->toJson(JSON_PRETTY_PRINT);
         return response($usersAll, 200);
     }
 
     public function getUserByEmail($email){
-        if (User::where('email', $email)->exists()) {
-            $user = User::where('email', $email)->get()->toJson(JSON_PRETTY_PRINT);
+        if (Appuser::where('email', $email)->exists()) {
+            $user = Appuser::where('email', $email)->get()->toJson(JSON_PRETTY_PRINT);
             return response($user, 200);
           } else {
             return response()->json(["message" => "Users nao por email"], 404);
@@ -76,11 +76,11 @@ class ApiController extends Controller
     }
 
     public function getUserByPasswordAndEmail($email,$password){
-        if (User::where('email',$email)->where('password',$password)->exists()) {
-            $userEmailAndPass = User::where('email',$email)->where('password',$password)->get()->toJson(JSON_PRETTY_PRINT);
+        if (Appuser::where('email',$email)->where('password',$password)->exists()) {
+            $userEmailAndPass = Appuser::where('email',$email)->where('password',$password)->get()->toJson(JSON_PRETTY_PRINT);
             return response($userEmailAndPass,200);
         }else{
-            return response()->json(["message" => "User nao encontrado por email e pass"],404);
+            return response()->json(["message" => "Appuser nao encontrado por email e pass"],404);
         }
     }
 

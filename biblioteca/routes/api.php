@@ -44,4 +44,3 @@ Route::get('requisitions/{email}', [ApiController::class, 'getRequisitionByEmail
 Route::get('requisitionsId/{id}', [ApiController::class, 'getRequisitionById']);
 Route::get('requisitions/{email}/{string}', [ApiController::class, 'getRequisitionByTitle']);
 Route::put('requisitions/{id}/{status}', [ApiController::class, 'updateRequisition']);
-
