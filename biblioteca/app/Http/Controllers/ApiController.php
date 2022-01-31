@@ -20,7 +20,45 @@ class ApiController extends Controller
         $users->image = $request->image;
         $users->save();
 
-        return response()->json(["message" => "requests record created"], 201);
+        return response()->json(["message" => "Utilizador Criado"], 201);
+    }
+
+    public function updateUser(Request $request, $id) {
+        if (User::where('id', $id)->exists()) {
+            $users = User::find($id);
+            $users->name = is_null($request->name) ? $users->name : $request->name;
+            $users->date = is_null($request->date) ? $users->date : $request->date;
+            $users->email = is_null($request->email) ? $users->email : $request->email;
+            $users->phone = is_null($request->phone) ? $users->phone : $request->phone;
+            $users->username = is_null($request->username) ? $users->username : $request->username;
+            $users->password = is_null($request->password) ? $users->password : $request->password;
+            $users->image = is_null($request->image) ? $users->image : $request->image;
+            $users->save();
+    
+            return response()->json([
+                "message" => "User atualizado"
+            ], 200);
+            } else {
+            return response()->json([
+                "message" => "Nao foi encontrado o user"
+            ], 404);
+            
+        }
+    }
+
+    public function deleteUser ($id) {
+        if(User::where('id', $id)->exists()) {
+          $users = User::find($id);
+          $users->delete();
+  
+          return response()->json([
+            "message" => "User eliminado"
+          ], 202);
+        } else {
+          return response()->json([
+            "message" => "User nao encontrado para eliminar"
+          ], 404);
+        }
     }
 
     public function getAllUsers(){
@@ -33,7 +71,7 @@ class ApiController extends Controller
             $user = User::where('email', $email)->get()->toJson(JSON_PRETTY_PRINT);
             return response($user, 200);
           } else {
-            return response()->json(["message" => "Student not found"], 404);
+            return response()->json(["message" => "Users nao por email"], 404);
           }
     }
 
@@ -42,14 +80,51 @@ class ApiController extends Controller
             $userEmailAndPass = User::where('email',$email)->where('password',$password)->get()->toJson(JSON_PRETTY_PRINT);
             return response($userEmailAndPass,200);
         }else{
-            return response()->json(["message" => "User not found"],404);
+            return response()->json(["message" => "User nao encontrado por email e pass"],404);
         }
     }
 
 
+
+
+
 //BOOK
 //BOOK
 //BOOK
+
+    public function addBook(Request $request){
+        $books = new Book;
+        $books->title = $request->title;
+        $books->titleEn = $request->titleEn;
+        $books->author = $request->author;            
+        $books->edition = $request->edition;
+        $books->publisher = $request->publisher;
+        $books->synopse = $request->synopse;
+        $books->genders = $request->genders;
+        $books->quantity = $request->quantity;
+        $books->image = $request->image;
+        $books->save();
+
+        return response()->json(["message" => "Livro Criado"], 201);
+    }
+
+
+
+    public function deleteBook ($id) {
+        if(Book::where('id', $id)->exists()) {
+        $books = Book::find($id);
+        $books->delete();
+
+        return response()->json([
+            "message" => "Livro eliminado"
+        ], 202);
+        } else {
+        return response()->json([
+            "message" => "Livro nao encontrado para eliminar"
+        ], 404);
+        }
+    }
+
 
     public function getAllBooks() {
         $books = Book::get()->toJson(JSON_PRETTY_PRINT);
@@ -67,7 +142,7 @@ class ApiController extends Controller
             return response($books, 200);
         }else {
             return response()->json([
-              "message" => "Book by title not found"
+              "message" => "Livro nao encontrado pelo titulo"
             ], 404);
         }
     }
@@ -78,7 +153,7 @@ class ApiController extends Controller
             return response($id, 200);
         }else {
             return response()->json([
-              "message" => "Book by id not found"
+              "message" => "Livro nao encontrado por id"
             ], 404);
         }
     }
@@ -86,52 +161,78 @@ class ApiController extends Controller
     public function updateBook(Request $request, $id) {
         if (Book::where('id', $id)->exists()) {
             $books = Book::find($id);
+            $books->title = is_null($request->title) ? $books->title : $request->title;
+            $books->titleEn = is_null($request->titleEn) ? $books->titleEn : $request->titleEn;
+            $books->author = is_null($request->author) ? $books->author : $request->author;
+            $books->edition = is_null($request->edition) ? $books->edition : $request->edition;
+            $books->publisher = is_null($request->publisher) ? $books->publisher : $request->publisher;
+            $books->synopse = is_null($request->synopse) ? $books->synopse : $request->synopse;
+            $books->genders = is_null($request->genders) ? $books->genders : $request->genders;
             $books->quantity = is_null($request->quantity) ? $books->quantity : $request->quantity;
+            $books->image = is_null($request->image) ? $books->image : $request->image;
             $books->save();
     
             return response()->json([
-                "message" => "records updated successfully"
+                "message" => "Livro atualizado"
             ], 200);
-            } else {
+        } else {
             return response()->json([
-                "message" => "Book to update not found"
+                "message" => "Livro nao encontrado"
             ], 404);
             
         }
     }
 
-    public function getBookByTitleList($column, $string){
+    public function updateBookQuantity(Request $request, $title, $quantity) {
+        if (Book::where('title', $title)->exists()) {
+            $books = Book::find($title);
+            $books = Book::where('title', $title)->decrement('quantity', $quantity);
+    
+            return response()->json([
+                "message" => "Requisicao atualizada"
+            ], 200);
 
-        if (Book::where($column, 'LIKE', '%' . $string . '%')->exists()) {
-            $books = Book::where($column, 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
+        } else {
+            return response()->json([
+                "message" => "Requisicao para atualizar nao encontrada"
+            ], 404);
+        }
+    }
+
+    public function getBookByTitleList($string){
+
+        if (Book::where('title', 'LIKE', '%' . $string . '%')->exists()) {
+            $books = Book::where('title', 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
             return response($books,200);
+
+        }elseif (Book::where('titleEn', 'LIKE', '%' . $string . '%')->exists()) {
+            $books = Book::where('titleEn', 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($books,200);
+
+        }elseif (Book::where('author', 'LIKE', '%' . $string . '%')->exists()) {
+            $books = Book::where('author', 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($books,200);
+
+        }elseif (Book::where('publisher', 'LIKE', '%' . $string . '%')->exists()) {
+            $books = Book::where('publisher', 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($books,200);
+
+        }elseif (Book::where('genders', 'LIKE', '%' . $string . '%')->exists()) {
+            $books = Book::where('genders', 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($books,200);
+    
         }else{
             return response()->json([
-                "message" => "Book by word not found"
+                "message" => "Livro nao encontado por titulo"
             ],404);
         }
     }
 
-
 //REQUISITION
 //REQUISITION
 //REQUISITION
 
-    public function getAllRequisitions(){
-        $requisitions = Requisition::get()->toJson(JSON_PRETTY_PRINT);
-        return response($requisitions, 200);
-    }
-
-    public function getRequisitionByEmail($email){
-        if (Requisition::where('email', $email)->exists()) {
-            $requisition = Requisition::where('email', $email)->get()->toJson(JSON_PRETTY_PRINT);
-            return response($requisition, 200);
-          } else {
-            return response()->json(["message" => "Student not found"], 404);
-          }
-    }
-
-    public function addRequisition(Request $request){
+public function addRequisition(Request $request){
         $requisitions = new Requisition;
         $requisitions->email = $request->email;
         $requisitions->title = $request->title;
@@ -141,48 +242,88 @@ class ApiController extends Controller
         $requisitions->status = $request->status;
         $requisitions->save();
 
-        return response()->json(["message" => "requests record created"], 201);
+        return response()->json(["message" => "Requisicao adicionada"], 201);
 
     }
-    
+
+    public function getAllRequisitions(){
+        $requisitions = Requisition::get()->toJson(JSON_PRETTY_PRINT);
+        return response($requisitions, 200);
+    }
+
+
+
+
+
+
+    public function getRequisitionByEmail($email){
+        if (Requisition::where('email', $email)->exists()) {
+            $requisition = Requisition::where('email', $email)->orderBy('id','desc')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($requisition, 200);
+          } else {
+            return response()->json(["message" => "Requisicao nao encontrada por email"], 404);
+          }
+    }
+
     public function getRequisitionById($id) {
         if (Requisition::where('id', $id)->exists()) {
             $id = Requisition::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($id, 200);
         }else {
             return response()->json([
-              "message" => "Book by id not found"
+              "message" => "Requisicao nao encontrada por id"
             ], 404);
         }
     }
 
-    public function getRequisitionByTitle($column, $string){
+    public function getRequisitionByTitle($email, $string){
+        $requisitionsTitle = Requisition::find($string);
 
-        if (Requisition::where($column, 'LIKE', '%' . $string . '%')->exists()) {
-            $requisitions = Requisition::where($column, 'LIKE', '%' . $string . '%')->get()->toJson(JSON_PRETTY_PRINT);
-            return response($requisitions,200);
+        if (Requisition::where('title', 'LIKE', '%' . $string . '%')->exists()) {
+            $requisitionsTitle = Requisition::where('email', $email)->where('title', $string)->orderBy('id','desc')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($requisitionsTitle,200);
+
+        }elseif (Requisition::where('status', 'LIKE', '%' . $string . '%')->exists()) {
+            $requisitionsTitle = Requisition::where('email', $email)->where('status', $string)->orderBy('id','desc')->get()->toJson(JSON_PRETTY_PRINT);
+            return response($requisitionsTitle,200);
+
         }else{
-            return response()->json([
-                "message" => "YESNTSS by word not found"
-            ],404);
+        return response()->json([
+            "message" => "Livro nao encontado por titulo"
+        ],404);
         }
     }
+
+    public function updateBookQuantityasas(Request $request, $title, $quantity) {
+        if (Book::where('title', $title)->exists()) {
+            $books = Book::find($title);
+            $books = Book::where('title', $title)->decrement('quantity', $quantity);
     
+            return response()->json([
+                "message" => "Requisicao atualizada"
+            ], 200);
+
+        } else {
+            return response()->json([
+                "message" => "Requisicao para atualizar nao encontrada"
+            ], 404);
+        }
+    }
+
     public function updateRequisition(Request $request, $id) {
         if (Requisition::where('id', $id)->exists()) {
             $requisitions = Requisition::find($id);
             $requisitions->status = is_null($request->status) ? $requisitions->status : $request->status;
             $requisitions->save();
-    
+            
             return response()->json([
-                "message" => "records updated successfully"
+                "message" => "Requisicao atualizada"
             ], 200);
             } else {
             return response()->json([
-                "message" => "Book to update not found"
+                "message" => "Requisicao para atualizar nao encontrada"
             ], 404);
             
         }
     }
 }
-
