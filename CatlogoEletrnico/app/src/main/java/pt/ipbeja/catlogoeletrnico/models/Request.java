@@ -1,4 +1,4 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

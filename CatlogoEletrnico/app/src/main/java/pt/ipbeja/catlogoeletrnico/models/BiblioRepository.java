@@ -1,4 +1,4 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -7,8 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
-import java.util.logging.Handler;
 
+import pt.ipbeja.catlogoeletrnico.models.Book;
+import pt.ipbeja.catlogoeletrnico.models.Request;
+import pt.ipbeja.catlogoeletrnico.models.User;
+import pt.ipbeja.catlogoeletrnico.models.retrofit.BiblioService;
+import pt.ipbeja.catlogoeletrnico.models.retrofit.DataSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,7 +20,6 @@ import retrofit2.Response;
 public class BiblioRepository {
 
     private final Context context;
-    private android.os.Handler handler = new android.os.Handler();
 
     public BiblioRepository(Context context) {
         this.context = context;
@@ -93,32 +96,29 @@ public class BiblioRepository {
         });
     }
 
-    public LiveData<List<Request>> getRequestListByEmail(Context context, String email) {
+    public LiveData<List<Request>> getRequestListByEmail(String email) {
         MutableLiveData<List<Request>> userMutableLiveData = new MutableLiveData<>();
-        handler.postDelayed(new Runnable() {
+        BiblioService service = DataSource.getService();
+        service.getRequestListByEmail(email).enqueue(new Callback<List<Request>>() {
             @Override
-            public void run() {
-                BiblioService service = DataSource.getService();
-                service.getRequestListByEmail(email).enqueue(new Callback<List<Request>>() {
-                    @Override
-                    public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
-                        if (response.isSuccessful()) {
-                            List<Request> requests = response.body();
-                            if (requests.size() > 0) {
-                                userMutableLiveData.postValue(response.body());
-                            }else {
-                                userMutableLiveData.postValue(null);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Request>> call, Throwable t) {
+            public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().size() > 0) {
+                        userMutableLiveData.postValue(response.body());
+                    }else if(response.body().size() > 0){
+                        userMutableLiveData.postValue(null);
+                    } else {
                         userMutableLiveData.postValue(null);
                     }
-                });
+                }
             }
-        },3000);
+
+            @Override
+            public void onFailure(Call<List<Request>> call, Throwable t) {
+                t.printStackTrace();
+                userMutableLiveData.postValue(null);
+            }
+        });
 
         return userMutableLiveData;
     }
@@ -141,70 +141,63 @@ public class BiblioRepository {
 
     public LiveData<List<Book>> getAllBooksMoreZero(){
         MutableLiveData<List<Book>> bookMutableLiveData = new MutableLiveData<>();
-        handler.postDelayed(new Runnable() {
+        BiblioService service = DataSource.getService();
+        Call<List<Book>> call = service.getAllBooksMoreZero();
+        call.enqueue(new Callback<List<Book>>() {
             @Override
-            public void run() {
-                BiblioService service = DataSource.getService();
-                Call<List<Book>> call = service.getAllBooksMoreZero();
-                call.enqueue(new Callback<List<Book>>() {
-                    @Override
-                    public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                        bookMutableLiveData.postValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Book>> call, Throwable t) {
-                        bookMutableLiveData.postValue(null);
-                    }
-                });
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                bookMutableLiveData.postValue(response.body());
             }
-        },3000);
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                bookMutableLiveData.postValue(null);
+            }
+        });
         return bookMutableLiveData;
     }
 
     public LiveData<List<Book>> getAllBooks(){
         MutableLiveData<List<Book>> mutableLiveData = new MutableLiveData<>();
-        handler.postDelayed(new Runnable() {
+        BiblioService service = DataSource.getService();
+        Call<List<Book>> call = service.getAllBooks();
+        call.enqueue(new Callback<List<Book>>() {
             @Override
-            public void run() {
-                BiblioService service = DataSource.getService();
-                Call<List<Book>> call = service.getAllBooks();
-                call.enqueue(new Callback<List<Book>>() {
-                    @Override
-                    public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().size() > 0) {
                         mutableLiveData.postValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Book>> call, Throwable t) {
+                    }else if(response.body().size() > 0){
+                        mutableLiveData.postValue(null);
+                    } else {
                         mutableLiveData.postValue(null);
                     }
-                });
+                }
             }
-        },3000);
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                mutableLiveData.postValue(null);
+            }
+        });
         return mutableLiveData;
     }
 
     public LiveData<List<Book>> getBookByTitleList(String string){
         MutableLiveData<List<Book>> mutableLiveData = new MutableLiveData<>();
-        handler.postDelayed(new Runnable() {
+        BiblioService service = DataSource.getService();
+        Call<List<Book>> call = service.getBookByTitleList(string);
+        call.enqueue(new Callback<List<Book>>() {
             @Override
-            public void run() {
-                BiblioService service = DataSource.getService();
-                Call<List<Book>> call = service.getBookByTitleList(string);
-                call.enqueue(new Callback<List<Book>>() {
-                    @Override
-                    public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                        mutableLiveData.postValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Book>> call, Throwable t) {
-                        mutableLiveData.postValue(null);
-                    }
-                });
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                mutableLiveData.postValue(response.body());
             }
-        },3000);
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                mutableLiveData.postValue(null);
+            }
+        });
         return mutableLiveData;
     }
 
@@ -228,24 +221,23 @@ public class BiblioRepository {
 
     public LiveData<Book> getBookByTitle(String title){
         MutableLiveData<Book> mutableLiveData = new MutableLiveData<>();
-        handler.postDelayed(new Runnable() {
+        BiblioService service = DataSource.getService();
+        Call<List<Book>> call = service.getBookByTitle(title);
+        call.enqueue(new Callback<List<Book>>() {
             @Override
-            public void run() {
-                BiblioService service = DataSource.getService();
-                Call<List<Book>> call = service.getBookByTitle(title);
-                call.enqueue(new Callback<List<Book>>() {
-                    @Override
-                    public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().size() > 0) {
                         mutableLiveData.postValue(response.body().get(0));
                     }
-
-                    @Override
-                    public void onFailure(Call<List<Book>> call, Throwable t) {
-                        mutableLiveData.postValue(null);
-                    }
-                });
+                }
             }
-        },3000);
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                mutableLiveData.postValue(null);
+            }
+        });
         return mutableLiveData;
     }
 
@@ -301,33 +293,26 @@ public class BiblioRepository {
 
     public LiveData<List<Request>> getRequestByTitle(String email, String string){
         MutableLiveData<List<Request>> userMutableLiveData = new MutableLiveData<>();
-        handler.postDelayed(new Runnable() {
+        BiblioService service = DataSource.getService();
+        service.getRequestByTitle(email,string).enqueue(new Callback<List<Request>>() {
             @Override
-            public void run() {
-                BiblioService service = DataSource.getService();
-                service.getRequestByTitle(email,string).enqueue(new Callback<List<Request>>() {
-                    @Override
-                    public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
-                        if (response.isSuccessful()) {
-                            List<Request> requests = response.body();
-                            if (requests.size() > 0) {
-                                userMutableLiveData.postValue(response.body());
-                            }else {
-                                userMutableLiveData.postValue(null);
-                                Toast toast = Toast.makeText(context, "Erro! Email existentes",Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Request>> call, Throwable t) {
-                        t.printStackTrace();
+            public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
+                if (response.isSuccessful()) {
+                    List<Request> requests = response.body();
+                    if (requests.size() > 0) {
+                        userMutableLiveData.postValue(response.body());
+                    }else {
                         userMutableLiveData.postValue(null);
                     }
-                });
+                }
             }
-        },3000);
+
+            @Override
+            public void onFailure(Call<List<Request>> call, Throwable t) {
+                t.printStackTrace();
+                userMutableLiveData.postValue(null);
+            }
+        });
         return userMutableLiveData;
     }
 }

@@ -1,8 +1,9 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +13,22 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.models.User;
+import pt.ipbeja.catlogoeletrnico.viewModels.MainViewModel;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
     private TextInputLayout editTextPassword;
-    private BiblioRepository biblioRepository;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        User user = SessionManager.getActiveSession(this);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        User user = mainViewModel.getActiveSession();
         if (user != null) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
@@ -30,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.biblioRepository = new BiblioRepository(getApplicationContext());
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
@@ -46,16 +52,16 @@ public class MainActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassLoginPass);
 
 
-        biblioRepository.getUserByEmail(MainActivity.this,editTextEmail.getText().toString()).observe(MainActivity.this, new Observer<User>() {
+        mainViewModel.getUserByEmail(MainActivity.this,editTextEmail.getText().toString()).observe(MainActivity.this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
-                    biblioRepository.getUserByPasswordAndEmail(MainActivity.this,editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()).observe(MainActivity.this, new Observer<User>() {
+                    mainViewModel.getUserByPasswordAndEmail(MainActivity.this,editTextEmail.getText().toString(),editTextPassword.getEditText().getText().toString()).observe(MainActivity.this, new Observer<User>() {
                         @Override
                         public void onChanged(User user) {
                             if (user != null) {
                                 Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                                SessionManager.saveSession(MainActivity.this,user);
+                                mainViewModel.saveSession(user);
                                 startActivity(intent);
                                 finish();
                             }else {

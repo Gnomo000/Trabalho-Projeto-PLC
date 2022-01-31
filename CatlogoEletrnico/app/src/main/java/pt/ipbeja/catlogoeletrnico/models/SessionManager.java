@@ -1,7 +1,9 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import pt.ipbeja.catlogoeletrnico.models.User;
 
 public class SessionManager {
     private static final String KEY_ID = "ID";
@@ -13,6 +15,7 @@ public class SessionManager {
     private static final String KEY_PASSWORD = "PASSWORD";
     private static final String KEY_IMAGE = "IMAGE";
     private static final String KEY_DARKTHEME = "isDarkModeOn";
+    private Context context;
 
     private static SharedPreferences sharedpreferences;
     private static SharedPreferences sharedpreferencesTheme;

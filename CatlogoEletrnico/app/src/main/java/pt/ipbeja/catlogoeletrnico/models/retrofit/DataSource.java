@@ -1,4 +1,4 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models.retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

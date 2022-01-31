@@ -1,4 +1,4 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models.room;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
+
+import pt.ipbeja.catlogoeletrnico.models.Book;
 
 @Dao
 public interface BookDao {

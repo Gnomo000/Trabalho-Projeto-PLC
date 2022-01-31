@@ -14,49 +14,49 @@
         android:theme="@style/Theme.CatálogoEletrónico.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".HistoryDetailsActivity"
+            android:name=".view.HistoryDetailsActivity"
             android:label="Nome Livro"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Drawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HistoryActivity" />
+                android:value=".view.HistoryActivity" />
         </activity>
         <activity
-            android:name=".BookDetailsActivity"
+            android:name=".view.BookDetailsActivity"
             android:label="Nome Livro"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Drawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BooksActivity" />
+                android:value=".view.BooksActivity" />
         </activity>
         <activity
-            android:name=".BooksActivity"
+            android:name=".view.BooksActivity"
             android:label="Livros"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.NoDrawer" />
         <activity
-            android:name=".HistoryActivity"
+            android:name=".view.HistoryActivity"
             android:label="Histórico"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.NoDrawer" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".view.HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.NoDrawer" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".view.RegisterActivity"
             android:label="@string/app_register"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CatálogoEletrónico.Light.Drawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".view.MainActivity" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>

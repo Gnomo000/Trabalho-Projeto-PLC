@@ -1,9 +1,10 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.view;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
+import pt.ipbeja.catlogoeletrnico.models.Book;
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.models.Request;
+import pt.ipbeja.catlogoeletrnico.viewModels.BookDetailsViewModel;
+
 public class BookDetailsActivity extends AppCompatActivity {
 
     public static void startActivity(Context context, int id) {
@@ -35,7 +41,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_ITEMID = "ITEMID";
     private static final String TAG = "BookDetailsActivity";
-    private BiblioRepository biblioRepository;
+    private BookDetailsViewModel bookDetailsViewModel;
 
     private ImageView imageViewBook;
     private TextView textViewBook;
@@ -54,7 +60,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
 
-        this.biblioRepository = new BiblioRepository(this);
+        bookDetailsViewModel = new ViewModelProvider(this).get(BookDetailsViewModel.class);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -77,7 +83,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 return;
             }
 
-            biblioRepository.getBookById(id).observe(this, new Observer<List<Book>>() {
+            bookDetailsViewModel.getBookById(id).observe(this, new Observer<List<Book>>() {
                 @Override
                 public void onChanged(List<Book> books) {
 
@@ -114,10 +120,10 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     public void requestBook(View view) {
 
-        biblioRepository.getBookById(id).observe(this, new Observer<List<Book>>() {
+        bookDetailsViewModel.getBookById(id).observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                biblioRepository.getBookByTitle(books.get(0).getTitle()).observe(BookDetailsActivity.this, new Observer<Book>() {
+                bookDetailsViewModel.getBookByTitle(books.get(0).getTitle()).observe(BookDetailsActivity.this, new Observer<Book>() {
                     @Override
                     public void onChanged(Book book) {
                         AlertDialog.Builder areYouShure = new AlertDialog.Builder(BookDetailsActivity.this,R.style.MyDialogTheme);
@@ -142,9 +148,9 @@ public class BookDetailsActivity extends AppCompatActivity {
                                         String dateNow = sdf.format(Calendar.getInstance().getTime());
                                         LocalDate localDate = LocalDate.now().plusMonths(1);
                                         String dateAfter = dtf.format(localDate);
-                                        Request request = new Request(0,SessionManager.getActiveSession(BookDetailsActivity.this).getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
-                                        biblioRepository.addRequest(request);
-                                        biblioRepository.updateBookQuantity(book.getTitle(),getQuantity);
+                                        Request request = new Request(0, bookDetailsViewModel.getActiveSession().getEmail(),book.getTitle(),dateNow,dateAfter,getQuantity,"Por Levantar");
+                                        bookDetailsViewModel.addRequest(request);
+                                        bookDetailsViewModel.updateBookQuantity(book.getTitle(),getQuantity);
                                         BookDetailsActivity.this.recreate();
                                     }
                                 });
@@ -177,7 +183,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
         PhotoView photoView = mView.findViewById(R.id.photo_view);
-        biblioRepository.getBookById(id).observe(this, new Observer<List<Book>>() {
+        bookDetailsViewModel.getBookById(id).observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
                 Glide.with(BookDetailsActivity.this).load(books.get(0).getImage()).into(photoView);

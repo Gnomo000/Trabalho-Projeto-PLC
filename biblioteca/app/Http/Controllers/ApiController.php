@@ -141,9 +141,7 @@ class ApiController extends Controller
             $books = Book::where('title', $title)->get()->toJson(JSON_PRETTY_PRINT);
             return response($books, 200);
         }else {
-            return response()->json([
-              "message" => "Livro nao encontrado pelo titulo"
-            ], 404);
+            return response()->json([], 404);
         }
     }
 
@@ -152,9 +150,7 @@ class ApiController extends Controller
             $id = Book::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($id, 200);
         }else {
-            return response()->json([
-              "message" => "Livro nao encontrado por id"
-            ], 404);
+            return response()->json([], 404);
         }
     }
     
@@ -222,9 +218,7 @@ class ApiController extends Controller
             return response($books,200);
     
         }else{
-            return response()->json([
-                "message" => "Livro nao encontado por titulo"
-            ],404);
+            return response()->json([],404);
         }
     }
 
@@ -258,7 +252,7 @@ class ApiController extends Controller
             $requisition = Requisition::where('email', $email)->orderBy('id','desc')->get()->toJson(JSON_PRETTY_PRINT);
             return response($requisition, 200);
           } else {
-            return response()->json(["message" => "Requisicao nao encontrada por email"], 404);
+            return response([], 200);
           }
     }
 
@@ -267,9 +261,7 @@ class ApiController extends Controller
             $id = Requisition::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($id, 200);
         }else {
-            return response()->json([
-              "message" => "Requisicao nao encontrada por id"
-            ], 404);
+            return response()->json([], 404);
         }
     }
 
@@ -289,9 +281,7 @@ class ApiController extends Controller
             return response($requisitionsTitle,200);
 
         }else{
-        return response()->json([
-            "message" => "Livro nao encontado por titulo"
-        ],404);
+        return response()->json([],404);
         }
     }
 

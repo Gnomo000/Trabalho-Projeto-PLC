@@ -1,9 +1,10 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.view;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 
+import pt.ipbeja.catlogoeletrnico.models.Book;
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.models.Request;
+import pt.ipbeja.catlogoeletrnico.viewModels.HistoryDetailsViewModel;
+
 public class HistoryDetailsActivity extends AppCompatActivity {
 
     public static void startActivity(Context context, int id) {
@@ -28,7 +34,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_ITEMID = "ITEMID";
     private static final String TAG = "HistoryDetailsActivity";
-    private BiblioRepository biblioRepository;
+    private HistoryDetailsViewModel historyDetailsViewModel;
 
     private ImageView imageViewBook;
     private TextView textViewBook;
@@ -54,7 +60,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_details);
 
         ActionBar actionBar = getSupportActionBar();
-        this.biblioRepository = new BiblioRepository(this);
+        this.historyDetailsViewModel = new ViewModelProvider(this).get(HistoryDetailsViewModel.class);
 
         this.imageViewBook = findViewById(R.id.imageViewBook);
         this.textViewBook = findViewById(R.id.bookTitle);
@@ -81,7 +87,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
                 return;
             }
 
-            biblioRepository.getRequestById(id).observe(this, new Observer<Request>() {
+            historyDetailsViewModel.getRequestById(id).observe(this, new Observer<Request>() {
                 @Override
                 public void onChanged(Request request) {
                     HistoryDetailsActivity.this.textViewStade.setText(request.getStatus());
@@ -101,7 +107,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
                         Log.i("POOP","|"+request.getStatus()+"|");
                     }
 
-                    biblioRepository.getBookByTitle(request.getTitle()).observe(HistoryDetailsActivity.this, new Observer<Book>() {
+                    historyDetailsViewModel.getBookByTitle(request.getTitle()).observe(HistoryDetailsActivity.this, new Observer<Book>() {
                         @Override
                         public void onChanged(Book book) {
 

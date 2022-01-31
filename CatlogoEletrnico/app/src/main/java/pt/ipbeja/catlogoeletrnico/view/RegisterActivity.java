@@ -1,33 +1,30 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.view;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Calendar;
-import java.util.List;
+
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.models.User;
+import pt.ipbeja.catlogoeletrnico.viewModels.RegisterViewModel;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     public static Activity closeRegisterActivity;
-    private BiblioRepository biblioRepository;
     private EditText editTextName;
     private EditText editTextDate;
     private EditText editTextEmail;
@@ -35,13 +32,15 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     private EditText editTextUserName;
     private TextInputLayout editTextPassword;
     private EditText editTextImage;
+    private RegisterViewModel registerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        this.biblioRepository = new BiblioRepository(this);
+        this.registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+
         findViewById(R.id.buttonCalendar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         editTextImage = findViewById(R.id.editTextRegisterImage);
         editTextDate.setInputType(InputType.TYPE_CLASS_DATETIME);
 
-        biblioRepository.getUserByEmail(RegisterActivity.this,editTextEmail.getText().toString()).observe(RegisterActivity.this, new Observer<User>() {
+        registerViewModel.getUserByEmail(RegisterActivity.this,editTextEmail.getText().toString()).observe(RegisterActivity.this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
@@ -96,12 +95,12 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         alertAboutUs.create().show();
                     }else {
                         User newUser = User.createUser(editTextName.getText().toString(),editTextDate.getText().toString(),editTextEmail.getText().toString(),editTextPhone.getText().toString(),editTextUserName.getText().toString(),editTextPassword.getEditText().getText().toString(),editTextImage.getText().toString());
-                        biblioRepository.createUser(newUser);
-                        biblioRepository.getUserByEmail(RegisterActivity.this,newUser.getEmail()).observe(RegisterActivity.this, new Observer<User>() {
+                        registerViewModel.createUser(newUser);
+                        registerViewModel.getUserByEmail(RegisterActivity.this,newUser.getEmail()).observe(RegisterActivity.this, new Observer<User>() {
                             @Override
                             public void onChanged(User user) {
-                                Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
-                                SessionManager.saveSession(RegisterActivity.this,user);
+                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                                registerViewModel.saveSession(user);
                                 startActivity(intent);
                             }
                         });

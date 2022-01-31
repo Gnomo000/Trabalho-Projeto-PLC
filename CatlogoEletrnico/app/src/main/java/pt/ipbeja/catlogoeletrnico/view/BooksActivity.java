@@ -1,4 +1,4 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,13 +28,18 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
+import pt.ipbeja.catlogoeletrnico.models.Book;
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.models.AdapterBook;
+import pt.ipbeja.catlogoeletrnico.viewModels.BooksViewModel;
+
 public class BooksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
-    private RecyclerViewAdapterBook adapter;
+    private AdapterBook adapter;
     private RecyclerView recyclerView;
     private EditText editTextSearchBook;
-    private BiblioRepository biblioRepository;
+    private BooksViewModel booksViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +53,30 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
-
         recyclerView = findViewById(R.id.recyclerView);
-        this.biblioRepository = new BiblioRepository(this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        booksViewModel = new ViewModelProvider(this).get(BooksViewModel.class);
 
-        biblioRepository.getAllBooks().observe(BooksActivity.this, new Observer<List<Book>>() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        adapter = new AdapterBook(BooksActivity.this);
+        recyclerView.setAdapter(adapter);
+
+        LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+
+        booksViewModel.getAllBooks().observe(BooksActivity.this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                adapter = new RecyclerViewAdapterBook(BooksActivity.this,books);
-                recyclerView.setLayoutManager(gridLayoutManager);
-                recyclerView.setAdapter(adapter);
+                if (books != null && books.size() != 0) {
+                    isEmpty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    TextView textView = findViewById(R.id.emptyMessage);
+                    textView.setText("Livro Não Encontrado\nDesculpe!");
+
+                    isEmpty.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+                adapter.update(books);
             }
         });
 
@@ -72,9 +90,9 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(SessionManager.getActiveSession(this).getUsername());
-        Glide.with(this).load(SessionManager.getActiveSession(this).getImage()).into(imageViewImage);
-        textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
+        textViewName.setText(booksViewModel.getActiveSession().getUsername());
+        Glide.with(this).load(booksViewModel.getActiveSession().getImage()).into(imageViewImage);
+        textViewEmail.setText(booksViewModel.getActiveSession().getEmail());
 
         editTextSearchBook = findViewById(R.id.editTextSearchBook);
         editTextSearchBook.addTextChangedListener(new TextWatcher() {
@@ -87,26 +105,23 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void afterTextChanged(Editable s) {
 
-                RecyclerView myBooks = findViewById(R.id.recyclerView);
-                LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+                adapter = new AdapterBook(BooksActivity.this);
+                recyclerView.setAdapter(adapter);
 
-                biblioRepository.getBookByTitleList(editTextSearchBook.getText().toString()).observe(BooksActivity.this, new Observer<List<Book>>() {
+                booksViewModel.getBookByTitleList(editTextSearchBook.getText().toString()).observe(BooksActivity.this, new Observer<List<Book>>() {
                     @Override
                     public void onChanged(List<Book> books) {
-
-                        if (books.size() != 0) {
-                            adapter = new RecyclerViewAdapterBook(BooksActivity.this,books);
-                            recyclerView  = findViewById(R.id.recyclerView);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(BooksActivity.this,2);
-                            recyclerView.setLayoutManager(gridLayoutManager);
-                            recyclerView.setAdapter(adapter);
-
+                        if (books != null && books.size() != 0) {
                             isEmpty.setVisibility(View.GONE);
-                            myBooks.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.VISIBLE);
                         }else {
+                            TextView textView = findViewById(R.id.emptyMessage);
+                            textView.setText("Livro Não Encontrado\nDesculpe!");
+
                             isEmpty.setVisibility(View.VISIBLE);
-                            myBooks.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.GONE);
                         }
+                        adapter.update(books);
                     }
                 });
             }
@@ -126,41 +141,64 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onStart() {
         super.onStart();
+
+        LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
+
+        booksViewModel.getAllBooks().observe(BooksActivity.this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                if (books != null && books.size() != 0){
+                    BooksActivity.this.adapter.update(books);
+
+                    isEmpty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    TextView textView = findViewById(R.id.emptyMessage);
+                    textView.setText("Livro Não Encontrado\nDesculpe!");
+
+                    isEmpty.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_books);
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home: {
-                Intent intent = new Intent(this,HomeActivity.class);
+                Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_history: {
-                Intent intent = new Intent(this,HistoryActivity.class);
+                Intent intent = new Intent(this, HistoryActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_theme: {
 
-                boolean isDarkModeOn = SessionManager.getTheme(BooksActivity.this);
+                boolean isDarkModeOn = booksViewModel.getTheme();
 
                 if (isDarkModeOn) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    SessionManager.saveTheme(BooksActivity.this,false);
+                    booksViewModel.saveTheme(false);
                 }
                 else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    SessionManager.saveTheme(BooksActivity.this,true);
+                    booksViewModel.saveTheme(true);
                 }
                 break;
             }
             case R.id.nav_out: {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                SessionManager.clearSession(BooksActivity.this);
+                booksViewModel.clearSession();
                 BooksActivity.this.finish();
                 break;
             }

@@ -1,4 +1,4 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,19 +25,25 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import pt.ipbeja.catlogoeletrnico.models.Book;
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.models.AdapterBook;
+import pt.ipbeja.catlogoeletrnico.models.AdapterHistory;
+import pt.ipbeja.catlogoeletrnico.models.Request;
+import pt.ipbeja.catlogoeletrnico.viewModels.HomeViewModel;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
-    private RecyclerViewAdapterHistory adapterMyBooks;
-    private RecyclerViewAdapterBook adapterAllBooks;
+    private AdapterHistory adapterMyBooks;
+    private AdapterBook adapterAllBooks;
     private boolean isDarkModeOn;
     TextView textViewName;
-    private BiblioRepository biblioRepository;
+    private HomeViewModel homeViewModel;
     private RecyclerView myBooks;
     private RecyclerView allBooks;
 
@@ -45,13 +52,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        this.biblioRepository = new BiblioRepository(this);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+        homeViewModel.getRequestListByEmail(homeViewModel.getActiveSession().getEmail()).observe(this, new Observer<List<Request>>() {
             @Override
             public void onChanged(List<Request> requests) {
-                if (requests.size() != 0) {
+                if (requests != null && requests.size() != 0) {
                     Date dateDeliver = null;
                     Date dateQ  = Calendar.getInstance().getTime();
 
@@ -63,9 +70,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         }
 
                         if (dateQ.after(dateDeliver)) {
-                            biblioRepository.updateRequestStatus(requests.get(i).getId(),"Atrazado");
+                            homeViewModel.updateRequestStatus(requests.get(i).getId(),"Atrazado");
                         }else {
-                            biblioRepository.updateRequestStatus(requests.get(i).getId(),"Por Levantar");
+                            homeViewModel.updateRequestStatus(requests.get(i).getId(),"Por Levantar");
                         }
                     }
                 }
@@ -92,50 +99,49 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView textViewEmail = headerView.findViewById(R.id.navEmail);
         ImageView imageViewImage = headerView.findViewById(R.id.imageViewDr);
 
-        textViewName.setText(SessionManager.getActiveSession(this).getUsername());
-        Glide.with(this).load(SessionManager.getActiveSession(this).getImage()).into(imageViewImage);
-        textViewEmail.setText(SessionManager.getActiveSession(this).getEmail());
+        textViewName.setText(homeViewModel.getActiveSession().getUsername());
+        Glide.with(this).load(homeViewModel.getActiveSession().getImage()).into(imageViewImage);
+        textViewEmail.setText(homeViewModel.getActiveSession().getEmail());
 
         LinearLayoutManager layoutManagerMyBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManagerAllBooks = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         myBooks =  findViewById(R.id.recyclerViewMyBooks);
         allBooks = findViewById(R.id.recyclerViewallBooks);
+
         myBooks.setLayoutManager(layoutManagerMyBooks);
         allBooks.setLayoutManager(layoutManagerAllBooks);
 
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+        adapterMyBooks = new AdapterHistory(HomeActivity.this);
+        myBooks.setAdapter(adapterMyBooks);
+
+        adapterAllBooks = new AdapterBook(HomeActivity.this);
+        allBooks.setAdapter(adapterAllBooks);
+
+        homeViewModel.getRequestListByEmail(homeViewModel.getActiveSession().getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
             @Override
             public void onChanged(List<Request> requests) {
-                if (requests.size() == 0) {
-                    isEmpty.setVisibility(View.VISIBLE);
-                    myBooks.setVisibility(View.GONE);
-                }else {
+                if (requests != null && requests.size() != 0) {
                     isEmpty.setVisibility(View.GONE);
                     myBooks.setVisibility(View.VISIBLE);
+                }else {
+                    isEmpty.setVisibility(View.VISIBLE);
+                    myBooks.setVisibility(View.GONE);
                 }
+                adapterMyBooks.update(requests);
             }
         });
 
-        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
-            @Override
-            public void onChanged(List<Request> requests) {
-                adapterMyBooks = new RecyclerViewAdapterHistory(HomeActivity.this,requests);
-                myBooks.setAdapter(adapterMyBooks);
-            }
-        });
-
-        biblioRepository.getAllBooksMoreZero().observe(HomeActivity.this, new Observer<List<Book>>() {
+        homeViewModel.getAllBooksMoreZero().observe(HomeActivity.this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                adapterAllBooks = new RecyclerViewAdapterBook(HomeActivity.this,books);
-                allBooks.setAdapter(adapterAllBooks);
+                adapterAllBooks.update(books);
             }
         });
 
-        isDarkModeOn = SessionManager.getTheme(this);
+        isDarkModeOn = homeViewModel.getTheme();
 
         if (isDarkModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -150,35 +156,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
 
-        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
-            @Override
-            public void onChanged(List<Request> requests) {
-                adapterMyBooks.update(requests);
-                myBooks.setAdapter(adapterMyBooks);
-            }
-        });
-
-        biblioRepository.getAllBooksMoreZero().observe(HomeActivity.this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-                adapterAllBooks.update(books);
-                allBooks.setAdapter(adapterAllBooks);
-            }
-        });
-
         RecyclerView myBooks = findViewById(R.id.recyclerViewMyBooks);
         LinearLayout isEmpty = findViewById(R.id.listIsEmpty);
 
-        biblioRepository.getRequestListByEmail(HomeActivity.this,SessionManager.getActiveSession(this).getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
+        homeViewModel.getRequestListByEmail(homeViewModel.getActiveSession().getEmail()).observe(HomeActivity.this, new Observer<List<Request>>() {
             @Override
             public void onChanged(List<Request> requests) {
-                if (requests.size() == 0) {
-                    isEmpty.setVisibility(View.VISIBLE);
-                    myBooks.setVisibility(View.GONE);
-                }else {
+                if (requests != null && requests.size() != 0) {
                     isEmpty.setVisibility(View.GONE);
                     myBooks.setVisibility(View.VISIBLE);
+                }else {
+                    isEmpty.setVisibility(View.VISIBLE);
+                    myBooks.setVisibility(View.GONE);
                 }
+                adapterMyBooks.update(requests);
+            }
+        });
+
+        homeViewModel.getAllBooksMoreZero().observe(HomeActivity.this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                adapterAllBooks.update(books);
             }
         });
 
@@ -200,19 +198,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_history: {
-                Intent intent = new Intent(this,HistoryActivity.class);
+                Intent intent = new Intent(this, HistoryActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_books: {
-                Intent intent = new Intent(this,BooksActivity.class);
+                Intent intent = new Intent(this, BooksActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_out: {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                SessionManager.clearSession(HomeActivity.this);
+                homeViewModel.clearSession();
                 HomeActivity.this.finish();
                 break;
             }
@@ -220,11 +218,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 if (isDarkModeOn) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    SessionManager.saveTheme(HomeActivity.this,false);
+                    homeViewModel.saveTheme(false);
                 }
                 else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    SessionManager.saveTheme(HomeActivity.this,true);
+                    homeViewModel.saveTheme(true);
                 }
                 break;
             }

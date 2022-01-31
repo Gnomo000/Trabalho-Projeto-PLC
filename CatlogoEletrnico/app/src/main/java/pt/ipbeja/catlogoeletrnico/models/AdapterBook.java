@@ -1,11 +1,9 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,17 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAdapterBook.ViewHolder> {
+import pt.ipbeja.catlogoeletrnico.R;
+import pt.ipbeja.catlogoeletrnico.view.BookDetailsActivity;
+
+public class AdapterBook extends RecyclerView.Adapter<AdapterBook.ViewHolder> {
 
     private List<Book> item;
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public RecyclerViewAdapterBook(Context context, List<Book> item) {
+    public AdapterBook(Context context) {
         this.context = context;
-        this.item = item;
+        this.item = new ArrayList<>();
         this.layoutInflater = LayoutInflater.from(context);
     }
 
@@ -54,7 +56,7 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
         holder.getParentLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookDetailsActivity.startActivity(RecyclerViewAdapterBook.this.context, (int) book.getId());
+                BookDetailsActivity.startActivity(AdapterBook.this.context, (int) book.getId());
             }
         });
     }
@@ -65,8 +67,10 @@ public class RecyclerViewAdapterBook extends RecyclerView.Adapter<RecyclerViewAd
     }
 
     public void update(List<Book> newList) {
-        this.item = newList;
-        notifyDataSetChanged();
+        if (newList != null) {
+            this.item = newList;
+            notifyDataSetChanged();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

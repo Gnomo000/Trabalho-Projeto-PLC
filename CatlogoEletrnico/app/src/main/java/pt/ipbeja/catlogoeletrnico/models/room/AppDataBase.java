@@ -1,14 +1,16 @@
-package pt.ipbeja.catlogoeletrnico;
+package pt.ipbeja.catlogoeletrnico.models.room;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Book.class,Request.class,User.class}, version = 1)
+import pt.ipbeja.catlogoeletrnico.models.Book;
+import pt.ipbeja.catlogoeletrnico.models.Request;
+import pt.ipbeja.catlogoeletrnico.models.User;
+
+@Database(entities = {Book.class, Request.class, User.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract BookDao getBookDao();
