@@ -1,14 +1,18 @@
-@extends('book.layouts.app')
+@extends('user.layouts.app')
 
 @section('content')
-<div class="card-header">{{ __('Dashboard') }}</div>
-<div class="col-lg-1"></div>
-<div class="card-body">
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
+    <div class="card-header">{{ __('Dashboard') }}</div>
+    <div class="col-lg-1">
+    </div>
+    <div class="card-body">
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
+        <div class="col-lg-1">
+            <a class="btn btn-success" href="{{ route('user.create') }}">Add</a>
         </div>
-    @endif
     <table class="table table-bordered">
         <tr>
             <th>Id</th>
