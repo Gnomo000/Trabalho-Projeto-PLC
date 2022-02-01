@@ -4,14 +4,14 @@
 <div class="card-header">{{ __('Criar user') }}</div>
 <div class="col-lg-1"></div>
 <div class="card-body">
+<div class="col-lg-1">
+    <a class="btn btn-primary" href="{{ url('requisition') }}"> Back</a>
+</div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
         </div>
     @endif
-
----------------------------
-
 
     <form action="{{ route('requisition.store') }}" method="POST">
         @csrf
@@ -43,7 +43,6 @@
     </form>
 
     
---------------------------------------
     {{ __('You are logged in!') }}
 </div>
 @endsection

@@ -1,11 +1,11 @@
-@extends('requisition.layouts.app')
+@extends('user.layouts.app')
 
 @section('content')
-<div class="card-header">{{ __('Dashboard') }}</div>
+<div class="card-header">{{ __('Ver User') }}</div>
 <div class="col-lg-1"></div>
 <div class="card-body">
 <div class="col-lg-1">
-    <a class="btn btn-primary" href="{{ url('requisition') }}"> Back</a>
+    <a class="btn btn-primary" href="{{ url('user') }}"> Back</a>
 </div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -15,27 +15,31 @@
     <table class="table table-bordered">
         <tr>
             <th>Email:</th>
-            <td>{{ $requisition->email }}</td>
+            <td>{{ $user->name }}</td>
         </tr>
         <tr>
             <th>Titulo:</th>
-            <td>{{ $requisition->title }}</td>
+            <td>{{ $user->date }}</td>
         </tr>
         <tr>
             <th>Data de requisição:</th>
-            <td>{{ $requisition->requestDate }}</td>
+            <td>{{ $user->email }}</td>
         </tr>
         <tr>
             <th>Data de entrega:</th>
-            <td>{{ $requisition->deliverDate }}</td>
+            <td>{{ $user->phone }}</td>
         </tr>
         <tr>
             <th>Quantidade:</th>
-            <td>{{ $requisition->quantity }}</td>
+            <td>{{ $user->username }}</td>
         </tr>
         <tr>
             <th>Status:</th>
-            <td>{{ $requisition->status }}</td>
+            <td>{{ $user->password }}</td>
+        </tr>
+        <tr>
+            <th>Status:</th>
+            <td>{{ $user->image }}</td>
         </tr>
     </table>
     {{ __('You are logged in!') }}

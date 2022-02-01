@@ -1,14 +1,17 @@
 @extends('book.layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-11">
-                <h2>Laravel 8 CRUD Example</h2>
+<div class="card-header">{{ __('Ver Livro') }}</div>
+<div class="col-lg-1"></div>
+<div class="card-body">
+<div class="col-lg-1">
+    <a class="btn btn-primary" href="{{ url('book') }}"> Back</a>
+</div>
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
         </div>
-        <div class="col-lg-1">
-            <a class="btn btn-primary" href="{{ url('book') }}"> Back</a>
-        </div>
-    </div>
+    @endif
     <table class="table table-bordered">
         <tr>
             <th>Titulo:</th>
@@ -46,6 +49,7 @@
             <th>Image:</th>
             <td>{{ $book->image }}</td>
         </tr>
-
     </table>
+    {{ __('You are logged in!') }}
+</div>
 @endsection
