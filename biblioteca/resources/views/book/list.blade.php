@@ -43,7 +43,7 @@
                     <td>{{ $book->synopse }}</td>
                     <td>{{ $book->genders }}</td>
                     <td>{{ $book->quantity }}</td>
-                    <td>{{ $book->image }}</td>
+                    <td><img src="{{$book->image}}" alt="image"  width="120px"></td>
                     <td>
                         <form action="{{ route('book.destroy',$book->id) }}" method="POST">
                             <a class="btn btn-info" href="{{ route('book.show',$book->id) }}">Show</a>

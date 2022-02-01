@@ -38,7 +38,7 @@
                 <td>{{ $user->phone }}</td>
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->password }}</td>
-                <td>{{ $user->image }}</td>
+                <td><img src="{{$user->image}}" alt="image"  width="120px"></td>
                 <td>
                     <form action="{{ route('user.destroy',$user->id) }}" method="POST">
                         <a class="btn btn-info" href="{{ route('user.show',$user->id) }}">Show</a>
