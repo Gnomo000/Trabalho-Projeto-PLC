@@ -12,21 +12,24 @@
 
 ## Criação da Aplicação no AndroidStudio
 
+## Criação da API pelo Laravel
+
 ### Requisitos Minimos
-* Criar um Utilizador
-* Adicionar uma Requisição
+* Criar um Utilizador pelo BackOffice
+* Adicionar uma Requisição pelo Utilizador
 * Lista de Requisições
 * Lista de Livros
 * Pagina unica do Livro
+* Gestao das tabelas da Bade de dados pelo BackOffice
+* Utilização da API para a pesquisa da aplicação á base de dados
 
 ### Requisitos Avançados
-* Editar Perfil
 * Esquema de Cores para os livros
 
 ## Lista de Tarefas
 
-* Adicionar um Utilizador [X]
-* Adicionar uma Requisição [X]
+* Adicionar um Utilizador pelo BackOffice[X]
+* Criação de uma Requisição pelo Utilizador [X]
 * Lista de Requisições [X]
 * Lista de Livros [X]
 * Pagina unica do Livro [X]
