@@ -4,6 +4,9 @@
 <div class="card-header">{{ __('Editar Livro') }}</div>
 <div class="col-lg-1"></div>
 <div class="card-body">
+<div class="col-lg-1">
+    <a class="btn btn-primary" href="{{ url('book') }}"> Back</a>
+</div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}

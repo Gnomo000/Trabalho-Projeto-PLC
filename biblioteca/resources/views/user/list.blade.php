@@ -1,9 +1,8 @@
 @extends('user.layouts.app')
 
 @section('content')
-    <div class="card-header">{{ __('Dashboard') }}</div>
-    <div class="col-lg-1">
-    </div>
+    <div class="card-header">{{ __('Users') }}</div>
+    <div class="col-lg-1"></div>
     <div class="card-body">
         @if (session('status'))
             <div class="alert alert-success" role="alert">

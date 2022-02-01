@@ -78,15 +78,15 @@ class AppuserController extends Controller
         $user->password = $request->get('txtPassword');
         $user->image = $request->get('txtImage');
  
-        $student->update();
+        $user->update();
  
-        return redirect('/user')->with('success', 'Student updated successfully');
+        return redirect('/user')->with('success', 'user updated successfully');
     }
  
     public function destroy(Appuser $user)
     {
-        $student->delete();
-        return redirect('/user')->with('success', 'Student deleted successfully');
+        $user->delete();
+        return redirect('/user')->with('success', 'user deleted successfully');
     }
 
 

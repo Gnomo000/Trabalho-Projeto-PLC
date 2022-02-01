@@ -1,9 +1,10 @@
 @extends('user.layouts.app')
 
 @section('content')
-<div class="card-header">{{ __('Criar Utilizador') }}</div>
+<div class="card-header">{{ __('Criar User') }}</div>
 <div class="col-lg-1"></div>
 <div class="card-body">
+<a class="btn btn-primary" href="{{ url('user') }}"> Back</a>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}

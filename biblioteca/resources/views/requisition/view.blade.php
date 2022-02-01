@@ -1,7 +1,7 @@
 @extends('requisition.layouts.app')
 
 @section('content')
-<div class="card-header">{{ __('Dashboard') }}</div>
+<div class="card-header">{{ __('Requisição') }}</div>
 <div class="col-lg-1"></div>
 <div class="card-body">
 <div class="col-lg-1">
