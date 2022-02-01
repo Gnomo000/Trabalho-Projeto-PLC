@@ -10,10 +10,97 @@ class AppuserController extends Controller
 
     public function index()
     {
-        //
         $users = Appuser::all();
         return view('user.list', compact('users','users'));
     }
+
+    public function create()
+    {
+        return view('user.create');
+    }
+ 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'txtName'=>'required',
+            'txtDate'=> 'required',
+            'txtEmail' => 'required',
+            'txtPhone' => 'required',
+            'txtUsername' => 'required',
+            'txtPassword' => 'required',
+            'txtImage' => 'required'
+        ]);
+ 
+        $user = new Appuser([
+            'name' => $request->get('txtName'),
+            'date'=> $request->get('txtDate'),
+            'email'=> $request->get('txtEmail'),
+            'phone'=> $request->get('txtPhone'),
+            'username'=> $request->get('txtUsername'),
+            'password'=> $request->get('txtPassword'),
+            'image'=> $request->get('txtImage'),
+        ]);
+ 
+        $user->save();
+        return redirect('/user')->with('success', 'User has been added');
+    }
+ 
+    public function show(Appuser $user)
+    {
+        //
+        return view('user.view',compact('user'));
+    }
+ 
+    public function edit(Appuser $user)
+    {
+        //
+        return view('user.edit',compact('user'));
+    }
+ 
+    public function update(Request $request,$id)
+    {
+        $request->validate([
+            'txtName'=>'required',
+            'txtDate'=> 'required',
+            'txtEmail' => 'required',
+            'txtPhone' => 'required',
+            'txtUsername' => 'required',
+            'txtPassword' => 'required',
+            'txtImage' => 'required'
+        ]);
+
+        $user = Appuser::find($id);
+        $user->name = $request->get('txtName');
+        $user->date = $request->get('txtDate');
+        $user->email = $request->get('txtEmail');
+        $user->phone = $request->get('txtPhone');
+        $user->username = $request->get('txtUsername');
+        $user->password = $request->get('txtPassword');
+        $user->image = $request->get('txtImage');
+ 
+        $student->update();
+ 
+        return redirect('/user')->with('success', 'Student updated successfully');
+    }
+ 
+    public function destroy(Appuser $user)
+    {
+        $student->delete();
+        return redirect('/user')->with('success', 'Student deleted successfully');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
