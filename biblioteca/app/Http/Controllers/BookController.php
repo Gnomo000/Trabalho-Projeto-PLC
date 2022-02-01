@@ -103,26 +103,6 @@ class BookController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function addBook(Request $request){
         $books = new Book;
         $books->title = $request->title;

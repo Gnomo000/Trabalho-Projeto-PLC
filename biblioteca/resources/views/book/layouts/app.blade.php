@@ -29,10 +29,10 @@
                 <a class="navbar-brand" href="{{ url('/book') }}">
                     {{ __('Livros') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/utilizadores') }}">
+                <a class="navbar-brand" href="{{ url('/user') }}">
                     {{ __('Utilizadores') }}
                 </a>
-                <a class="navbar-brand" href="{{ url('/requisicoes') }}">
+                <a class="navbar-brand" href="{{ url('/requisition') }}">
                     {{ __('Requisições') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

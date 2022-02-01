@@ -7,6 +7,99 @@ use App\Models\Requisition;
 
 class RequisitionController extends Controller
 {
+    
+    public function index()
+    {
+        $requisition = Requisition::all();
+        return view('requisition.list', compact('requisition','requisition'));
+    }
+
+
+    public function create()
+    {
+        return view('requisition.create');
+    }
+ 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'txtEmail'=>'required',
+            'txtTitle'=>'required',
+            'txtrequestDate'=>'required',
+            'txtdeliverDate'=>'required',
+            'txtQuantity'=>'required',
+            'txtStatus'=>'required'
+        ]);
+ 
+        $requisition = new Requisition([
+            'email' => $request->get('txtEmail'),
+            'title'=> $request->get('txtTitle'),
+            'requestDate'=> $request->get('txtrequestDate'),
+            'deliverDate'=> $request->get('txtdeliverDate'),
+            'quantity'=> $request->get('txtQuantity'),
+            'status'=> $request->get('txtStatus')
+        ]);
+ 
+        $requisition->save();
+        return redirect('/requisition')->with('success', 'Requisição has been added');
+    }
+ 
+    public function show(Requisition $requisition)
+    {
+        return view('requisition.view',compact('requisition'));
+    }
+ 
+    public function edit(Requisition $requisition)
+    {
+        return view('requisition.edit',compact('requisition'));
+    }
+ 
+    public function update(Request $request,$id)
+    {
+        $request->validate([
+            'txtEmail'=>'required',
+            'txtTitle'=> 'required',
+            'txtrequestDate' => 'required',
+            'txtdeliverDate' => 'required',
+            'txtQuantity' => 'required',
+            'txtStatus' => 'required'
+        ]);
+ 
+ 
+        $requisition = Requisition::find($id);
+        $requisition->email = $request->get('txtEmail');
+        $requisition->title = $request->get('txtTitle');
+        $requisition->requestDate = $request->get('txtrequestDate');
+        $requisition->deliverDate = $request->get('txtdeliverDate');
+        $requisition->Quantity = $request->get('txtQuantity');
+        $requisition->Status = $request->get('txtStatus');
+ 
+        $requisition->update();
+
+        return redirect('/requisition')->with('success', 'Requisition updated successfully');
+    }
+ 
+    public function destroy(Requisition $requisition)
+    {
+        $requisition->delete();
+        return redirect('/requisition')->with('success', 'Requisition deleted successfully');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function addRequisition(Request $request){
 
         $requisitions = new Requisition;

@@ -7,6 +7,22 @@ use App\Models\Appuser;
 
 class AppuserController extends Controller
 {
+
+    public function index()
+    {
+        //
+        $users = Appuser::all();
+        return view('user.list', compact('users','users'));
+    }
+
+
+
+
+
+
+
+
+
     public function addUser(Request $request){
         $users = new Appuser;
         $users->name = $request->name;
