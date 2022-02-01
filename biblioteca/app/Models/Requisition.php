@@ -9,7 +9,7 @@ class Requisition extends Model
 {
     use HasFactory;
     protected $requisitions = 'requisitions';
-    protected $fillable = ['email','title','requestDate','diliverDate','quantity','status'];
+    protected $fillable = ['email','title','requestDate','deliverDate','quantity','status'];
 
 
 }

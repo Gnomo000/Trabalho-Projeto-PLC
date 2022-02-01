@@ -15,6 +15,93 @@ class BookController extends Controller
         return view('book.list', compact('books','books'));
     }
 
+    public function create()
+    {
+        //
+        return view('book.create');
+    }
+
+    public function store(Request $request)
+    {
+        //
+        $request->validate([
+            'txtTitle'=>'required',
+            'txtTitleEn'=> 'required',
+            'txtAuthor' => 'required',
+            'txtEdition' => 'required',
+            'txtPublisher' => 'required',
+            'txtSynopse' => 'required',
+            'txtGenders' => 'required',
+            'txtQuantity' => 'required',
+            'txtImage' => 'required',
+        ]);
+
+        $book = new Book([
+            'title' => $request->get('txtTitle'),
+            'titleEn'=> $request->get('txtTitleEn'),
+            'author'=> $request->get('txtAuthor'),
+            'edition'=> $request->get('txtEdition'),
+            'publisher'=> $request->get('txtPublisher'),
+            'synopse'=> $request->get('txtSynopse'),
+            'genders'=> $request->get('txtGenders'),
+            'quantity'=> $request->get('txtQuantity'),
+            'image'=> $request->get('txtImage')
+        ]);
+
+        $book->save();
+        return redirect('/book')->with('success', 'Book has been added');
+    }
+
+    public function show(Book $book)
+    {
+        return view('book.view',compact('book'));
+    }
+
+    public function edit(Book $book)
+    {
+        return view('book.edit',compact('book'));
+    }
+
+    public function update(Request $request,$id)
+    {
+
+        $request->validate([
+            'txtTitle'=>'required',
+            'txtTitleEn'=> 'required',
+            'txtAuthor' => 'required',
+            'txtEdition' => 'required',
+            'txtPublisher' => 'required',
+            'txtSynopse' => 'required',
+            'txtGenders' => 'required',
+            'txtQuantity' => 'required',
+            'txtImage' => 'required',
+        ]);
+
+
+        $book = Book::find($id);
+        $book->title = $request->get('txtTitle');
+        $book->titleEn = $request->get('txtTitleEn');
+        $book->author = $request->get('txtAuthor');
+        $book->edition = $request->get('txtEdition');
+        $book->publisher = $request->get('txtPublisher');
+        $book->synopse = $request->get('txtSynopse');
+        $book->genders = $request->get('txtGenders');
+        $book->quantity = $request->get('txtQuantity');
+        $book->image = $request->get('txtImage');
+
+        $book->update();
+
+        return redirect('/book')->with('success', 'Book updated successfully');
+    }
+
+    public function destroy(Book $book)
+    {
+        //
+        $book->delete();
+        return redirect('/book')->with('success', 'Book deleted successfully');
+    }
+
+
 
 
 
